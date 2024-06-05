@@ -36,6 +36,13 @@
   .player-home {
     border: 5px solid black;
     border-radius: 20px;
+    box-shadow:
+      1px 1px 2px 3px $title-color,
+      inset 1px 1px 2px 3px $title-color,
+      1px 1px 1px 3px $title-color;
+  }
+  .seemore {
+    margin: 20px;
   }
 }
 .description-container {
@@ -51,13 +58,13 @@
     font-size: $font-text;
     background-color: $background-color-dark;
     font-size: 1.7rem;
-
-    padding: 30px;
+    line-height: 1.5;
+    padding: 40px;
     border-radius: 10px;
 
     box-shadow:
-      5px 5px 4px 1px gray,
-      inset 1px 1px 5px 0px whitesmoke,
-      5px 5px 5px 5px white;
+      1px 1px 2px 3px $title-color,
+      inset 1px 1px 2px 3px $title-color,
+      1px 1px 1px 3px $title-color;
   }
 }

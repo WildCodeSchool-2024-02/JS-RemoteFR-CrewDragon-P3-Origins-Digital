@@ -26,9 +26,10 @@ function Home() {
 
           <YouTube
             className="player-home"
-            videoId={video.url.split("=")[1]}
+            videoId={video.url1.split("=")[1]}
             opts={opts}
           />
+          <p className="seemore">Voir Plus</p>
           <div className="description-container">
             <p className="description">{video.description}</p>
           </div>
