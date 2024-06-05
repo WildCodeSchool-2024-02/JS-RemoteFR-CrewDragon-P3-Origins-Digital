@@ -1,0 +1,63 @@
+@use "./Variables.scss" as *;
+
+.intro-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  p {
+    font-family: $font-text;
+    color: $text-color-black;
+    margin: 10px 10px 10px 10px;
+    padding: 10px;
+    font-size: 1.25rem;
+  }
+  p strong {
+    font-size: 1.5rem;
+    color: $title-color;
+  }
+}
+.player-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  h2 {
+    font-family: $font-title;
+    color: $title-color;
+    font-size: 2.5rem;
+
+    padding: 5px;
+    margin: 10px;
+  }
+  .player-home {
+    border: 5px solid black;
+    border-radius: 20px;
+  }
+}
+.description-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: 30px;
+  .description {
+    width: 380px;
+    color: $text-color-white;
+    font-size: $font-text;
+    background-color: $background-color-dark;
+    font-size: 1.7rem;
+
+    padding: 30px;
+    border-radius: 10px;
+
+    box-shadow:
+      5px 5px 4px 1px gray,
+      inset 1px 1px 5px 0px whitesmoke,
+      5px 5px 5px 5px white;
+  }
+}
