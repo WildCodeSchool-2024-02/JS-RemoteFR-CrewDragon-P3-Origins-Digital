@@ -1,0 +1,113 @@
+.footer-container {
+  position: relative;
+  background: url(../assets/images/images-footer/footer.gif);
+  background-size: cover;
+}
+.logo-text-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+  background-color: rgba(107, 40, 40, 0);
+}
+.text-footer {
+  text-align: center;
+  color: white;
+  width: 100%;
+  font-size: 1.4rem;
+  padding-bottom: 20px;
+  background-color: rgba(107, 40, 40, 0);
+}
+.responsive-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: rgba(107, 40, 40, 0);
+}
+.text-footer1 {
+  text-align: center;
+  color: white;
+  width: 100%;
+  font-size: 1.1rem;
+  padding: 0 50px;
+  background-color: rgba(107, 40, 40, 0);
+}
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+}
+.logo-footer {
+  width: 200px;
+  height: auto;
+  padding-top: 15px;
+  background-color: rgba(107, 40, 40, 0);
+}
+.footer-nav-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 25px 0;
+  gap: 15px;
+  background-color: rgba(107, 40, 40, 0);
+}
+.nav-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  background-color: rgba(107, 40, 40, 0);
+}
+
+.footer-nav {
+  color: white;
+  background-color: rgba(107, 40, 40, 0);
+}
+.credits-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  padding-top: 30px;
+  background-color: rgba(107, 40, 40, 0);
+}
+
+.team-credits {
+  color: white;
+  padding-bottom: 5px;
+  background-color: rgba(107, 40, 40, 0);
+}
+
+@media only screen and (min-width: 996px) {
+  .responsive-container {
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    padding: 0 20%;
+  }
+  .text-footer {
+    font-size: 1.6rem;
+  }
+
+  .logo-footer {
+    width: 300px;
+  }
+  .text-footer1 {
+    font-size: 1.4rem;
+    padding: 50px 0 50px 10%;
+  }
+  .footer-nav-container {
+    flex-direction: row-reverse;
+    justify-content: space-between;
+  }
+  .nav-container {
+    padding-right: 25px;
+  }
+  .credits-container {
+    flex-direction: row;
+    margin-top: 81px;
+    padding-left: 25px;
+  }
+}
