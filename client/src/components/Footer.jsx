@@ -18,18 +18,10 @@ function Footer() {
         </div>
         <div className="footer-nav-container">
           <div className="nav-container">
-            <p className="footer-nav" href="#">
-              Mentions légales
-            </p>
-            <p className="footer-nav" href="#">
-              Conditions d'utilisation
-            </p>
-            <p className="footer-nav" href="#">
-              Nous Contacter
-            </p>
-            <p className="footer-nav" href="#">
-              © 2024 Origin Digital, inc
-            </p>
+            <p className="footer-nav">Mentions légales</p>
+            <p className="footer-nav">Conditions d'utilisation</p>
+            <p className="footer-nav">Nous Contacter</p>
+            <p className="footer-nav">© 2024 Origin Digital, inc</p>
           </div>
           <div className="credits-container">
             <p className="team-credits">Crédits :</p>
