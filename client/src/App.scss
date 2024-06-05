@@ -1,13 +1,12 @@
 @font-face {
   font-family: "dream_orphanage";
   src: url(./assets//Font/dream_orphanage/dream\ orphanage\ rg.otf);
-
 }
 @font-face {
   font-family: "Nauman";
   src: url(./assets//Font/nauman/Nauman-Regular.ttf);
-
 }
+@import url(./style/Footer.scss);
 
 $background-color-light: #ffffff;
 $background-color-dark: #06192b;
@@ -16,8 +15,8 @@ $title-color: #ff7105;
 $text-color-black: #000000;
 $text-color-white: #ffffff;
 $arrow-color: #f76b00;
-$font-title:"dream_orphanage";
-$font-text:"Nauman";
+$font-title: "dream_orphanage";
+$font-text: "Nauman";
 
 * {
   background-color: $background-color-light;
