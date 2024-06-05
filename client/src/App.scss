@@ -1,5 +1,9 @@
-@use "./style//Variables.scss" as *;
+@import url(./style/Footer.scss);
 @import url(./style/Home.scss);
+
+@use "./style//Variables.scss" as *;
+
+
 * {
   background-color: $background-color-light;
   box-sizing: border-box;
