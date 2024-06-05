@@ -1,0 +1,160 @@
+// MenuBurger style
+.header {
+  position: relative;
+  height: 300px;
+  z-index: 1;
+}
+
+.video-header {
+  top: 0;
+  position: absolute;
+  z-index: -1;
+  height: 300px;
+  width: 100%;
+}
+.filter-video {
+  position: relative;
+  z-index: 10;
+  height: 300px;
+  background: linear-gradient(
+    to bottom,
+    #000000,
+    #000000eb 16%,
+    #00000039 100%
+  );
+}
+
+.sidenav {
+  display: flex;
+  justify-content: center;
+  z-index: 13;
+  height: 100%;
+  width: 50%;
+  position: fixed;
+  top: 0;
+  right: -50%;
+  overflow: hidden;
+  padding-top: 10px;
+  transition: right 0.3s ease;
+}
+.background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+.sidenav.active {
+  right: 0;
+}
+
+.sidenav a {
+  font-family: "roboto";
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 1.3rem;
+  color: #746458;
+  display: block;
+  text-decoration: underline;
+  text-decoration-color: #3a322c;
+}
+.sidenav a:hover {
+  color: #746458;
+}
+.sidenav ul {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: 50px;
+  list-style-type: none;
+  margin-top: 100px;
+  color: white;
+  background-color: rgba(107, 40, 40, 0);
+}
+.sidenav ul li {
+  background-color: rgba(107, 40, 40, 0);
+}
+.close {
+  background-color: rgba(107, 40, 40, 0);
+}
+.sidenav .close {
+  position: absolute;
+  top: -20px;
+  right: 10px;
+  margin-top: 20px;
+  font-size: 25px;
+}
+
+.menu-svg {
+  position: absolute;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+.logo {
+  position: absolute;
+  z-index: 12;
+  top: 0;
+  width: 7rem;
+  margin-left: 15px;
+  background-color: rgba(107, 40, 40, 0);
+}
+.logo-cross {
+  width: 5rem;
+  background-color: rgba(107, 40, 40, 0);
+}
+.logo-burger {
+  position: absolute;
+  top: 0;
+  z-index: 12;
+  margin-right: 10px;
+  right: 0;
+  width: 4rem;
+  background-color: rgba(107, 40, 40, 0);
+}
+
+@media only screen and (min-width: 1024px) {
+  .burger-icon {
+    display: none;
+  }
+
+  .background-video {
+    display: none;
+  }
+
+  .sidenav {
+    display: flex;
+    position: static;
+    width: auto;
+    background-color: transparent;
+    border-left: none;
+    padding-top: 0;
+    height: auto;
+  }
+  .sidenav ul {
+    position: absolute;
+    z-index: 13;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    margin-top: 35px;
+    padding-left: 25%;
+    color: white;
+  }
+
+  .sidenav a {
+    color: #c1b09e;
+  }
+  .sidenav .close {
+    display: none;
+  }
+  .logo {
+    width: 9rem;
+  }
+}
