@@ -1,0 +1,14 @@
+$background-color-light: #ffffff;
+$background-color-dark: #06192b;
+$color-aside-admin: #d3b7a1;
+$title-color: #ff7105;
+$text-color-black: #000000;
+$text-color-white: #ffffff;
+$arrow-color: #f76b00;
+
+* {
+  background-color: $background-color-light;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
