@@ -1,5 +1,6 @@
 // Import react
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 // Import des images
 import LOGO from "../assets/images/origindigital.svg";
@@ -30,12 +31,13 @@ function Header() {
           <img className="logo-cross" src={CROSS} alt="fermer" />
         </button>
         <ul>
-          <li>Accueil</li>
-          <li>Catégories</li>
-          <li>Sous-Catégories</li>
-          <li>Admin</li>
-          <li>pourquoi pas s'abonner ?</li>
-          <li>se connecter</li>
+          <Link to="/">Accueil</Link>
+          <Link to="/Categories">Catégories</Link>
+          <Link to="/SousCategories">Sous-Catégories</Link>
+          <Link to="/Contenue">Contenue</Link>
+          <Link to="/Admin">Admin</Link>
+          <Link to="/error404">pourquoi pas s'abonner ?</Link>
+          <Link to="/error404">se connecter</Link>
         </ul>
       </div>
       <button type="button" id="openBtn" onClick={toggleMenu}>
