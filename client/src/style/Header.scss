@@ -55,10 +55,11 @@
   font-family: "roboto";
   font-weight: bold;
   text-decoration: none;
-  font-size: 1.3rem;
-  color: #746458;
+  font-size: 1rem;
+  background-color: transparent;
+  color: white;
   display: block;
-  text-decoration: underline;
+  text-decoration: none;
   text-decoration-color: #3a322c;
 }
 .sidenav a:hover {
@@ -78,6 +79,7 @@
   background-color: rgba(107, 40, 40, 0);
 }
 .close {
+  border: none;
   background-color: rgba(107, 40, 40, 0);
 }
 .sidenav .close {
@@ -151,7 +153,7 @@
   }
 
   .sidenav a {
-    color: #c1b09e;
+    color: white;
   }
   .sidenav .close {
     display: none;
