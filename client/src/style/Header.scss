@@ -1,25 +1,26 @@
 // MenuBurger style
 .header {
   position: relative;
-  height: 300px;
+  height: 500px;
   z-index: 1;
 }
 
 .video-header {
   top: 0;
+  object-fit: cover;
   position: absolute;
   z-index: -1;
-  height: 300px;
+  height: 500px;
   width: 100%;
 }
 .filter-video {
   position: relative;
   z-index: 10;
-  height: 300px;
+  height: 500px;
   background: linear-gradient(
     to bottom,
-    #000000,
-    #000000eb 16%,
+    #000000d0 10%,
+    #000000a4 16%,
     #00000039 100%
   );
 }
@@ -138,13 +139,14 @@
     position: absolute;
     z-index: 13;
     top: 0;
-    left: 0;
+    // left: 0;
+    right: 0;
     display: flex;
     flex-direction: row;
     align-items: center;
-    width: 100%;
+    // width: 100%;
     margin-top: 35px;
-    padding-left: 25%;
+    padding-right: 15px;
     color: white;
   }
 
