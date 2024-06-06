@@ -1,9 +1,14 @@
-import React from "react";
 import YouTube from "react-youtube";
+import { Link } from "react-router-dom";
 import HomepageData from "../Data/HomePageData";
 
 function Home() {
-  const opts = { height: "380", width: "380" };
+  const opts = {
+    playerVars: {
+      autoplay: 0,
+    },
+  };
+
   return (
     <>
       <div className="intro-container">
@@ -20,16 +25,19 @@ function Home() {
         </p>
       </div>
 
-      {HomepageData.map((video, index) => (
-        <div key={index} className="player-container">
+      {HomepageData.map((video) => (
+        <div key={video.id} className="player-container">
           <h2>{video.title}</h2>
-
-          <YouTube
-            className="player-home"
-            videoId={video.url1.split("=")[1]}
-            opts={opts}
-          />
-          <p className="seemore">Voir Plus</p>
+          <div className="player-wrapper">
+            <YouTube
+              className="player-home"
+              videoId={video.url1.split("=")[1]}
+              opts={opts}
+            />
+          </div>
+          <Link to="/Connectingpage" className="seemore">
+            Voir Plus
+          </Link>
           <div className="description-container">
             <p className="description">{video.description}</p>
           </div>
