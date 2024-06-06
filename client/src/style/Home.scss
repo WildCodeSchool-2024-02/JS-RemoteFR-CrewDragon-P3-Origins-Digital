@@ -18,6 +18,7 @@
     color: $title-color;
   }
 }
+
 .player-container {
   display: flex;
   flex-direction: column;
@@ -29,22 +30,39 @@
     font-family: $font-title;
     color: $title-color;
     font-size: 2.5rem;
-
     padding: 5px;
     margin: 10px;
   }
+  .player-wrapper {
+    position: relative;
+  }
+  iframe {
+    width: 350px;
+    height: 300px;
+  }
   .player-home {
-    border: 5px solid black;
+    border: 10px solid black;
     border-radius: 20px;
     box-shadow:
       1px 1px 2px 3px $title-color,
       inset 1px 1px 2px 3px $title-color,
       1px 1px 1px 3px $title-color;
-  }
-  .seemore {
     margin: 20px;
   }
+  .seemore {
+    font-size: 1.4em;
+    margin: 20px;
+    cursor: pointer;
+    padding: 10px;
+    text-decoration: underline overline wavy 2px $title-color;
+    color: inherit;
+  }
+  .seemore:hover {
+    color: $title-color;
+    text-decoration: underline overline wavy 2px black;
+  }
 }
+
 .description-container {
   display: flex;
   flex-direction: column;
@@ -61,10 +79,46 @@
     line-height: 1.5;
     padding: 40px;
     border-radius: 10px;
-
     box-shadow:
       1px 1px 2px 3px $title-color,
       inset 1px 1px 2px 3px $title-color,
       1px 1px 1px 3px $title-color;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .intro-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 60%;
+    margin-left: 300px;
+
+    p {
+      text-align: center;
+      font-size: 2rem;
+    }
+    p strong {
+      font-size: 2.5rem;
+    }
+  }
+
+  .player-container {
+    h2 {
+      font-size: 4rem;
+    }
+    iframe {
+      width: 700px;
+      height: 500px;
+    }
+  }
+
+  .description-container {
+    .description {
+      width: 700px;
+      font-size: 2.5rem;
+    }
   }
 }
