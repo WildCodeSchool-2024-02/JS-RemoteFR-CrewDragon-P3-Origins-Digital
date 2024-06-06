@@ -1,4 +1,3 @@
-import React from "react";
 import YouTube from "react-youtube";
 import HomepageData from "../Data/HomePageData";
 
@@ -20,8 +19,8 @@ function Home() {
         </p>
       </div>
 
-      {HomepageData.map((video, index) => (
-        <div key={index} className="player-container">
+      {HomepageData.map((video) => (
+        <div key={video.id} className="player-container">
           <h2>{video.title}</h2>
 
           <YouTube
