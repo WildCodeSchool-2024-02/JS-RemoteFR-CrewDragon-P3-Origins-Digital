@@ -158,13 +158,35 @@ function Header() {
           <img className="logo-cross" src={CROSS} alt="fermer" />
         </button>
         <ul>
-          <Link to="/">Accueil</Link>
-          <Link to="/Categories">Catégories</Link>
-          <Link to="/SousCategories">Sous-Catégories</Link>
-          <Link to="/Contenue">Contenue</Link>
-          <Link to="/Admin">Admin</Link>
-          <Link to="/error404">pourquoi pas s'abonner ?</Link>
-          <Link to="/error404">se connecter</Link>
+          <Link className="glitch" data-glitch="Accueil" to="/">
+            Accueil
+          </Link>
+          <Link className="glitch" data-glitch="Catégories" to="/Categories">
+            Catégories
+          </Link>
+          <Link
+            className="glitch"
+            data-glitch="Sous-Catégories"
+            to="/SousCategories"
+          >
+            Sous-Catégories
+          </Link>
+          <Link className="glitch" data-glitch="Contenue" to="/Contenue">
+            Contenue
+          </Link>
+          <Link className="glitch" data-glitch="Admin" to="/Admin">
+            Admin
+          </Link>
+          <Link
+            className="glitch"
+            data-glitch="pourquoi pas s'abonner ?"
+            to="/error404"
+          >
+            pourquoi pas s'abonner ?
+          </Link>
+          <Link className="glitch" data-glitch="se connecter" to="/error404">
+            se connecter
+          </Link>
         </ul>
       </div>
       <button type="button" id="openBtn" onClick={toggleMenu}>

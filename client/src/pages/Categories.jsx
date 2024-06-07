@@ -1,7 +1,15 @@
+import { useEffect } from "react";
+
 import "../style/Categories.scss";
 import { Link } from "react-router-dom";
 
 function Categories() {
+  useEffect(() => {
+    window.scrollBy({
+      top: window.innerHeight,
+      behavior: "smooth",
+    });
+  }, []);
   return (
     <>
       <h1>
