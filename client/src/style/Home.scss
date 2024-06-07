@@ -54,12 +54,12 @@
     margin: 20px;
     cursor: pointer;
     padding: 10px;
-    text-decoration: underline overline wavy 2px $title-color;
+    text-decoration: underline overline 2px $title-color;
     color: inherit;
   }
   .seemore:hover {
     color: $title-color;
-    text-decoration: underline overline wavy 2px black;
+    text-decoration: underline overline 2px black;
   }
 }
 
