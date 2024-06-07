@@ -1,6 +1,14 @@
+import { useEffect } from "react";
+
 import "../style/Categories.scss";
 
 function Categories() {
+  useEffect(() => {
+    window.scrollBy({
+      top: window.innerHeight,
+      behavior: "smooth",
+    });
+  }, []);
   return (
     <>
       <h1>
