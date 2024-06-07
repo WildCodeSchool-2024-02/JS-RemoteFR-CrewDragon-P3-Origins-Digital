@@ -13,7 +13,8 @@ import SousCategories from "./pages/SousCategories";
 import Contenue from "./pages/Contenue";
 import Admin from "./pages/Admin";
 import Error404 from "./pages/Error404";
-import ConnectingPage from "./pages/ConectingPage";
+import Login from "./pages/Login";
+import Account from "./pages/Account";
 // router creation
 
 const router = createBrowserRouter([
@@ -41,8 +42,12 @@ const router = createBrowserRouter([
         element: <Admin />,
       },
       {
-        path: "/ConnectingPage",
-        element: <ConnectingPage />,
+        path: "/Login",
+        element: <Login />,
+      },
+      {
+        path: "/Account",
+        element: <Account />,
       },
       {
         path: "/error404",

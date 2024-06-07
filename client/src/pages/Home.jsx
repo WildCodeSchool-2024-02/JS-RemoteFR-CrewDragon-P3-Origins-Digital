@@ -35,7 +35,7 @@ function Home() {
               opts={opts}
             />
           </div>
-          <Link to="/Connectingpage" className="seemore">
+          <Link to="/Login" className="seemore">
             Voir Plus
           </Link>
           <div className="description-container">
