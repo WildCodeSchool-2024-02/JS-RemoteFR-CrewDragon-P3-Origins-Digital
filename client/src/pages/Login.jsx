@@ -1,6 +1,13 @@
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 function LoginPage() {
+  useEffect(() => {
+    window.scrollBy({
+      top: window.innerHeight,
+      behavior: "smooth",
+    });
+  }, []);
   return (
     <div className="login-container">
       <h2 className="tittle-login">
