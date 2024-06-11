@@ -448,6 +448,7 @@
   }
   .sidenav a:hover {
     color: $title-color;
+    transition: 0.5s ease-in-out;
   }
   .sidenav .close {
     display: none;
