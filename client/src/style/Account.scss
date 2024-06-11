@@ -1,6 +1,6 @@
 @use "./Variables.scss" as *;
 
-.login-container {
+.account-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -9,7 +9,7 @@
   max-width: 600px;
 
   background-image: url("../assets/images/bg-conecting-page/LogRedOrange.png");
-  background-size: cover;
+  background-size: 100% 100%;
   background-repeat: no-repeat;
   border: 3px solid;
   border-image: linear-gradient(to right, red, orange) 1;
@@ -19,7 +19,8 @@
   border-radius: 10px;
   padding: 20px;
 
-  .tittle-login {
+  .tittle-account {
+    margin: 10px;
     strong {
       color: $title-color;
     }
@@ -29,10 +30,10 @@
     max-width: 400px;
     background-size: 100% 100%;
     padding: 40px;
-    .tittle-login {
+    .tittle-account {
       font-size: 1.3rem;
     }
-    .login-form {
+    .account-form {
       .form-group {
         width: 100%;
         max-width: 250px;
@@ -40,7 +41,7 @@
     }
   }
 
-  .login-form {
+  .account-form {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
@@ -67,12 +68,12 @@
         padding: 10px;
         border: 2px solid;
         border-image: linear-gradient(to right, red, orange) 1;
-        border-radius: 5px;
+
         font-size: 16px;
       }
     }
 
-    .login-button {
+    .account-button {
       width: 100%;
       padding: 10px;
       background-color: #ff4500;

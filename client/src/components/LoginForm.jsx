@@ -19,7 +19,7 @@ function LoginForm() {
           placeholder="Entrez votre mot de passe"
         />
       </div>
-      <button className="login-button" type="button">
+      <button className="login-button" type="submit">
         Connexion
       </button>
       <Link to="/account" className="login-account">
