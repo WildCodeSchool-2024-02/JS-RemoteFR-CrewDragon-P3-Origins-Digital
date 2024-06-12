@@ -15,6 +15,7 @@ import Admin from "./pages/Admin";
 import Error404 from "./pages/Error404";
 import Login from "./pages/Login";
 import Account from "./pages/Account";
+import Contact from "./pages/Contact";
 // router creation
 
 const router = createBrowserRouter([
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
       {
         path: "/error404",
         element: <Error404 />,
+      },
+      {
+        path: "/Contact",
+        element: <Contact />,
       },
     ],
   },
