@@ -26,6 +26,7 @@ function Admin() {
   //     behavior: "smooth",
   //   });
   // }, []);
+
   return (
     <body>
       <div className="container-admin-action">
@@ -34,15 +35,15 @@ function Admin() {
         </button>
         <div className="svg-folder-container">
           <img className="svg-folder" src={FOLDER} alt="svg-fichier" />
-          <p>ajouter</p>
+          <p className="text-admin">ajouter</p>
         </div>
         <div className="svg-modify-container">
           <img className="svg-modify" src={MODIFY} alt="svg-modify" />
-          <p>modifier</p>
+          <p className="text-admin">modifier</p>
         </div>
         <div className="svg-bin-container">
           <img className="svg-bin" src={BIN} alt="svg-bin" />
-          <p>supprimer</p>
+          <p className="text-admin">supprimer</p>
         </div>
       </div>
       <div className="admin-container">
@@ -102,10 +103,12 @@ function Admin() {
                     </div>
                     <input className="checkbox-style" type="checkbox" />
                   </div>
-                  <p>Titre :</p>
-                  <p>{video.title}</p>
-                  <p>Description :</p>
-                  <p>{video.description}</p>
+                  <div className="title-text-container">
+                    <h3 className="title-admin">Titre :</h3>
+                    <p className="text-admin">{video.title}</p>
+                    <h4 className="title-admin">Description :</h4>
+                    <p className="text-admin">{video.description}</p>
+                  </div>
                 </div>
               </div>
             ))}
