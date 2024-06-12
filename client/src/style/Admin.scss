@@ -4,7 +4,8 @@
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  background-color: #d3b7a1;
+  background-color: $admin-color;
+  border-bottom: solid 3px $text-color-black;
   height: 150px;
 }
 .container-admin-action p {
@@ -17,6 +18,8 @@
   flex-direction: column;
   align-items: center;
 }
+
+// SVG css
 
 .svg-folder-container {
   display: flex;
@@ -54,7 +57,7 @@
   left: -100%;
   overflow: hidden;
   transition: left 0.3s ease;
-  background-color: #d3b7a1;
+  background-color: $admin-color;
 }
 .sideadmin.active {
   left: 0;
@@ -70,8 +73,7 @@
   text-align: center;
   gap: 25px;
   list-style-type: none;
-  color: black;
-  background-color: rgba(107, 40, 40, 0);
+  color: $text-color-black;
 }
 .sideadmin h2 {
   padding-top: 50px;
@@ -81,18 +83,16 @@
 }
 .close {
   border: none;
-  background-color: rgba(107, 40, 40, 0);
 }
 
 .cross-admin {
   position: absolute;
   right: 0;
   width: 2.5rem;
-  background-color: rgba(107, 40, 40, 0);
 }
 .admin-link {
   text-decoration: none;
-  color: black;
+  color: $text-color-black;
 }
 #openBtn {
   border: none;
@@ -102,8 +102,29 @@
   position: relative;
   overflow: auto;
   overflow-x: hidden;
-  max-height: 100vh;
+  max-height: 75vh;
+
+  // scroll bar custom
+
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    border: solid 1px $text-color-black;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $admin-color;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: $title-color;
+    cursor: pointer;
+  }
 }
+.hero-slider-menu-nav-container {
+  display: none;
+}
+
+// Logo admin
 
 .logo-arrow {
   right: 0;
@@ -124,10 +145,13 @@
   width: 100%;
   justify-items: end;
   padding-right: 20px;
-  border-bottom: solid 2px black;
+  border-bottom: solid 2px $text-color-black;
 }
+
+// Vidéos admin
+
 .player-wrapper-admin {
-  border-bottom: solid 2px $title-color;
+  border-bottom: solid 2px $admin-color;
   padding-bottom: 20px;
   iframe {
     width: 40vw;
@@ -156,19 +180,21 @@
 .checkbox-style,
 .checkbox-style1 {
   margin-left: 19vw;
-  width: 20px;
-  height: 20px;
+  margin-top: 10px;
+  width: 25px;
+  height: 25px;
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  background-color: #ffffff;
-  border: 2px solid #000000;
+  background-color: $text-color-white;
+  border: 2px solid $text-color-black;
   border-radius: 50%;
   position: relative;
   cursor: pointer;
 }
 .checkbox-style1 {
   margin: 0;
+  margin-top: 10px;
 }
 
 .checkbox-style:checked,
@@ -185,22 +211,54 @@
   transform: translate(-50%, -50%) rotate(45deg);
   width: 6px;
   height: 12px;
-  border: solid #ffffff;
+  border: solid $text-color-white;
   border-width: 0 2px 2px 0;
+}
+
+// Titre texte page admin
+
+.title-admin {
+  font-family: $font-title;
+  color: $title-color;
+  font-size: 1.3rem;
+}
+.text-admin {
+  font-family: $font-text;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+.title-text-container {
+  display: flex;
+  flex-direction: column;
+  padding-left: 13px;
+  padding-right: 20vw;
+}
+.grid-date-category {
+  font-family: $font-text;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+.video-date-categorie-container p {
+  font-family: $font-text;
+  font-weight: bold;
+  font-size: 0.9rem;
 }
 
 // Responsive
 
 @media only screen and (min-width: 1024px) {
+  // Menu admin style responsive
   .logo-arrow {
     display: none;
   }
+
   .sideadmin {
     position: relative;
     left: 0;
     width: 25%;
-    height: 100vh;
+    height: 84vh;
     overflow: visible;
+    border-right: solid 3px $text-color-black;
   }
   .sideadmin ul {
     padding: 0 50px;
@@ -221,15 +279,62 @@
   }
   .container-admin-videos {
     overflow: auto;
-    max-height: 89vh;
+    max-height: 73vh;
+
+    // Scroll bar responsive
+
+    &::-webkit-scrollbar {
+      width: 15px;
+    }
   }
   .grid-date-category {
-    padding-left: 7.8vw;
+    padding-left: 6.9vw;
   }
   .player-wrapper-admin iframe {
     height: 20vw;
   }
   .container-align-text {
     padding-left: 8vw;
+  }
+
+  // Checkbox style responsive
+
+  .checkbox-style,
+  .checkbox-style1 {
+    width: 35px;
+    height: 35px;
+  }
+
+  // Titre texte page admin responsive
+
+  .title-admin {
+    font-size: 1.8rem;
+  }
+  .text-admin {
+    font-size: 1.2rem;
+  }
+  .title-text-container {
+    padding-right: 43vw;
+  }
+  .grid-date-category p {
+    font-size: 1.2rem;
+  }
+  .video-date-categorie-container p {
+    font-size: 1.2rem;
+    padding-left: 35px;
+  }
+
+  // SVG css responsive
+
+  .svg-folder {
+    width: 3rem;
+  }
+
+  .svg-modify {
+    width: 3rem;
+  }
+
+  .svg-bin {
+    width: 3rem;
   }
 }
