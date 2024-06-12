@@ -180,7 +180,7 @@ function Header() {
           <Link
             className="glitch"
             data-glitch="pourquoi pas s'abonner ?"
-            to="/error404"
+            to="/Account"
           >
             pourquoi pas s'abonner ?
           </Link>
