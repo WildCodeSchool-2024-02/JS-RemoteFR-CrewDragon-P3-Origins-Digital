@@ -1,4 +1,5 @@
 // Import des images
+import { Link } from "react-router-dom";
 import LOGO from "../assets/images/origindigital.svg";
 
 function Footer() {
@@ -20,7 +21,11 @@ function Footer() {
           <div className="nav-container">
             <p className="footer-nav">Mentions légales</p>
             <p className="footer-nav">Conditions d'utilisation</p>
-            <p className="footer-nav">Nous Contacter</p>
+            <p className="footer-nav">
+              <Link className="linkContact" to="/Contact">
+                Nous Contacter{" "}
+              </Link>
+            </p>
             <p className="footer-nav">© 2024 Origin Digital, inc</p>
           </div>
           <div className="credits-container">

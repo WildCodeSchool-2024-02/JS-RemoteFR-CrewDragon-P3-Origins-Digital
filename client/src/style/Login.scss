@@ -101,4 +101,12 @@
       }
     }
   }
+
+  textarea {
+    resize: none;
+    border: 3px solid;
+    border-image: linear-gradient(to right, red, orange) 1;
+    font-size: 15px;
+    width: 100%;
+  }
 }
