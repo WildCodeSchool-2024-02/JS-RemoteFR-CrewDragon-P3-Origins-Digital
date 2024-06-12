@@ -33,7 +33,7 @@ const AdminHomePage = [
       "Le président de la République, qui avait promis de revenir très vite devant les Français après sa décision surprise de dissoudre l'Assemblée nationale au soir d'européennes catastrophiques pour son camp, donne mercredi une conférence de presse.",
     url1: "https://www.youtube.com/watch?v=VEmiuN6hcjw",
     date: "12/06/2024",
-    categorie: "Actualitées",
+    categorie: "Actu",
   },
   {
     id: 5,

@@ -1,7 +1,7 @@
-// import { useEffect } from "react";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+// Import react
 
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import YouTube from "react-youtube";
 
 // Import data
@@ -17,15 +17,38 @@ import BIN from "../assets/images/svg-admin/bin.svg";
 function Admin() {
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const [selectAll, setSelectAll] = useState(false);
+  const [selectedVideos, setSelectedVideos] = useState([]);
+
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
-  // useEffect(() => {
-  //   window.scrollBy({
-  //     top: window.innerHeight,
-  //     behavior: "smooth",
-  //   });
-  // }, []);
+
+  // Handle pour selectionner toutes les checkbox
+  const handleSelectAll = () => {
+    setSelectAll(!selectAll);
+    if (!selectAll) {
+      setSelectedVideos(AdminHomePage.map((video) => video.id));
+    } else {
+      setSelectedVideos([]);
+    }
+  };
+
+  // Handle pour checkbox individuel
+  const handleCheckboxChange = (id) => {
+    if (selectedVideos.includes(id)) {
+      setSelectedVideos(selectedVideos.filter((videoId) => videoId !== id));
+    } else {
+      setSelectedVideos([...selectedVideos, id]);
+    }
+  };
+
+  useEffect(() => {
+    window.scrollBy({
+      top: window.innerHeight,
+      behavior: "smooth",
+    });
+  }, []);
 
   return (
     <body>
@@ -76,8 +99,13 @@ function Admin() {
         <div className="container-video-information-responsive">
           <div className="grid-date-category">
             <div className="flex-checkbox">
-              <p>Vidéos séléctionnées</p>
-              <input className="checkbox-style1" type="checkbox" />
+              <p>Tout sélectionner</p>
+              <input
+                className="checkbox-style1"
+                type="checkbox"
+                checked={selectAll}
+                onChange={handleSelectAll}
+              />
             </div>
             <span className="container-align-text">
               <p>Catégorie</p>
@@ -101,7 +129,12 @@ function Admin() {
                       <p>{video.categorie}</p>
                       <p>{video.date}</p>
                     </div>
-                    <input className="checkbox-style" type="checkbox" />
+                    <input
+                      className="checkbox-style"
+                      type="checkbox"
+                      checked={selectedVideos.includes(video.id)}
+                      onChange={() => handleCheckboxChange(video.id)}
+                    />
                   </div>
                   <div className="title-text-container">
                     <h3 className="title-admin">Titre :</h3>
