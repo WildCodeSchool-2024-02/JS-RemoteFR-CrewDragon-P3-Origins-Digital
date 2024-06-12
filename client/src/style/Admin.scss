@@ -1,0 +1,235 @@
+@use "./Variables.scss" as *;
+
+.container-admin-action {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: #d3b7a1;
+  height: 150px;
+}
+.container-admin-action p {
+  font-size: 1rem;
+  text-align: center;
+}
+
+.input-checkbox-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.svg-folder-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.svg-folder {
+  width: 2rem;
+}
+.svg-modify-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.svg-modify {
+  width: 2rem;
+}
+.svg-bin-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.svg-bin {
+  width: 2rem;
+}
+
+// MenuAdmin style
+
+.sideadmin {
+  z-index: 1;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: -100%;
+  overflow: hidden;
+  transition: left 0.3s ease;
+  background-color: #d3b7a1;
+}
+.sideadmin.active {
+  left: 0;
+  z-index: 3;
+}
+.admin-link:hover {
+  color: $title-color;
+  transition: 0.4s ease-in-out;
+}
+.sideadmin ul {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: 25px;
+  list-style-type: none;
+  color: black;
+  background-color: rgba(107, 40, 40, 0);
+}
+.sideadmin h2 {
+  padding-top: 50px;
+}
+.admin-color {
+  color: $title-color;
+}
+.close {
+  border: none;
+  background-color: rgba(107, 40, 40, 0);
+}
+
+.cross-admin {
+  position: absolute;
+  right: 0;
+  width: 2.5rem;
+  background-color: rgba(107, 40, 40, 0);
+}
+.admin-link {
+  text-decoration: none;
+  color: black;
+}
+#openBtn {
+  border: none;
+  background: transparent;
+}
+.container-admin-videos {
+  position: relative;
+  overflow: auto;
+  overflow-x: hidden;
+  max-height: 100vh;
+}
+
+.logo-arrow {
+  right: 0;
+  width: 3rem;
+}
+.flex-checkbox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.grid-date-category {
+  display: flex;
+  justify-content: space-around;
+  height: 100px;
+  grid-gap: 50px;
+  text-align: center;
+  align-items: center;
+  width: 100%;
+  justify-items: end;
+  padding-right: 20px;
+  border-bottom: solid 2px black;
+}
+.player-wrapper-admin {
+  border-bottom: solid 2px $title-color;
+  padding-bottom: 20px;
+  iframe {
+    width: 40vw;
+    height: auto;
+    margin-left: 10px;
+  }
+}
+.player-admin {
+  margin-top: 20px;
+}
+.video-checkbox-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.video-date-categorie-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 30px;
+  justify-items: center;
+  align-items: center;
+}
+
+// Checkbox
+
+.checkbox-style,
+.checkbox-style1 {
+  margin-left: 19vw;
+  width: 20px;
+  height: 20px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: #ffffff;
+  border: 2px solid #000000;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+}
+.checkbox-style1 {
+  margin: 0;
+}
+
+.checkbox-style:checked,
+.checkbox-style1:checked {
+  background-color: $title-color;
+}
+
+.checkbox-style:checked::after,
+.checkbox-style1:checked::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  width: 6px;
+  height: 12px;
+  border: solid #ffffff;
+  border-width: 0 2px 2px 0;
+}
+
+// Responsive
+
+@media only screen and (min-width: 1024px) {
+  .logo-arrow {
+    display: none;
+  }
+  .sideadmin {
+    position: relative;
+    left: 0;
+    width: 25%;
+    height: 100vh;
+    overflow: visible;
+  }
+  .sideadmin ul {
+    padding: 0 50px;
+    font-size: 1.5rem;
+    padding-bottom: 80px;
+  }
+  .sideadmin h2 {
+    padding-top: 0;
+  }
+  .cross-admin {
+    display: none;
+  }
+  #openBtn {
+    display: none;
+  }
+  .admin-container {
+    display: flex;
+  }
+  .container-admin-videos {
+    overflow: auto;
+    max-height: 89vh;
+  }
+  .grid-date-category {
+    padding-left: 7.8vw;
+  }
+  .player-wrapper-admin iframe {
+    height: 20vw;
+  }
+  .container-align-text {
+    padding-left: 8vw;
+  }
+}
