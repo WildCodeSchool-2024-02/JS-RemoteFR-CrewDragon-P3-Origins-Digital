@@ -31,7 +31,7 @@ function SousCategories() {
   }, [categoryName]);
 
   const settings = {
-    arrows: false,
+    arrows: true,
     dots: false,
     infinite: true,
     fade: true,
@@ -49,37 +49,54 @@ function SousCategories() {
 
   return (
     <>
-      <h1>{selectedCategory ? selectedCategory.name : "Chargement..."}</h1>
+      <h1 className="title-h1">
+        {selectedCategory ? selectedCategory.name : "Chargement..."}
+      </h1>
 
       {subCategories.map((sousCategorie) => (
         <div key={sousCategorie.id}>
-          <h2>{sousCategorie.name}</h2>
+          <h2 className="title-sous-categorie">{sousCategorie.name}</h2>
           <Slider {...settings}>
             {sousCategorie.video1 && (
               <div key={sousCategorie.video1}>
                 <YouTube
+                  className="container-sous-categorie"
                   videoId={sousCategorie.video1.split("v=")[1]}
                   opts={opts}
                 />
-                <button type="button">voir plus</button>
+                <div className="button-container">
+                  <button className="button-style" type="button">
+                    voir plus
+                  </button>
+                </div>
               </div>
             )}
             {sousCategorie.video2 && (
               <div key={sousCategorie.video2}>
                 <YouTube
+                  className="container-sous-categorie"
                   videoId={sousCategorie.video2.split("v=")[1]}
                   opts={opts}
                 />
-                <button type="button">voir plus</button>
+                <div className="button-container">
+                  <button className="button-style" type="button">
+                    voir plus
+                  </button>
+                </div>
               </div>
             )}
             {sousCategorie.video3 && (
               <div key={sousCategorie.video3}>
                 <YouTube
+                  className="container-sous-categorie"
                   videoId={sousCategorie.video3.split("v=")[1]}
                   opts={opts}
                 />
-                <button type="button">voir plus</button>
+                <div className="button-container">
+                  <button className="button-style" type="button">
+                    voir plus
+                  </button>
+                </div>
               </div>
             )}
           </Slider>
