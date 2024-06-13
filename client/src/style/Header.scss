@@ -457,3 +457,28 @@
     width: 9rem;
   }
 }
+.dark {
+  background-color: $background-color-dark;
+  color: #fff;
+
+  .theme button {
+    width: 20px;
+    height: 20px;
+    background-image: url("../assets/images/images-header/sun.svg");
+    background-size: contain;
+    border: none;
+    background-color: transparent;
+  }
+}
+
+.light {
+  background-color: $background-color-light;
+  .theme button {
+    width: 20px;
+    height: 20px;
+    background-image: url("../assets/images/images-header/moon.svg");
+    background-size: contain;
+    border: none;
+    background-color: transparent;
+  }
+}
