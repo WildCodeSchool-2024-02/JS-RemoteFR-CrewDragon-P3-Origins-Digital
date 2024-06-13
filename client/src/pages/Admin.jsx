@@ -1,6 +1,11 @@
+
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
+
+
+
+import { Link } from "react-router-dom";
 import YouTube from "react-youtube";
 
 // Import data
@@ -16,15 +21,33 @@ import BIN from "../assets/images/svg-admin/bin.svg";
 function Admin() {
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const [selectAll, setSelectAll] = useState(false);
+  const [selectedVideos, setSelectedVideos] = useState([]);
+
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
+
+
+
+  // Handle pour selectionner toutes les checkbox
+  const handleSelectAll = () => {
+    setSelectAll(!selectAll);
+    if (!selectAll) {
+      setSelectedVideos(AdminHomePage.map((video) => video.id));
+    } else {
+      setSelectedVideos([]);
+    }
+  };
+
+
   useEffect(() => {
     window.scrollBy({
       top: window.innerHeight,
       behavior: "smooth",
     });
   }, []);
+
   return (
     <body>
       <div className="container-admin-action">
@@ -33,15 +56,15 @@ function Admin() {
         </button>
         <div className="svg-folder-container">
           <img className="svg-folder" src={FOLDER} alt="svg-fichier" />
-          <p>ajouter</p>
+          <p className="text-admin">ajouter</p>
         </div>
         <div className="svg-modify-container">
           <img className="svg-modify" src={MODIFY} alt="svg-modify" />
-          <p>modifier</p>
+          <p className="text-admin">modifier</p>
         </div>
         <div className="svg-bin-container">
           <img className="svg-bin" src={BIN} alt="svg-bin" />
-          <p>supprimer</p>
+          <p className="text-admin">supprimer</p>
         </div>
       </div>
       <div className="admin-container">
@@ -74,8 +97,13 @@ function Admin() {
         <div className="container-video-information-responsive">
           <div className="grid-date-category">
             <div className="flex-checkbox">
-              <p>Vidéos séléctionnées</p>
-              <input className="checkbox-style1" type="checkbox" />
+              <p>Tout sélectionner</p>
+              <input
+                className="checkbox-style1"
+                type="checkbox"
+                checked={selectAll}
+                onChange={handleSelectAll}
+              />
             </div>
             <span className="container-align-text">
               <p>Catégorie</p>
@@ -99,12 +127,19 @@ function Admin() {
                       <p>{video.categorie}</p>
                       <p>{video.date}</p>
                     </div>
-                    <input className="checkbox-style" type="checkbox" />
+                    <input
+                      className="checkbox-style"
+                      type="checkbox"
+                      checked={selectedVideos.includes(video.id)}
+                      onChange={() => handleCheckboxChange(video.id)}
+                    />
                   </div>
-                  <p>Titre :</p>
-                  <p>{video.title}</p>
-                  <p>Description :</p>
-                  <p>{video.description}</p>
+                  <div className="title-text-container">
+                    <h3 className="title-admin">Titre :</h3>
+                    <p className="text-admin">{video.title}</p>
+                    <h4 className="title-admin">Description :</h4>
+                    <p className="text-admin">{video.description}</p>
+                  </div>
                 </div>
               </div>
             ))}

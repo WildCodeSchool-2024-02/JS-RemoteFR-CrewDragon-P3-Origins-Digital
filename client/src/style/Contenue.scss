@@ -1,0 +1,59 @@
+@use "./Variables.scss" as *;
+
+.AllVideos {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  iframe {
+    width: 100vw;
+    height: 50vh;
+    margin-top: 100px;
+  }
+}
+
+.blocDetails {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 20px;
+  font-family: $font-text;
+  font-size: 1.5rem;
+  button {
+    background-color: $title-color;
+    width: 170px;
+    border: 2px $text-color-black solid;
+    border-radius: 40px;
+    color: $text-color-white;
+    font-size: 1.3rem;
+  }
+}
+
+.infosVideo {
+  display: flex;
+  flex-direction: column;
+  p {
+    padding: 5px 0;
+    font-weight: bold;
+  }
+}
+
+.voirPlus {
+  display: none;
+}
+
+@media only screen and (min-width: 1024px) {
+  .AllVideos {
+    justify-content: space-evenly;
+    iframe {
+      width: 30vw;
+      height: 50vh;
+    }
+  }
+
+  .blocDetails {
+    font-size: 0.8rem;
+    button {
+      width: 90px;
+      font-size: 0.8rem;
+    }
+  }
+}
