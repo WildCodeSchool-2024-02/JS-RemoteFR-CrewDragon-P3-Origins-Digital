@@ -1,5 +1,4 @@
-// import { useEffect } from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import YouTube from "react-youtube";
@@ -20,12 +19,12 @@ function Admin() {
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
-  // useEffect(() => {
-  //   window.scrollBy({
-  //     top: window.innerHeight,
-  //     behavior: "smooth",
-  //   });
-  // }, []);
+  useEffect(() => {
+    window.scrollBy({
+      top: window.innerHeight,
+      behavior: "smooth",
+    });
+  }, []);
   return (
     <body>
       <div className="container-admin-action">

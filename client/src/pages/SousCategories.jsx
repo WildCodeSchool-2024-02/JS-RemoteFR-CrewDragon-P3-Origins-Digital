@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-props-no-spreading */
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -11,7 +10,6 @@ import "slick-carousel/slick/slick-theme.css";
 
 function SousCategories() {
   const { categoryName } = useParams();
-  const [selectedSousCategorie, setSelectedSousCategorie] = useState(null);
   const [subCategories, setSubCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
 
@@ -27,7 +25,6 @@ function SousCategories() {
     if (category) {
       setSelectedCategory(category);
       if (category.sousCategorie) {
-        setSelectedSousCategorie(category.sousCategorie[0]);
         setSubCategories(category.sousCategorie);
       }
     }
