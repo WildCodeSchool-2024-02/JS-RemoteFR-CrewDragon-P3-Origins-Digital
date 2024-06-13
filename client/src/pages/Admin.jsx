@@ -1,10 +1,6 @@
+// Import react
 
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-
-
-
-
 import { Link } from "react-router-dom";
 import YouTube from "react-youtube";
 
@@ -28,8 +24,6 @@ function Admin() {
     setMenuOpen(!menuOpen);
   };
 
-
-
   // Handle pour selectionner toutes les checkbox
   const handleSelectAll = () => {
     setSelectAll(!selectAll);
@@ -40,6 +34,14 @@ function Admin() {
     }
   };
 
+  // Handle pour checkbox individuel
+  const handleCheckboxChange = (id) => {
+    if (selectedVideos.includes(id)) {
+      setSelectedVideos(selectedVideos.filter((videoId) => videoId !== id));
+    } else {
+      setSelectedVideos([...selectedVideos, id]);
+    }
+  };
 
   useEffect(() => {
     window.scrollBy({
