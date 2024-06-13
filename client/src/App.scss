@@ -1,0 +1,15 @@
+@use "./style/Variables.scss" as *;
+
+@import url(./style/Header.scss);
+@import url(./style/Footer.scss);
+@import url(./style/Home.scss);
+@import url(./style/Login.scss);
+@import url(./style/Account.scss);
+@import url(./style//Error404.scss);
+@import url(./style/Admin.scss);
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}

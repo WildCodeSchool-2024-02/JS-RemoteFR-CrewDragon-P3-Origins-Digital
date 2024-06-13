@@ -1,0 +1,340 @@
+@use "./Variables.scss" as *;
+
+.container-admin-action {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: $admin-color;
+  border-bottom: solid 3px $text-color-black;
+  height: 150px;
+}
+.container-admin-action p {
+  font-size: 1rem;
+  text-align: center;
+}
+
+.input-checkbox-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+// SVG css
+
+.svg-folder-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.svg-folder {
+  width: 2rem;
+}
+.svg-modify-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.svg-modify {
+  width: 2rem;
+}
+.svg-bin-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.svg-bin {
+  width: 2rem;
+}
+
+// MenuAdmin style
+
+.sideadmin {
+  z-index: 1;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: -100%;
+  overflow: hidden;
+  transition: left 0.3s ease;
+  background-color: $admin-color;
+}
+.sideadmin.active {
+  left: 0;
+  z-index: 3;
+}
+.admin-link:hover {
+  color: $title-color;
+  transition: 0.4s ease-in-out;
+}
+.sideadmin ul {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: 25px;
+  list-style-type: none;
+  color: $text-color-black;
+}
+.sideadmin h2 {
+  padding-top: 50px;
+}
+.admin-color {
+  color: $title-color;
+}
+.close {
+  border: none;
+}
+
+.cross-admin {
+  position: absolute;
+  right: 0;
+  width: 2.5rem;
+}
+.admin-link {
+  text-decoration: none;
+  color: $text-color-black;
+}
+#openBtn {
+  border: none;
+  background: transparent;
+}
+.container-admin-videos {
+  position: relative;
+  overflow: auto;
+  overflow-x: hidden;
+  max-height: 75vh;
+
+  // scroll bar custom
+
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    border: solid 1px $text-color-black;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $admin-color;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: $title-color;
+    cursor: pointer;
+  }
+}
+.hero-slider-menu-nav-container {
+  display: none;
+}
+
+// Logo admin
+
+.logo-arrow {
+  right: 0;
+  width: 3rem;
+}
+.flex-checkbox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.grid-date-category {
+  display: flex;
+  justify-content: space-around;
+  height: 100px;
+  grid-gap: 50px;
+  text-align: center;
+  align-items: center;
+  width: 100%;
+  justify-items: end;
+  padding-right: 20px;
+  border-bottom: solid 2px $text-color-black;
+}
+
+// Vidéos admin
+
+.player-wrapper-admin {
+  border-bottom: solid 2px $admin-color;
+  padding-bottom: 20px;
+  iframe {
+    width: 40vw;
+    height: auto;
+    margin-left: 10px;
+  }
+}
+.player-admin {
+  margin-top: 20px;
+}
+.video-checkbox-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.video-date-categorie-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 30px;
+  justify-items: center;
+  align-items: center;
+}
+
+// Checkbox
+
+.checkbox-style,
+.checkbox-style1 {
+  margin-left: 19vw;
+  margin-top: 10px;
+  width: 25px;
+  height: 25px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: $text-color-white;
+  border: 2px solid $text-color-black;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+}
+.checkbox-style1 {
+  margin: 0;
+  margin-top: 10px;
+}
+
+.checkbox-style:checked,
+.checkbox-style1:checked {
+  background-color: $title-color;
+}
+
+.checkbox-style:checked::after,
+.checkbox-style1:checked::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  width: 6px;
+  height: 12px;
+  border: solid $text-color-white;
+  border-width: 0 2px 2px 0;
+}
+
+// Titre texte page admin
+
+.title-admin {
+  font-family: $font-title;
+  color: $title-color;
+  font-size: 1.3rem;
+}
+.text-admin {
+  font-family: $font-text;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+.title-text-container {
+  display: flex;
+  flex-direction: column;
+  padding-left: 13px;
+  padding-right: 20vw;
+}
+.grid-date-category {
+  font-family: $font-text;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+.video-date-categorie-container p {
+  font-family: $font-text;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+// Responsive
+
+@media only screen and (min-width: 1024px) {
+  // Menu admin style responsive
+  .logo-arrow {
+    display: none;
+  }
+
+  .sideadmin {
+    position: relative;
+    left: 0;
+    width: 25%;
+    height: 84vh;
+    overflow: visible;
+    border-right: solid 3px $text-color-black;
+  }
+  .sideadmin ul {
+    padding: 0 50px;
+    font-size: 1.5rem;
+    padding-bottom: 80px;
+  }
+  .sideadmin h2 {
+    padding-top: 0;
+  }
+  .cross-admin {
+    display: none;
+  }
+  #openBtn {
+    display: none;
+  }
+  .admin-container {
+    display: flex;
+  }
+  .container-admin-videos {
+    overflow: auto;
+    max-height: 73vh;
+
+    // Scroll bar responsive
+
+    &::-webkit-scrollbar {
+      width: 15px;
+    }
+  }
+  .grid-date-category {
+    padding-left: 6.9vw;
+  }
+  .player-wrapper-admin iframe {
+    height: 20vw;
+  }
+  .container-align-text {
+    padding-left: 8vw;
+  }
+
+  // Checkbox style responsive
+
+  .checkbox-style,
+  .checkbox-style1 {
+    width: 35px;
+    height: 35px;
+  }
+
+  // Titre texte page admin responsive
+
+  .title-admin {
+    font-size: 1.8rem;
+  }
+  .text-admin {
+    font-size: 1.2rem;
+  }
+  .title-text-container {
+    padding-right: 43vw;
+  }
+  .grid-date-category p {
+    font-size: 1.2rem;
+  }
+  .video-date-categorie-container p {
+    font-size: 1.2rem;
+    padding-left: 35px;
+  }
+
+  // SVG css responsive
+
+  .svg-folder {
+    width: 3rem;
+  }
+
+  .svg-modify {
+    width: 3rem;
+  }
+
+  .svg-bin {
+    width: 3rem;
+  }
+}

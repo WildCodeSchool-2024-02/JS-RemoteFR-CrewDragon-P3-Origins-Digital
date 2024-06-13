@@ -7,10 +7,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "axios": "^1.7.2",
+    "hero-slider": "^3.2.1",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.23.0"
+    "react-router-dom": "^6.23.1",
+    "react-slick": "^0.30.2",
+    "react-youtube": "^10.1.0",
+    "sass": "^1.77.4",
+    "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.2.1",
