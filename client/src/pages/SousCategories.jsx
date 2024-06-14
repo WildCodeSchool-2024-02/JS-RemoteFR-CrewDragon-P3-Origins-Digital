@@ -64,7 +64,7 @@ function SousCategories() {
                   opts={opts}
                 />
                 <div className="button-container">
-                  <Link to="/video">
+                  <Link to={`/video/${sousCategorie.video1.split("v=")[1]}`}>
                     <button className="button-style" type="button">
                       voir plus
                     </button>
@@ -80,7 +80,7 @@ function SousCategories() {
                   opts={opts}
                 />
                 <div className="button-container">
-                  <Link to="/video">
+                  <Link to={`/video/${sousCategorie.video2.split("v=")[1]}`}>
                     <button className="button-style" type="button">
                       voir plus
                     </button>
@@ -96,7 +96,7 @@ function SousCategories() {
                   opts={opts}
                 />
                 <div className="button-container">
-                  <Link to="/video">
+                  <Link to={`/video/${sousCategorie.video3.split("v=")[1]}`}>
                     <button className="button-style" type="button">
                       voir plus
                     </button>

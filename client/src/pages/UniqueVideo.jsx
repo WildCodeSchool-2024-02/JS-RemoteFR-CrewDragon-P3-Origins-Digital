@@ -1,7 +1,16 @@
+import { useParams } from "react-router-dom";
+import YouTube from "react-youtube";
+
 function UniqueVideo() {
+  const { videoId } = useParams();
+
+  const opts = {
+    playerVars: {},
+  };
+
   return (
-    <div>
-      <h1>HelloWorld</h1>
+    <div className="video-container">
+      <YouTube videoId={videoId} opts={opts} />
     </div>
   );
 }

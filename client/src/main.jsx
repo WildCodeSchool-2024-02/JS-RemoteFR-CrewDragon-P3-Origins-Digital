@@ -40,7 +40,7 @@ const router = createBrowserRouter([
         element: <Contenue />,
       },
       {
-        path: "/video",
+        path: "/video/:videoId",
         element: <VideoUnique />,
       },
       {
