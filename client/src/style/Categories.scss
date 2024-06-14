@@ -14,39 +14,8 @@ h1 {
   color: $title-color;
 }
 
-.title-h1 {
-  text-decoration: underline;
-  text-decoration-color: $text-color-black;
-}
-
 h1 span {
   color: #ff7105;
-}
-
-.title-sous-categorie {
-  text-align: center;
-  margin-top: 40px;
-  padding-bottom: 20px;
-  text-decoration: underline;
-  text-decoration-color: $title-color;
-}
-
-// Bouton style
-
-.button-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 25px;
-}
-
-.button-style {
-  cursor: pointer;
-  border-radius: 25px;
-  width: 100px;
-  height: 30px;
-  background-color: $title-color;
-  animation: float 2s infinite;
-  color: $text-color-white;
 }
 
 // Img cover catégorie
@@ -75,55 +44,6 @@ h1 span {
   background-image: url("https://www.denofgeek.com/wp-content/uploads/2020/03/Best-Kids-TV-Shows-Streaming-in-the-UK-Lead.jpg?fit=1200%2C675");
 }
 
-// Vidéos custom
-
-.container-sous-categorie {
-  display: flex;
-  justify-content: center;
-
-  iframe {
-    width: 70vw;
-    max-height: auto;
-  }
-}
-
-// Slider custom
-
-.slick-list {
-  height: 425px !important;
-}
-
-.slick-next {
-  right: 9vw !important;
-}
-.slick-prev {
-  left: 1.5vw !important;
-  position: absolute !important;
-  z-index: 16 !important;
-}
-.slick-prev:before,
-.slick-next:before {
-  color: $title-color !important;
-  font-size: 2rem !important;
-  position: absolute !important;
-  top: -6vh;
-}
-
-.overlay-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  color: white;
-  transform: translate(-50%, -50%);
-  //  padding: 10px 20px; //*
-  font-size: 4.6rem;
-  text-align: center;
-  background: none;
-  font-weight: bolder;
-  -webkit-text-stroke-width: 2px;
-  -webkit-text-stroke-color: black;
-}
-
 @media only screen and (min-width: 1080px) {
   .layout {
     display: grid;
@@ -140,31 +60,5 @@ h1 span {
   }
   .overlay-text {
     font-size: 6rem;
-  }
-
-  // Vidéos custom responsive
-
-  .container-sous-categorie {
-    display: flex;
-    justify-content: center;
-
-    iframe {
-      width: 40vw;
-      max-height: auto;
-    }
-  }
-  // Slider custom responsive
-
-  .slick-next {
-    right: 27.5vw !important;
-  }
-  .slick-prev {
-    left: 25vw !important;
-  }
-  .slick-prev:before,
-  .slick-next:before {
-    color: $title-color !important;
-    font-size: 3rem !important;
-    top: -4vh !important;
   }
 }

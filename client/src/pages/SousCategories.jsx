@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import YouTube from "react-youtube";
 import Slider from "react-slick";
 import categoriesData from "../Data/CategorieData";
@@ -52,7 +52,6 @@ function SousCategories() {
       <h1 className="title-h1">
         {selectedCategory ? selectedCategory.name : "Chargement..."}
       </h1>
-
       {subCategories.map((sousCategorie) => (
         <div key={sousCategorie.id}>
           <h2 className="title-sous-categorie">{sousCategorie.name}</h2>
@@ -65,9 +64,11 @@ function SousCategories() {
                   opts={opts}
                 />
                 <div className="button-container">
-                  <button className="button-style" type="button">
-                    voir plus
-                  </button>
+                  <Link to="/video">
+                    <button className="button-style" type="button">
+                      voir plus
+                    </button>
+                  </Link>
                 </div>
               </div>
             )}
@@ -79,9 +80,11 @@ function SousCategories() {
                   opts={opts}
                 />
                 <div className="button-container">
-                  <button className="button-style" type="button">
-                    voir plus
-                  </button>
+                  <Link to="/video">
+                    <button className="button-style" type="button">
+                      voir plus
+                    </button>
+                  </Link>
                 </div>
               </div>
             )}
@@ -93,9 +96,11 @@ function SousCategories() {
                   opts={opts}
                 />
                 <div className="button-container">
-                  <button className="button-style" type="button">
-                    voir plus
-                  </button>
+                  <Link to="/video">
+                    <button className="button-style" type="button">
+                      voir plus
+                    </button>
+                  </Link>
                 </div>
               </div>
             )}
