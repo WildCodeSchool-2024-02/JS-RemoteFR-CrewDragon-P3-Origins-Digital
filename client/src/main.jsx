@@ -11,6 +11,7 @@ import Home from "./pages/Home";
 import Categories from "./pages/Categories";
 import SousCategories from "./pages/SousCategories";
 import Contenue from "./pages/Contenue";
+import VideoUnique from "./pages/UniqueVideo";
 import Admin from "./pages/Admin";
 import Error404 from "./pages/Error404";
 import Login from "./pages/Login";
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: "/Contenue",
         element: <Contenue />,
+      },
+      {
+        path: "/video",
+        element: <VideoUnique />,
       },
       {
         path: "/Admin",
