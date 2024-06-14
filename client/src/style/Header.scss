@@ -457,10 +457,18 @@
     width: 9rem;
   }
 }
+
+// Mode Jour/Nuit
+
 .dark {
   background-color: $background-color-dark;
-  color: #fff;
-
+  color: $background-color-light;
+  .title-h1 {
+    text-decoration-color: $text-color-white;
+  }
+  .grid-date-category {
+    border-bottom: solid 2px $background-color-light;
+  }
   .theme button {
     width: 50px;
     height: 22px;
