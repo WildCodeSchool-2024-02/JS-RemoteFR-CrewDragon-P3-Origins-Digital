@@ -64,7 +64,17 @@ function SousCategories() {
                   opts={opts}
                 />
                 <div className="button-container">
-                  <Link to={`/video/${sousCategorie.video1.split("v=")[1]}`}>
+                  <Link
+                    to={`/video/${sousCategorie.video1.split("v=")[1]}`}
+                    // passe un state dans le link pour UniqueVideo.jsx
+                    state={{
+                      title: sousCategorie.titre1,
+                      description: sousCategorie.description1,
+                      date: sousCategorie.date1,
+                      duration: sousCategorie.durée1,
+                      categories: sousCategorie.name,
+                    }}
+                  >
                     <button className="button-style" type="button">
                       voir plus
                     </button>
@@ -80,7 +90,17 @@ function SousCategories() {
                   opts={opts}
                 />
                 <div className="button-container">
-                  <Link to={`/video/${sousCategorie.video2.split("v=")[1]}`}>
+                  <Link
+                    to={`/video/${sousCategorie.video2.split("v=")[1]}`}
+                    // passe un state dans le link pour UniqueVideo.jsx
+                    state={{
+                      title: sousCategorie.titre2,
+                      description: sousCategorie.description2,
+                      date: sousCategorie.date2,
+                      duration: sousCategorie.durée2,
+                      categories: sousCategorie.name,
+                    }}
+                  >
                     <button className="button-style" type="button">
                       voir plus
                     </button>
@@ -96,7 +116,17 @@ function SousCategories() {
                   opts={opts}
                 />
                 <div className="button-container">
-                  <Link to={`/video/${sousCategorie.video3.split("v=")[1]}`}>
+                  <Link
+                    to={`/video/${sousCategorie.video3.split("v=")[1]}`}
+                    // passe un state dans le link pour UniqueVideo.jsx
+                    state={{
+                      title: sousCategorie.titre3,
+                      description: sousCategorie.description3,
+                      date: sousCategorie.date3,
+                      duration: sousCategorie.durée3,
+                      categories: sousCategorie.name,
+                    }}
+                  >
                     <button className="button-style" type="button">
                       voir plus
                     </button>
