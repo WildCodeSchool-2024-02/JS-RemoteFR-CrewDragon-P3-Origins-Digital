@@ -1,0 +1,66 @@
+@use "./Variables.scss" as *;
+
+// responsive mobile first
+.video-unique-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 80px;
+  iframe {
+    width: 100vw;
+    height: 40vh;
+  }
+}
+// text style
+.title-video-unique,
+.desc-video-unique,
+.date-video-unique,
+.time-video-unique {
+  font-family: "Nauman";
+}
+.strong-color {
+  color: $title-color;
+  font-family: "dream_orphans";
+  font-size: 1.3rem;
+}
+.data-container {
+  margin: 0 5px;
+  padding: 10px;
+  border: solid 1px;
+  border-radius: 25px;
+}
+
+// responsive tablette
+@media only screen and (min-width: 500px) {
+  // vidéo responsive tablette
+  .video-unique-container {
+    iframe {
+      width: 100vw;
+      height: 80vh;
+    }
+  }
+}
+
+// responsive desktop
+@media only screen and (min-width: 1080px) {
+  // video responsive desktop
+  .video-unique-container {
+    iframe {
+      width: 70vw;
+      height: 70vh;
+    }
+  }
+  .title-video-unique,
+  .desc-video-unique,
+  .date-video-unique,
+  .time-video-unique {
+    font-size: 1.3rem;
+    font-family: "Nauman";
+  }
+  .strong-color {
+    font-size: 1.5rem;
+  }
+  .data-container {
+    margin: 15px 14.5vw;
+    margin-bottom: 50px;
+  }
+}
