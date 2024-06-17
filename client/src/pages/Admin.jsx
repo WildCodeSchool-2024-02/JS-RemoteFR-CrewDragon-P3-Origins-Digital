@@ -57,16 +57,22 @@ function Admin() {
           <img className="logo-arrow" src={OPENMENU} alt="menu burger" />{" "}
         </button>
         <div className="svg-folder-container">
-          <img className="svg-folder" src={FOLDER} alt="svg-fichier" />
-          <p className="text-admin">ajouter</p>
+          <button className="button-admin" type="button">
+            <img className="svg-folder" src={FOLDER} alt="svg-fichier" />
+            <p className="text-admin">ajouter</p>
+          </button>
         </div>
         <div className="svg-modify-container">
-          <img className="svg-modify" src={MODIFY} alt="svg-modify" />
-          <p className="text-admin">modifier</p>
+          <button className="button-admin" type="button">
+            <img className="svg-modify" src={MODIFY} alt="svg-modify" />
+            <p className="text-admin">modifier</p>
+          </button>
         </div>
         <div className="svg-bin-container">
-          <img className="svg-bin" src={BIN} alt="svg-bin" />
-          <p className="text-admin">supprimer</p>
+          <button className="button-admin" type="button">
+            <img className="svg-bin" src={BIN} alt="svg-bin" />
+            <p className="text-admin">supprimer</p>{" "}
+          </button>
         </div>
       </div>
       <div className="admin-container">
