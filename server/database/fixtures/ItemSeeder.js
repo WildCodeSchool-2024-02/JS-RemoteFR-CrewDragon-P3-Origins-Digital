@@ -19,6 +19,8 @@ class ItemSeeder extends AbstractSeeder {
       const fakeItem = {
         title: this.faker.lorem.word(), // Generate a fake title using faker library
         // Get the insertId of the corresponding user from UserSeeder
+        // Foreign Keys
+        users_id: this.getRef(`users_${i}`).insertId, // Get the insertId of the corresponding brand from BrandeSeeder
       };
 
       // Insert the fakeItem data into the 'item' table

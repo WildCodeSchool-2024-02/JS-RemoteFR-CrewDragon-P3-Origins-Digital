@@ -18,6 +18,7 @@ class UserSeeder extends AbstractSeeder {
         firstname: this.faker.lorem.word(),
         lastname: this.faker.lorem.word(),
         birthday: this.faker.date.anytime(),
+        refName: `users_${i}`, // Create a reference name for the model
       };
 
       // Insert the fakeUser data into the 'user' table
