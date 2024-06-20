@@ -1,25 +1,22 @@
 const AbstractRepository = require("./AbstractRepository");
 
-class UserRepository extends AbstractRepository {
+class AbonnementRepository extends AbstractRepository {
   constructor() {
     // Call the constructor of the parent class (AbstractRepository)
     // and pass the table name "user" as configuration
-    super({ table: "users" });
+    super({ table: "abonnements" });
   }
 
   // The C of CRUD - Create operation
-  async create(user) {
+  async create(abonnement) {
     // Execute the SQL INSERT query to add a new user to the "users" table
     const [result] = await this.database.query(
-      `insert into ${this.table} (email, password, firstname, lastname, birthday, roles_id, abonnements_id) values (?, ?, ?, ?, ?, ?, ?)`,
+      `insert into ${this.table} (name, montant, date_de_paiement, date_de_fin ) values (?, ?, ?, ?)`,
       [
-        user.email,
-        user.password,
-        user.firstname,
-        user.lastname,
-        user.birthday,
-        user.roles_id,
-        user.abonnements_id,
+        abonnement.name,
+        abonnement.montant,
+        abonnement.date_de_paiement,
+        abonnement.date_de_fin,
       ]
     );
 
@@ -50,34 +47,16 @@ class UserRepository extends AbstractRepository {
   // The U of CRUD - Update operation
   // TODO: Implement the update operation to modify an existing user
 
-  async update(user) {
-    const [edit] = await this.database.query(
-      `update ${this.table} set email =?, password =?, firstname =?, lastname =?, birthday =?, roles_id =?, abonnements_id =? where id =?`,
-      [
-        user.email,
-        user.password,
-        user.firstname,
-        user.lastname,
-        user.birthday,
-        user.roles_id,
-        user.abonnements_id,
-        user.id,
-      ]
-    );
-    return edit;
-  }
+  // async update(user) {
+  //   ...
+  // }
 
   // The D of CRUD - Delete operation
   // TODO: Implement the delete operation to remove an user by its ID
 
-  async delete(id) {
-    // Execute the SQL DELETE query to remove an user from the "users" table
-    const [destroy] = await this.database.query(
-      `delete from ${this.table} where id = ?`,
-      [id]
-    );
-    return destroy;
-  }
+  // async delete(id) {
+  //   ...
+  // }
 }
 
-module.exports = UserRepository;
+module.exports = AbonnementRepository;
