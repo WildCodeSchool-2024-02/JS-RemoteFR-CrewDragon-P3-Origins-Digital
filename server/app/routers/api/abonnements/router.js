@@ -7,28 +7,16 @@ const router = express.Router();
 /* ************************************************************************* */
 
 // Import item-related actions
-const {
-  browse,
-  read,
-  edit,
-  add,
-  destroy,
-} = require("../../../controllers/userActions");
+const { browse, read, add } = require("../../../controllers/abonnementActions");
 
-// Route to get a list of user
+// Route to get a list of items
 router.get("/", browse);
 
-// Route to get a specific user by ID
+// Route to get a specific item by ID
 router.get("/:id", read);
 
-// Route to modify a specific user by ID
-router.put("/:id", edit);
-
-// Route to add a new user
+// Route to add a new item
 router.post("/", add);
-
-// Route to remove a new user by ID
-router.delete("/:id", destroy);
 
 /* ************************************************************************* */
 

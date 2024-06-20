@@ -8,6 +8,7 @@ create table roles(
 create table abonnements (
   id int primary key auto_increment not null,
   name varchar(30),
+  montant int UNSIGNED not null,
   date_de_paiement date not null,
   date_de_fin date not null
 );
@@ -18,18 +19,11 @@ create table users (
   password varchar(30) not null,
   firstname varchar(30) not null,
   lastname varchar(30) not null,
-  birthday date not null
-  -- roles_id INT NOT NULL,
-  -- Foreign Key (roles_id) REFERENCES roles(id),
-  -- abonnements_id INT NOT NULL,
-  -- Foreign Key (abonnements_id) REFERENCES abonnements(id) 
-);
-
-create table item (
-  id int primary key auto_increment not null,
-  title varchar(255) not null,
-  users_id INT not null,
-  Foreign Key (users_id) REFERENCES users(id) ON DELETE CASCADE
+  birthday date not null,
+  roles_id INT NOT NULL,
+  Foreign Key (roles_id) REFERENCES roles(id),
+  abonnements_id INT NOT NULL,
+  Foreign Key (abonnements_id) REFERENCES abonnements(id)
 );
 
   create table sections (
