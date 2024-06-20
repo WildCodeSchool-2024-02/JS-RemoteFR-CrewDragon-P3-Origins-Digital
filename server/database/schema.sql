@@ -13,7 +13,7 @@ create table abonnements (
 );
 
 create table users (
-  id int primary key auto_increment not null,
+  id int  primary key auto_increment not null,
   email varchar(255) not null,
   password varchar(30) not null,
   firstname varchar(30) not null,
@@ -27,14 +27,15 @@ create table users (
 
 create table item (
   id int primary key auto_increment not null,
-  title varchar(255) not null
-
+  title varchar(255) not null,
+  users_id INT not null,
+  Foreign Key (users_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
   create table sections (
     id int primary key auto_increment not null,
     name varchar(30) not null,
-    users_id int not null,
+    users_id int  not null,
     Foreign Key (users_id) REFERENCES users(id)
   );
 
