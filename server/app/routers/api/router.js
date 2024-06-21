@@ -26,9 +26,17 @@ const souscatsRouter = require("./souscats/router");
 
 router.use("/souscats", souscatsRouter);
 
+const souscatscategoriesRouter = require("./souscats_categories/router");
+
+router.use("/souscats_categories", souscatscategoriesRouter);
+
 const sectionsRouter = require("./sections/router");
 
 router.use("/sections", sectionsRouter);
+
+const videosRouter = require("./videos/router");
+
+router.use("/videos", videosRouter);
 
 /* ************************************************************************* */
 

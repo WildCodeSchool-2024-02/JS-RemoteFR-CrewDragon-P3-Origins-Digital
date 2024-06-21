@@ -12,8 +12,8 @@ class sectionRepository extends AbstractRepository {
   async create(section) {
     // Execute the SQL INSERT query to add a new section to the "section" table
     const [result] = await this.database.query(
-      `insert into ${this.table} (name) values (?)`,
-      [section.title]
+      `insert into ${this.table} (name, users_id) values (?, ?)`,
+      [section.name, section.users_id]
     );
 
     // Return the ID of the newly inserted section
@@ -44,12 +44,27 @@ class sectionRepository extends AbstractRepository {
   // The U of CRUD - Update operation
   // TODO: Implement the update operation to modify an existing section
 
+  async update(section) {
+    const [edit] = await this.database.query(
+      `update ${this.table} set name =? where id =?`,
+      [section.name, section.id]
+    );
+    return edit;
+  }
   // async update(section) {
   //   ...
   // }
 
   // The D of CRUD - Delete operation
   // TODO: Implement the delete operation to remove an section by its ID
+  async delete(id) {
+    // Execute the SQL DELETE query to remove an section from the "sections" table
+    const [destroy] = await this.database.query(
+      `delete from ${this.table} where id = ?`,
+      [id]
+    );
+    return destroy;
+  }
 
   // async delete(id) {
   //   ...
