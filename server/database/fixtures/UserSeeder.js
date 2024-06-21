@@ -26,7 +26,7 @@ class UserSeeder extends AbstractSeeder {
         birthday: this.faker.date.anytime(),
         roles_id: this.getRef(`roles_${i}`).insertId, // Get the insertId of the corresponding brand from BrandeSeeder
         abonnements_id: this.getRef(`abonnements_${i}`).insertId, // Get the insertId of the corresponding brand from BrandeSeeder
-        // refName: `users_${i}`, Create a reference name for the model
+        refName: `users_${i}`, //  Create a reference name for the model
       };
 
       // Insert the fakeUser data into the 'user' table

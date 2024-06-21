@@ -49,7 +49,7 @@ create table videos (
   miniature varchar(255) not null
   );
 
-  create table video_sections (
+  create table videos_sections (
     videos_id INT NOT NULL,
     sections_id INT NOT NULL,
     Foreign Key (videos_id) REFERENCES videos(id),
@@ -61,30 +61,30 @@ create table videos (
 
 -- categorie 
 
-create table souscat (
+create table souscats (
   id int primary key auto_increment not null,
   name varchar(30) not null
 );
 
-create table categorie (
+create table categories (
   id int primary key auto_increment not null,
   name varchar(30) not null
 );
 
-create table videos_souscat (
+create table videos_souscats (
     videos_id INT NOT NULL,
-    souscat_id INT NOT null,
+    souscats_id INT NOT null,
     Foreign Key (videos_id) REFERENCES videos(id),
-    Foreign Key (souscat_id) REFERENCES souscat(id),
-    PRIMARY KEY (videos_id, souscat_id)
+    Foreign Key (souscats_id) REFERENCES souscats(id),
+    PRIMARY KEY (videos_id, souscats_id)
 );
 
 
-create table souscat_categorie (
-    souscat_id INT NOT null,
-    categorie_id INT NOT null,
-    Foreign Key (souscat_id) REFERENCES souscat(id),
-    Foreign Key (categorie_id) REFERENCES categorie(id),
-    PRIMARY KEY (souscat_id, categorie_id)
+create table souscats_categories (
+    souscats_id INT NOT null,
+    categories_id INT NOT null,
+    Foreign Key (souscats_id) REFERENCES souscats(id),
+    Foreign Key (categories_id) REFERENCES categories(id),
+    PRIMARY KEY (souscats_id, categories_id)
 );
 

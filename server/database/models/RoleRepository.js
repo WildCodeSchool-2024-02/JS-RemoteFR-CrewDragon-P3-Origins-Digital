@@ -12,8 +12,8 @@ class RoleRepository extends AbstractRepository {
   async create(role) {
     // Execute the SQL INSERT query to add a new role to the "role" table
     const [result] = await this.database.query(
-      `insert into ${this.table} (name, users_id) values (?, ?)`,
-      [role.title, role.users_id]
+      `insert into ${this.table} (name) values (?)`,
+      [role.title]
     );
 
     // Return the ID of the newly inserted role

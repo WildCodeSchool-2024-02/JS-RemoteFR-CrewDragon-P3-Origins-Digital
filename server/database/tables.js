@@ -2,6 +2,9 @@
 const RoleRepository = require("./models/RoleRepository");
 const AbonnementRepository = require("./models/AbonnementRepository");
 const UserRepository = require("./models/UserRepository");
+const CategorieRepository = require("./models/CategorieRepository");
+const SousCatRepository = require("./models/SousCatRepository");
+const SectionRepository = require("./models/SectionRepository");
 
 // Create an empty object to hold data repositories for different tables
 const tables = {};
@@ -14,6 +17,9 @@ const tables = {};
 tables.role = new RoleRepository();
 tables.abonnement = new AbonnementRepository();
 tables.user = new UserRepository();
+tables.categorie = new CategorieRepository();
+tables.souscat = new SousCatRepository();
+tables.section = new SectionRepository();
 
 /* ************************************************************************* */
 
