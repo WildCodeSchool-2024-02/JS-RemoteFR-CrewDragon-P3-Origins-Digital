@@ -1,11 +1,8 @@
 // Import react
 
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useLoaderData, Link, Form } from "react-router-dom";
 import YouTube from "react-youtube";
-
-// Import data
-import AdminHomePage from "../Data/AdminPageData";
 
 // Import des SVG
 import OPENMENU from "../assets/images/svg-admin/openmenu.svg";
@@ -15,6 +12,7 @@ import MODIFY from "../assets/images/svg-admin/pen.svg";
 import BIN from "../assets/images/svg-admin/bin.svg";
 
 function Admin() {
+  const videos = useLoaderData();
   const [menuOpen, setMenuOpen] = useState(false);
 
   const [selectAll, setSelectAll] = useState(false);
@@ -28,7 +26,7 @@ function Admin() {
   const handleSelectAll = () => {
     setSelectAll(!selectAll);
     if (!selectAll) {
-      setSelectedVideos(AdminHomePage.map((video) => video.id));
+      setSelectedVideos(videos.map((video) => video.id));
     } else {
       setSelectedVideos([]);
     }
@@ -41,6 +39,7 @@ function Admin() {
     } else {
       setSelectedVideos([...selectedVideos, id]);
     }
+    console.info(handleCheckboxChange);
   };
 
   useEffect(() => {
@@ -75,6 +74,60 @@ function Admin() {
           </button>
         </div>
       </div>
+      <h2>Ajouter une nouvelle vidéo</h2>
+      <Form method="post">
+        <div>
+          <label htmlFor="title">Titre</label>
+          <input type="text" id="title" name="title" required />
+        </div>
+        <div>
+          <label htmlFor="description">Description</label>
+          <textarea id="description" name="description" required />
+        </div>
+        <div>
+          <label htmlFor="url">URL</label>
+          <input type="text" id="url" name="url" required />
+        </div>
+        <div>
+          <label htmlFor="date">Date</label>
+          <input type="text" id="date" name="date" required />
+        </div>
+        <div>
+          <label>
+            <input type="checkbox" name="grille" />
+            Grille
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="checkbox" name="hero" />
+            Hero
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="checkbox" name="carouStatique" />
+            Carrousel Statique
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="checkbox" name="carouDynamique" />
+            Carrousel Dynamique
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="checkbox" name="freemium" />
+            Freemium
+          </label>
+        </div>
+        <div>
+          <label htmlFor="miniature">Miniature</label>
+          <input type="text" id="miniature" name="miniature" required />
+        </div>
+        <button type="submit">Ajouter</button>
+      </Form>
       <div className="admin-container">
         <div className={menuOpen ? "sideadmin active" : "sideadmin"}>
           <button type="button" className="close" onClick={toggleMenu}>
@@ -119,14 +172,14 @@ function Admin() {
             <p>Date</p>
           </div>
           <div className="container-admin-videos">
-            {AdminHomePage.map((video) => (
-              <div key={video.id} className="">
+            {videos.map((video) => (
+              <div key={video.id}>
                 <div className="player-wrapper-admin">
                   <div className="video-checkbox-container">
                     <div className="video-date-categorie-container">
                       <YouTube
                         className="player-admin"
-                        videoId={video.url1.split("v=")[1]}
+                        videoId={video.url.split("v=")[1]}
                         opts={{
                           height: "120",
                           width: "150",
