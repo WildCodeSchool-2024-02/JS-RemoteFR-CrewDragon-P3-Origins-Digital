@@ -54,7 +54,7 @@ app.use(
 
 // Uncomment one or more of these options depending on the format of the data sent by your client:
 
-// app.use(express.json());
+app.use(express.json());
 // app.use(express.urlencoded());
 // app.use(express.text());
 // app.use(express.raw());
@@ -85,6 +85,7 @@ app.use(
 /* ************************************************************************* */
 
 // Import the API router
+const path = require("path");
 const apiRouter = require("./routers/api/router");
 
 // Mount the API router under the "/api" endpoint
@@ -106,9 +107,6 @@ app.use("/api", apiRouter);
 // To enable production configuration:
 // 1. Uncomment the lines related to serving static files and redirecting unhandled requests.
 // 2. Ensure that the `reactBuildPath` points to the correct directory where your client's build artifacts are located.
-
-
-const path = require("path");
 
 const reactBuildPath = path.join(__dirname, "/../../client/dist");
 const publicFolderPath = path.join(__dirname, "/../public");

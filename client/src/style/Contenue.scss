@@ -14,16 +14,16 @@
 .blocDetails {
   display: flex;
   justify-content: space-between;
-  padding: 20px 20px;
   font-family: $font-text;
-  font-size: 1.5rem;
+  font-size: 0.6rem;
   button {
     background-color: $title-color;
-    width: 170px;
+    width: 80px;
+    height: 40px;
     border: 2px $text-color-black solid;
     border-radius: 40px;
     color: $text-color-white;
-    font-size: 1.3rem;
+    font-size: 0.6rem;
   }
 }
 
@@ -37,7 +37,30 @@
 }
 
 .voirPlus {
-  display: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px 0;
+  color: $title-color;
+}
+
+.buttonVP {
+  border-radius: 50%;
+  border: none;
+  background-color: $text-color-white;
+  animation: float 2s infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translatey(0px);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
 }
 
 @media only screen and (min-width: 1024px) {
@@ -50,10 +73,9 @@
   }
 
   .blocDetails {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     button {
-      width: 90px;
-      font-size: 0.8rem;
+      font-size: 0.7rem;
     }
   }
 }

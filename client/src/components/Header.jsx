@@ -1,6 +1,6 @@
 // Import react
 import HeroSlider, { Overlay, Slide, MenuNav } from "hero-slider";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 // Import des images
@@ -21,6 +21,18 @@ function Header() {
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
+
+  const [theme, setTheme] = useState("light");
+  const toggleTheme = () => {
+    if (theme === "light") {
+      setTheme("dark");
+    } else {
+      setTheme("light");
+    }
+  };
+  useEffect(() => {
+    document.body.className = theme;
+  }, [theme]);
 
   return (
     <div className="header">
@@ -147,6 +159,12 @@ function Header() {
         <MenuNav />
       </HeroSlider>
       <img className="logo" src={LOGO} alt="logo" />
+
+      <div className="theme">
+        <button type="button" onClick={toggleTheme}>
+          {" "}
+        </button>
+      </div>
       <div className={menuOpen ? "sidenav active" : "sidenav"}>
         <video autoPlay muted loop className="background-video">
           <source src={videoMenuBurger} type="video/mp4" />
@@ -157,6 +175,7 @@ function Header() {
         <button type="button" className="close" onClick={toggleMenu}>
           <img className="logo-cross" src={CROSS} alt="fermer" />
         </button>
+
         <ul>
           <Link className="glitch" data-glitch="Accueil" to="/">
             Accueil

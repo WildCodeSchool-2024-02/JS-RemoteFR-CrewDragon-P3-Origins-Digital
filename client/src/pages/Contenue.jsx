@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import YouTube from "react-youtube";
 import categoriesData from "../Data/CategorieData";
+import fleche from "../assets/images/fleche.png";
 
 import "../style/Contenue.scss";
 
@@ -21,28 +22,30 @@ function Contenue() {
   );
 
   return (
-    <div className="AllVideos">
-      {allVideos.map((video) => (
-        <div key={video}>
-          <YouTube
-            videoId={video.split("v=")[1]}
-            opts={{ autoplay: 0, width: "500", height: "400" }}
-          />
-          <div className="blocDetails">
-            <div className="infosVideo">
-              <p>Nom de la vidéo</p>
-              <p>Durée de la vidéo</p>
+    <>
+      <div className="AllVideos">
+        {allVideos.map((video) => (
+          <div key={video}>
+            <YouTube
+              videoId={video.split("v=")[1]}
+              opts={{ autoplay: 0, width: "500", height: "400" }}
+            />
+            <div className="blocDetails">
+              <div className="infosVideo">
+                <p>Nom de la vidéo</p>
+              </div>
+              <button type="button">Détails</button>
             </div>
-            <button type="button">Détails</button>
           </div>
-        </div>
-      ))}
-      <div>
-        <button className="voirPlus" type="button">
-          Voir plus
+        ))}
+      </div>
+      <div className="voirPlus">
+        <p>Voir plus</p>
+        <button className="buttonVP" type="button">
+          <img src={fleche} alt="voir plus" />
         </button>
       </div>
-    </div>
+    </>
   );
 }
 

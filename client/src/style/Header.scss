@@ -457,3 +457,42 @@
     width: 9rem;
   }
 }
+
+// Mode Jour/Nuit
+
+.dark {
+  background-color: $background-color-dark;
+  color: $background-color-light;
+  .title-h1 {
+    text-decoration-color: $text-color-white;
+  }
+  .grid-date-category {
+    border-bottom: solid 2px $background-color-light;
+  }
+  .theme button {
+    width: 50px;
+    height: 22px;
+    background-image: url("../assets/images/images-header/sun.svg");
+    background-size: cover;
+    border: none;
+    background-color: transparent;
+    margin-top: 1px;
+    margin-left: 3px;
+    cursor: pointer;
+  }
+}
+
+.light {
+  background-color: $background-color-light;
+  .theme button {
+    width: 50px;
+    height: 22px;
+    background-image: url("../assets/images/images-header/moon.svg");
+    background-size: cover;
+    border: none;
+    background-color: transparent;
+    margin-top: 1px;
+    margin-left: 3px;
+    cursor: pointer;
+  }
+}

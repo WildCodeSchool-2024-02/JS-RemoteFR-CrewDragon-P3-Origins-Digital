@@ -145,7 +145,7 @@
   width: 100%;
   justify-items: end;
   padding-right: 20px;
-  border-bottom: solid 2px $text-color-black;
+  border-bottom: solid 2px $background-color-dark;
 }
 
 // Vidéos admin
@@ -222,6 +222,13 @@
   color: $title-color;
   font-size: 1.3rem;
 }
+
+.svg-folder-container,
+.svg-modify-container,
+.svg-bin-container .text-admin {
+  color: black;
+}
+
 .text-admin {
   font-family: $font-text;
   font-weight: bold;
@@ -242,6 +249,14 @@
   font-family: $font-text;
   font-weight: bold;
   font-size: 0.9rem;
+}
+
+// Button style
+
+.button-admin {
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
 }
 
 // Responsive
