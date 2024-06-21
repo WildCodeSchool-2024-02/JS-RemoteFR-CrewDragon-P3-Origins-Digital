@@ -13,21 +13,21 @@ const {
   edit,
   add,
   destroy,
-} = require("../../../controllers/sectionActions");
+} = require("../../../controllers/videoActions");
 
-// Route to get a list of items
+// Route to get a list of user
 router.get("/", browse);
 
-// Route to get a specific item by ID
+// Route to get a specific user by ID
 router.get("/:id", read);
 
-// Route to edit a new item
+// Route to modify a specific user by ID
 router.put("/:id", edit);
 
-// Route to add a new item
+// Route to add a new user
 router.post("/", add);
 
-// Route to delete a new item
+// Route to remove a new user by ID
 router.delete("/:id", destroy);
 
 /* ************************************************************************* */
