@@ -1,5 +1,10 @@
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  redirect,
+} from "react-router-dom";
+import axios from "axios";
 
 // Import du Composant App
 
@@ -38,6 +43,10 @@ const router = createBrowserRouter([
       {
         path: "/Contenue",
         element: <Contenue />,
+        loader: async () => {
+          const response = await axios.get(`http://localhost:3310/api/videos`);
+          return response.data;
+        },
       },
       {
         path: "/video/:videoId",
@@ -46,6 +55,34 @@ const router = createBrowserRouter([
       {
         path: "/Admin",
         element: <Admin />,
+        loader: async () => {
+          const response = await axios.get(`http://localhost:3310/api/videos`);
+          return response.data;
+        },
+        action: async ({ request }) => {
+          const formData = await request.formData();
+
+          switch (request.method.toLowerCase()) {
+            case "post": {
+              await axios.post(`http://localhost:3310/api/videos/`, {
+                title: formData.get("title"),
+                description: formData.get("description"),
+                url: formData.get("url"),
+                date: formData.get("date"),
+                grille: 0,
+                hero: 0,
+                carouStatique: 0,
+                carouDynamique: 0,
+                freemium: 0,
+                miniature: formData.get("miniature"),
+              });
+
+              return redirect(`http://localhost:3000/Admin/`);
+            }
+            default:
+              throw new Response("", { status: 405 });
+          }
+        },
       },
       {
         path: "/Login",

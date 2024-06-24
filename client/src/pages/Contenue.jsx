@@ -1,11 +1,12 @@
 import { useEffect } from "react";
+import { useLoaderData } from "react-router-dom";
 import YouTube from "react-youtube";
-import categoriesData from "../Data/CategorieData";
 import fleche from "../assets/images/fleche.png";
 
 import "../style/Contenue.scss";
 
 function Contenue() {
+  const videos = useLoaderData();
   useEffect(() => {
     window.scrollBy({
       top: window.innerHeight,
@@ -13,26 +14,18 @@ function Contenue() {
     });
   }, []);
 
-  const allVideos = categoriesData.flatMap((category) =>
-    category.sousCategorie.flatMap((sousCategorie) => [
-      sousCategorie.video1,
-      sousCategorie.video2,
-      sousCategorie.video3,
-    ])
-  );
-
   return (
     <>
       <div className="AllVideos">
-        {allVideos.map((video) => (
-          <div key={video}>
+        {videos.map((video) => (
+          <div key={video.id}>
             <YouTube
-              videoId={video.split("v=")[1]}
+              videoId={video.url.split("v=")[1]}
               opts={{ autoplay: 0, width: "500", height: "400" }}
             />
             <div className="blocDetails">
               <div className="infosVideo">
-                <p>Nom de la vidéo</p>
+                <p>{video.title}</p>
               </div>
               <button type="button">Détails</button>
             </div>

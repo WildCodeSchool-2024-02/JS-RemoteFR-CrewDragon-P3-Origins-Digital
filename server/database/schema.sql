@@ -40,7 +40,7 @@ create table videos (
   title varchar(255) not null,
   description text not null,
   url varchar(255) not null,
-  date date not null,
+  date varchar(10) not null,
   grille boolean default false,
   hero boolean default false,
   carouStatique boolean default false,
