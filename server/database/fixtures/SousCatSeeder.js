@@ -18,6 +18,7 @@ class SousCatSeeder extends AbstractSeeder {
       const fakeSousCats = {
         name: this.faker.lorem.word(), // Generate a fake name using faker library
         refName: `souscats_${i}`, // Create a reference name for the model
+        categories_id: this.getRef(`categories_${i}`).insertId,
       };
 
       // Insert the fakeSousCats data into the 'souscats' table

@@ -68,10 +68,12 @@ function Admin() {
           </button>
         </div>
         <div className="svg-bin-container">
-          <button className="button-admin" type="button">
-            <img className="svg-bin" src={BIN} alt="svg-bin" />
-            <p className="text-admin">supprimer</p>{" "}
-          </button>
+          <Form method="delete">
+            <button className="button-admin" type="button">
+              <img className="svg-bin" src={BIN} alt="svg-bin" />
+              <p className="text-admin">supprimer</p>{" "}
+            </button>
+          </Form>
         </div>
       </div>
       <h2>Ajouter une nouvelle vidéo</h2>

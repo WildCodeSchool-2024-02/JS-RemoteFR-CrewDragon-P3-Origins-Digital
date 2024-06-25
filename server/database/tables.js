@@ -4,7 +4,6 @@ const AbonnementRepository = require("./models/AbonnementRepository");
 const UserRepository = require("./models/UserRepository");
 const CategorieRepository = require("./models/CategorieRepository");
 const SousCatRepository = require("./models/SousCatRepository");
-const SouscatCategorieRepository = require("./models/Souscat_CategorieRepository");
 const SectionRepository = require("./models/SectionRepository");
 const VideoRepository = require("./models/VideoRepository");
 
@@ -21,7 +20,6 @@ tables.abonnement = new AbonnementRepository();
 tables.user = new UserRepository();
 tables.categorie = new CategorieRepository();
 tables.souscat = new SousCatRepository();
-tables.souscat_categorie = new SouscatCategorieRepository();
 tables.section = new SectionRepository();
 tables.video = new VideoRepository();
 
