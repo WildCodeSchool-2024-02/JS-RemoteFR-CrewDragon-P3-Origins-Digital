@@ -56,10 +56,10 @@ const router = createBrowserRouter([
         path: "/Admin",
         element: <Admin />,
         loader: async () => {
-          const response = await axios.get(`http://localhost:3310/api/videos`);
+          const response = await axios.get(`http://localhost:3310/api/videos/`);
           return response.data;
         },
-        action: async ({ request }) => {
+        action: async ({ request, params }) => {
           const formData = await request.formData();
 
           switch (request.method.toLowerCase()) {
@@ -78,6 +78,13 @@ const router = createBrowserRouter([
               });
 
               return redirect(`http://localhost:3000/Admin/`);
+            }
+            case "delete": {
+              await axios.delete(
+                `http://localhost:3310/api/videos/${params.id}`
+              );
+
+              return redirect("http://localhost:3000/Admin/");
             }
             default:
               throw new Response("", { status: 405 });

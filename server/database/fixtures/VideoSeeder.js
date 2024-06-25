@@ -19,13 +19,15 @@ class VideoSeeder extends AbstractSeeder {
         title: this.faker.lorem.word(), // Generate a fake title using faker library
         description: this.faker.lorem.lines({ min: 1, max: 3 }), // Generate a fake password using faker library
         url: this.faker.internet.url(),
-        date: this.faker.lorem.word({ min: 1, max: 9 }),
+        date: this.faker.lorem.word({ min: 1, max: 7 }),
         grille: this.faker.datatype.boolean(),
         hero: this.faker.datatype.boolean(), // Get the insertId of the corresponding brand from BrandeSeeder
         carouStatique: this.faker.datatype.boolean(), // Get the insertId of the corresponding brand from BrandeSeeder
         carouDynamique: this.faker.datatype.boolean(), //  Create a reference name for the model
         freemium: this.faker.datatype.boolean(),
         miniature: this.faker.internet.url(),
+        categories_id: this.getRef(`categories_${i}`).insertId,
+        souscats_id: this.getRef(`souscats_${i}`).insertId,
       };
 
       // Insert the fakeUser data into the 'user' table
