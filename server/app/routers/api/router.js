@@ -18,6 +18,22 @@ const usersRouter = require("./users/router");
 
 router.use("/users", usersRouter);
 
+const categoriesRouter = require("./categories/router");
+
+router.use("/categories", categoriesRouter);
+
+const souscatsRouter = require("./souscats/router");
+
+router.use("/souscats", souscatsRouter);
+
+const sectionsRouter = require("./sections/router");
+
+router.use("/sections", sectionsRouter);
+
+const videosRouter = require("./videos/router");
+
+router.use("/videos", videosRouter);
+
 /* ************************************************************************* */
 
 module.exports = router;
