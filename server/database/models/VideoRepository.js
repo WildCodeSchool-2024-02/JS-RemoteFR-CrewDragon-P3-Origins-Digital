@@ -46,7 +46,24 @@ class VideoRepository extends AbstractRepository {
 
   async readAll() {
     // Execute the SQL SELECT query to retrieve all videos from the "video" table
-    const [rows] = await this.database.query(`select * from ${this.table}`);
+
+    const [rows] = await this.database.query(`
+      SELECT
+        v.*,
+        JSON_OBJECT(
+          'id', c.id,
+          'name', c.name
+        ) AS categories,
+        JSON_OBJECT(
+          'id', sc.id,
+          'name', sc.name
+        ) AS souscats
+      FROM ${this.table} AS v
+      JOIN categories AS c ON v.categories_id = c.id
+      LEFT JOIN souscats AS sc ON v.souscats_id = sc.id
+    `);
+
+    // const [rows] = await this.database.query(`select * from videos`);
 
     // Return the array of videos
     return rows;
