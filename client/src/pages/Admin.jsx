@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useLoaderData, Link, Form } from "react-router-dom";
 import YouTube from "react-youtube";
+import axios from "axios";
 
 // Import des SVG
 import OPENMENU from "../assets/images/svg-admin/openmenu.svg";
@@ -42,6 +43,24 @@ function Admin() {
     console.info(handleCheckboxChange);
   };
 
+  // Fonction pour supprimer les vidéos sélectionnées
+  const handleDeleteVideos = async () => {
+    try {
+      // Utilisation de Promise.all pour supprimer
+      await Promise.all(
+        selectedVideos.map((id) =>
+          axios.delete(`http://localhost:3310/api/videos/${id}`)
+        )
+      );
+      // Recharge les vidéos après la suppression
+      window.location.reload();
+      // Vous pouvez mettre à jour le state ou recharger les données ici
+      console.info("Vidéos supprimées avec succès !");
+    } catch (error) {
+      console.error("Erreur lors de la suppression des vidéos :", error);
+    }
+  };
+
   useEffect(() => {
     window.scrollBy({
       top: window.innerHeight,
@@ -68,12 +87,14 @@ function Admin() {
           </button>
         </div>
         <div className="svg-bin-container">
-          <Form method="delete">
-            <button className="button-admin" type="button">
-              <img className="svg-bin" src={BIN} alt="svg-bin" />
-              <p className="text-admin">supprimer</p>{" "}
-            </button>
-          </Form>
+          <button
+            className="button-admin"
+            type="button"
+            onClick={handleDeleteVideos}
+          >
+            <img className="svg-bin" src={BIN} alt="svg-bin" />
+            <p className="text-admin">supprimer</p>{" "}
+          </button>
         </div>
       </div>
       <h2>Ajouter une nouvelle vidéo</h2>
