@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import { useLoaderData, Link, Form } from "react-router-dom";
 import YouTube from "react-youtube";
 import axios from "axios";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // Import des SVG
 import OPENMENU from "../assets/images/svg-admin/openmenu.svg";
 import CROSSADMIN from "../assets/images/svg-admin/crossadmin.svg";
@@ -13,6 +14,12 @@ import MODIFY from "../assets/images/svg-admin/pen.svg";
 import BIN from "../assets/images/svg-admin/bin.svg";
 
 function Admin() {
+  // Message de Toastify Ajoutée
+  const notifyAdd = () => toast("La vidéo à bien été ajoutée");
+
+  // Message de Toastify Delete
+  const notifyDelete = () => toast("La vidéo à bien été supprimée");
+
   const videos = useLoaderData();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -53,7 +60,9 @@ function Admin() {
         )
       );
       // Recharge les vidéos après la suppression
-      window.location.reload();
+      setTimeout(() => {
+        window.location.reload();
+      }, 6000);
       // Vous pouvez mettre à jour le state ou recharger les données ici
       console.info("Vidéos supprimées avec succès !");
     } catch (error) {
@@ -90,11 +99,15 @@ function Admin() {
           <button
             className="button-admin"
             type="button"
-            onClick={handleDeleteVideos}
+            onClick={() => {
+              handleDeleteVideos();
+              notifyDelete();
+            }}
           >
             <img className="svg-bin" src={BIN} alt="svg-bin" />
             <p className="text-admin">supprimer</p>{" "}
           </button>
+          <ToastContainer />
         </div>
       </div>
       <h2>Ajouter une nouvelle vidéo</h2>
@@ -149,7 +162,10 @@ function Admin() {
           <label htmlFor="miniature">Miniature</label>
           <input type="text" id="miniature" name="miniature" required />
         </div>
-        <button type="submit">Ajouter</button>
+        <button onClick={notifyAdd} type="submit">
+          Ajouter
+        </button>
+        <ToastContainer />
       </Form>
       <div className="admin-container">
         <div className={menuOpen ? "sideadmin active" : "sideadmin"}>
@@ -208,7 +224,7 @@ function Admin() {
                           width: "150",
                         }}
                       />
-                      <p>{video.categorie}</p>
+                      <p>{video.categories_name}</p>
                       <p>{video.date}</p>
                     </div>
                     <input
