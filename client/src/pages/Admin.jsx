@@ -206,7 +206,7 @@ function Admin() {
               />
             </div>
             <span className="container-align-text">
-              <p>Catégorie</p>
+              <p>Catégorie / Sous-Catégorie</p>
             </span>
             <p>Date</p>
           </div>
@@ -224,7 +224,9 @@ function Admin() {
                           width: "150",
                         }}
                       />
-                      <p>{video.categories_name}</p>
+                      <p>
+                        {video.categories.name} /{video.souscats.name}
+                      </p>
                       <p>{video.date}</p>
                     </div>
                     <input
