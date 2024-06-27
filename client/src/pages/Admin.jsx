@@ -4,8 +4,7 @@ import { useState, useEffect } from "react";
 import { useLoaderData, Link, Form } from "react-router-dom";
 import YouTube from "react-youtube";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import toast, { Toaster } from "react-hot-toast";
 // Import des SVG
 import OPENMENU from "../assets/images/svg-admin/openmenu.svg";
 import CROSSADMIN from "../assets/images/svg-admin/crossadmin.svg";
@@ -20,7 +19,10 @@ function Admin() {
   // Message de Toastify Delete
   const notifyDelete = () => toast("La vidéo à bien été supprimée");
 
-  const videos = useLoaderData();
+  const { videos, categories, souscats } = useLoaderData();
+
+  const [videoAdmin, setVideoAdmin] = useState(videos);
+
   const [menuOpen, setMenuOpen] = useState(false);
 
   const [selectAll, setSelectAll] = useState(false);
@@ -55,15 +57,15 @@ function Admin() {
     try {
       // Utilisation de Promise.all pour supprimer
       await Promise.all(
-        selectedVideos.map((id) =>
-          axios.delete(`http://localhost:3310/api/videos/${id}`)
-        )
+        selectedVideos.map((id) => {
+          axios.delete(`http://localhost:3310/api/videos/${id}`);
+          // ici, je vais supprimer ma vidéo de mon tableau de vidéo
+          return setVideoAdmin(
+            videos.filter((video) => !selectedVideos.includes(video.id))
+          );
+        })
       );
-      // Recharge les vidéos après la suppression
-      setTimeout(() => {
-        window.location.reload();
-      }, 6000);
-      // Vous pouvez mettre à jour le state ou recharger les données ici
+
       console.info("Vidéos supprimées avec succès !");
     } catch (error) {
       console.error("Erreur lors de la suppression des vidéos :", error);
@@ -76,9 +78,10 @@ function Admin() {
       behavior: "smooth",
     });
   }, []);
+  // close button toast
 
   return (
-    <body>
+    <div>
       <div className="container-admin-action">
         <button type="button" id="openBtn" onClick={toggleMenu}>
           <img className="logo-arrow" src={OPENMENU} alt="menu burger" />{" "}
@@ -107,7 +110,7 @@ function Admin() {
             <img className="svg-bin" src={BIN} alt="svg-bin" />
             <p className="text-admin">supprimer</p>{" "}
           </button>
-          <ToastContainer />
+          <Toaster />
         </div>
       </div>
       <h2>Ajouter une nouvelle vidéo</h2>
@@ -162,10 +165,29 @@ function Admin() {
           <label htmlFor="miniature">Miniature</label>
           <input type="text" id="miniature" name="miniature" required />
         </div>
+        <label htmlFor="categories"> Choisissez une catégorie :</label>
+        <select name="categories" id="categories">
+          {categories.map((categorie) => (
+            <option key={categorie.id} value={categorie.id}>
+              {categorie.name}
+            </option>
+          ))}
+          ;
+        </select>{" "}
+        <br />
+        <label htmlFor="souscats"> Choisissez une sous-catégorie :</label>
+        <select name="souscats" id="souscats">
+          {souscats.map((souscat) => (
+            <option key={souscat.id} value={souscat.id}>
+              {souscat.name}
+            </option>
+          ))}
+          ;
+        </select>
         <button onClick={notifyAdd} type="submit">
           Ajouter
         </button>
-        <ToastContainer />
+        <Toaster />
       </Form>
       <div className="admin-container">
         <div className={menuOpen ? "sideadmin active" : "sideadmin"}>
@@ -211,7 +233,7 @@ function Admin() {
             <p>Date</p>
           </div>
           <div className="container-admin-videos">
-            {videos.map((video) => (
+            {videoAdmin.map((video) => (
               <div key={video.id}>
                 <div className="player-wrapper-admin">
                   <div className="video-checkbox-container">
@@ -248,7 +270,7 @@ function Admin() {
           </div>
         </div>
       </div>
-    </body>
+    </div>
   );
 }
 
