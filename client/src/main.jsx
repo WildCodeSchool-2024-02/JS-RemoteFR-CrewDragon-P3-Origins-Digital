@@ -56,8 +56,16 @@ const router = createBrowserRouter([
         path: "/Admin",
         element: <Admin />,
         loader: async () => {
-          const response = await axios.get(`http://localhost:3310/api/videos/`);
-          return response.data;
+          const [videosResponse, categoriesResponse, souscatsResponse] =
+            await Promise.all([
+              axios.get(`http://localhost:3310/api/videos/`),
+              axios.get(`http://localhost:3310/api/categories/`),
+              axios.get(`http://localhost:3310/api/souscats/`),
+            ]);
+          const videos = videosResponse.data;
+          const categories = categoriesResponse.data;
+          const souscats = souscatsResponse.data;
+          return { videos, categories, souscats };
         },
         action: async ({ request, params }) => {
           const formData = await request.formData();
@@ -75,6 +83,8 @@ const router = createBrowserRouter([
                 carouDynamique: 0,
                 freemium: 0,
                 miniature: formData.get("miniature"),
+                categories_id: parseInt(formData.get("categories"), 10),
+                souscats_id: parseInt(formData.get("souscats"), 10),
               });
 
               return redirect(`http://localhost:3000/Admin/`);
