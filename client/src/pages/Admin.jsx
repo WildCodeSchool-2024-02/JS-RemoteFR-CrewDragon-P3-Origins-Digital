@@ -72,13 +72,23 @@ function Admin() {
     }
   };
 
+  // Fonction pour ajouter une vidéos et la mettre a jour sur le front
+  const handleAddVideos = async () => {
+    try {
+      const response = await axios.get("http://localhost:3310/api/videos");
+      setVideoAdmin([...videos, response.data]);
+
+      console.info("Vidéo ajoutée avec succès !");
+    } catch (error) {
+      console.error("Erreur lors de l'ajout de la vidéo :", error);
+    }
+  };
   useEffect(() => {
     window.scrollBy({
       top: window.innerHeight,
       behavior: "smooth",
     });
   }, []);
-  // close button toast
 
   return (
     <div>
@@ -184,7 +194,13 @@ function Admin() {
           ))}
           ;
         </select>
-        <button onClick={notifyAdd} type="submit">
+        <button
+          onClick={() => {
+            handleAddVideos();
+            notifyAdd();
+          }}
+          type="submit"
+        >
           Ajouter
         </button>
         <Toaster />
