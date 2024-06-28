@@ -1,9 +1,5 @@
 import ReactDOM from "react-dom/client";
-import {
-  createBrowserRouter,
-  RouterProvider,
-  redirect,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import axios from "axios";
 
 // Import du Composant App
@@ -55,6 +51,7 @@ const router = createBrowserRouter([
       {
         path: "/Admin",
         element: <Admin />,
+
         loader: async () => {
           const [videosResponse, categoriesResponse, souscatsResponse] =
             await Promise.all([
@@ -66,39 +63,6 @@ const router = createBrowserRouter([
           const categories = categoriesResponse.data;
           const souscats = souscatsResponse.data;
           return { videos, categories, souscats };
-        },
-        action: async ({ request, params }) => {
-          const formData = await request.formData();
-
-          switch (request.method.toLowerCase()) {
-            case "post": {
-              await axios.post(`http://localhost:3310/api/videos/`, {
-                title: formData.get("title"),
-                description: formData.get("description"),
-                url: formData.get("url"),
-                date: formData.get("date"),
-                grille: 0,
-                hero: 0,
-                carouStatique: 0,
-                carouDynamique: 0,
-                freemium: 0,
-                miniature: formData.get("miniature"),
-                categories_id: parseInt(formData.get("categories"), 10),
-                souscats_id: parseInt(formData.get("souscats"), 10),
-              });
-
-              return redirect(`http://localhost:3000/Admin/`);
-            }
-            case "delete": {
-              await axios.delete(
-                `http://localhost:3310/api/videos/${params.id}`
-              );
-
-              return redirect("http://localhost:3000/Admin/");
-            }
-            default:
-              throw new Response("", { status: 405 });
-          }
         },
       },
       {

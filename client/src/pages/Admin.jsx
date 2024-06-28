@@ -1,7 +1,7 @@
 // Import react
 
 import { useState, useEffect } from "react";
-import { useLoaderData, Link, Form } from "react-router-dom";
+import { useLoaderData, Link } from "react-router-dom";
 import YouTube from "react-youtube";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
@@ -18,6 +18,9 @@ function Admin() {
 
   // Message de Toastify Delete
   const notifyDelete = () => toast("La vidéo à bien été supprimée");
+
+  // useState Popup pour ajouter une vidéo
+  const [isPopupAddOpen, setIsPopupAddOpen] = useState(false);
 
   const { videos, categories, souscats } = useLoaderData();
 
@@ -49,7 +52,6 @@ function Admin() {
     } else {
       setSelectedVideos([...selectedVideos, id]);
     }
-    console.info(handleCheckboxChange);
   };
 
   // Fonction pour supprimer les vidéos sélectionnées
@@ -73,15 +75,19 @@ function Admin() {
   };
 
   // Fonction pour ajouter une vidéos et la mettre a jour sur le front
-  const handleAddVideos = async () => {
-    try {
-      const response = await axios.get("http://localhost:3310/api/videos");
-      setVideoAdmin([...videos, response.data]);
+  const handleAddVideos = async (e) => {
+    e.preventDefault();
+    const form = e.target;
 
-      console.info("Vidéo ajoutée avec succès !");
-    } catch (error) {
-      console.error("Erreur lors de l'ajout de la vidéo :", error);
-    }
+    const formData = new FormData(form);
+
+    const formJson = Object.fromEntries(formData.entries());
+
+    await axios.post(`http://localhost:3310/api/videos/`, formJson);
+    const response = await axios.get("http://localhost:3310/api/videos");
+    setVideoAdmin(response.data);
+    notifyAdd();
+    setIsPopupAddOpen(false);
   };
   useEffect(() => {
     window.scrollBy({
@@ -97,7 +103,11 @@ function Admin() {
           <img className="logo-arrow" src={OPENMENU} alt="menu burger" />{" "}
         </button>
         <div className="svg-folder-container">
-          <button className="button-admin" type="button">
+          <button
+            className="button-admin"
+            type="button"
+            onClick={() => setIsPopupAddOpen(true)}
+          >
             <img className="svg-folder" src={FOLDER} alt="svg-fichier" />
             <p className="text-admin">ajouter</p>
           </button>
@@ -123,88 +133,95 @@ function Admin() {
           <Toaster />
         </div>
       </div>
-      <h2>Ajouter une nouvelle vidéo</h2>
-      <Form method="post">
-        <div>
-          <label htmlFor="title">Titre</label>
-          <input type="text" id="title" name="title" required />
+      {isPopupAddOpen && (
+        <div className="popup-add">
+          <div className="button-position">
+            <button type="button" onClick={() => setIsPopupAddOpen(false)}>
+              ❌
+            </button>
+          </div>
+          <h2>Ajouter une nouvelle vidéo</h2>
+          <form method="post" onSubmit={handleAddVideos}>
+            <div className="popup-position">
+              <label htmlFor="title">Titre</label>
+              <input type="text" id="title" name="title" required />
+            </div>
+            <div className="popup-position">
+              <label htmlFor="description">Description</label>
+              <textarea id="description" name="description" required />
+            </div>
+            <div className="popup-position">
+              <label htmlFor="url">URL</label>
+              <input type="text" id="url" name="url" required />
+            </div>
+            <div className="popup-position">
+              <label htmlFor="date">Date</label>
+              <input type="text" id="date" name="date" required />
+            </div>
+            <div className="popup-position">
+              <label>
+                <input type="checkbox" name="grille" />
+                Grille
+              </label>
+            </div>
+            <div className="popup-position">
+              <label>
+                <input type="checkbox" name="hero" />
+                Hero
+              </label>
+            </div>
+            <div className="popup-position">
+              <label>
+                <input type="checkbox" name="carouStatique" />
+                Carrousel Statique
+              </label>
+            </div>
+            <div className="popup-position">
+              <label>
+                <input type="checkbox" name="carouDynamique" />
+                Carrousel Dynamique
+              </label>
+            </div>
+            <div className="popup-position">
+              <label>
+                <input type="checkbox" name="freemium" />
+                Freemium
+              </label>
+            </div>
+            <div className="popup-position">
+              <label htmlFor="miniature">Miniature</label>
+              <input type="text" id="miniature" name="miniature" required />
+            </div>
+            <label htmlFor="categories_id"> Choisissez une catégorie :</label>{" "}
+            <br />
+            <select name="categories_id" id="categories">
+              {categories.map((categorie) => (
+                <option key={categorie.id} value={categorie.id}>
+                  {categorie.name}
+                </option>
+              ))}
+              ;
+            </select>{" "}
+            <br />
+            <label htmlFor="souscats_id">
+              {" "}
+              Choisissez une sous-catégorie :
+            </label>{" "}
+            <br />
+            <select name="souscats_id" id="souscats">
+              {souscats.map((souscat) => (
+                <option key={souscat.id} value={souscat.id}>
+                  {souscat.name}
+                </option>
+              ))}
+              ;
+            </select>{" "}
+            <br />
+            <button type="submit">Ajouter</button>
+            <Toaster />
+          </form>
         </div>
-        <div>
-          <label htmlFor="description">Description</label>
-          <textarea id="description" name="description" required />
-        </div>
-        <div>
-          <label htmlFor="url">URL</label>
-          <input type="text" id="url" name="url" required />
-        </div>
-        <div>
-          <label htmlFor="date">Date</label>
-          <input type="text" id="date" name="date" required />
-        </div>
-        <div>
-          <label>
-            <input type="checkbox" name="grille" />
-            Grille
-          </label>
-        </div>
-        <div>
-          <label>
-            <input type="checkbox" name="hero" />
-            Hero
-          </label>
-        </div>
-        <div>
-          <label>
-            <input type="checkbox" name="carouStatique" />
-            Carrousel Statique
-          </label>
-        </div>
-        <div>
-          <label>
-            <input type="checkbox" name="carouDynamique" />
-            Carrousel Dynamique
-          </label>
-        </div>
-        <div>
-          <label>
-            <input type="checkbox" name="freemium" />
-            Freemium
-          </label>
-        </div>
-        <div>
-          <label htmlFor="miniature">Miniature</label>
-          <input type="text" id="miniature" name="miniature" required />
-        </div>
-        <label htmlFor="categories"> Choisissez une catégorie :</label>
-        <select name="categories" id="categories">
-          {categories.map((categorie) => (
-            <option key={categorie.id} value={categorie.id}>
-              {categorie.name}
-            </option>
-          ))}
-          ;
-        </select>{" "}
-        <br />
-        <label htmlFor="souscats"> Choisissez une sous-catégorie :</label>
-        <select name="souscats" id="souscats">
-          {souscats.map((souscat) => (
-            <option key={souscat.id} value={souscat.id}>
-              {souscat.name}
-            </option>
-          ))}
-          ;
-        </select>
-        <button
-          onClick={() => {
-            handleAddVideos();
-            notifyAdd();
-          }}
-          type="submit"
-        >
-          Ajouter
-        </button>
-        <Toaster />
-      </Form>
+      )}
       <div className="admin-container">
         <div className={menuOpen ? "sideadmin active" : "sideadmin"}>
           <button type="button" className="close" onClick={toggleMenu}>
@@ -249,40 +266,41 @@ function Admin() {
             <p>Date</p>
           </div>
           <div className="container-admin-videos">
-            {videoAdmin.map((video) => (
-              <div key={video.id}>
-                <div className="player-wrapper-admin">
-                  <div className="video-checkbox-container">
-                    <div className="video-date-categorie-container">
-                      <YouTube
-                        className="player-admin"
-                        videoId={video.url.split("v=")[1]}
-                        opts={{
-                          height: "120",
-                          width: "150",
-                        }}
+            {videoAdmin &&
+              videoAdmin.map((video) => (
+                <div key={video.id}>
+                  <div className="player-wrapper-admin">
+                    <div className="video-checkbox-container">
+                      <div className="video-date-categorie-container">
+                        <YouTube
+                          className="player-admin"
+                          videoId={video.url.split("v=")[1]}
+                          opts={{
+                            height: "120",
+                            width: "150",
+                          }}
+                        />
+                        <p>
+                          {video.categories.name} /{video.souscats.name}
+                        </p>
+                        <p>{video.date}</p>
+                      </div>
+                      <input
+                        className="checkbox-style"
+                        type="checkbox"
+                        checked={selectedVideos.includes(video.id)}
+                        onChange={() => handleCheckboxChange(video.id)}
                       />
-                      <p>
-                        {video.categories.name} /{video.souscats.name}
-                      </p>
-                      <p>{video.date}</p>
                     </div>
-                    <input
-                      className="checkbox-style"
-                      type="checkbox"
-                      checked={selectedVideos.includes(video.id)}
-                      onChange={() => handleCheckboxChange(video.id)}
-                    />
-                  </div>
-                  <div className="title-text-container">
-                    <h3 className="title-admin">Titre :</h3>
-                    <p className="text-admin">{video.title}</p>
-                    <h4 className="title-admin">Description :</h4>
-                    <p className="text-admin">{video.description}</p>
+                    <div className="title-text-container">
+                      <h3 className="title-admin">Titre :</h3>
+                      <p className="text-admin">{video.title}</p>
+                      <h4 className="title-admin">Description :</h4>
+                      <p className="text-admin">{video.description}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
         </div>
       </div>
