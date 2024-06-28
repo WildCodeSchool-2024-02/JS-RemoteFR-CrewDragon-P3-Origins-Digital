@@ -52,7 +52,6 @@ function Admin() {
     } else {
       setSelectedVideos([...selectedVideos, id]);
     }
-    console.info(handleCheckboxChange);
   };
 
   // Fonction pour supprimer les vidéos sélectionnées
@@ -79,11 +78,11 @@ function Admin() {
   const handleAddVideos = async (e) => {
     e.preventDefault();
     const form = e.target;
-    console.info(form);
+
     const formData = new FormData(form);
 
     const formJson = Object.fromEntries(formData.entries());
-    console.info("Formulaire :", formJson);
+
     await axios.post(`http://localhost:3310/api/videos/`, formJson);
     const response = await axios.get("http://localhost:3310/api/videos");
     setVideoAdmin(response.data);
@@ -96,8 +95,6 @@ function Admin() {
       behavior: "smooth",
     });
   }, []);
-
-  console.info(videos);
 
   return (
     <div>
