@@ -39,14 +39,15 @@ create table sections (
 
 create table categories (
   id int primary key auto_increment not null,
-  name varchar(30) not null
+  name varchar(30) not null,
+  image VARCHAR(500) NOT NULL
 );
-INSERT INTO categories(id, name) VALUES 
-    ("1", "Sport"),
-    ("2", "Actualité"),
-    ("3", "Tech"),
-    ("4", "Juniors");
 
+INSERT INTO categories(id, name,image) VALUES 
+    (1, "Sport","https://aarp-content.brightspotcdn.com/dims4/default/cc18043/2147483647/strip/true/crop/1279x704+0+0/resize/876x482!/quality/90/?url=http%3A%2F%2Faarp-brightspot.s3.amazonaws.com%2Fcontent%2Faa%2Fc9%2Fcbf66962478cb9e8f92d5641b070%2Fsportsgoat-neiljamieson-1280.jpg"),
+    (2, "Actualité","https://static8.depositphotos.com/1391774/933/i/450/depositphotos_9334068-stock-photo-ripped-newspapers.jpg"),
+    (3, "Tech","https://e0.pxfuel.com/wallpapers/171/486/desktop-wallpaper-cpu.jpg"),
+    (4, "Juniors","https://www.denofgeek.com/wp-content/uploads/2020/03/Best-Kids-TV-Shows-Streaming-in-the-UK-Lead.jpg?fit=1200%2C675");
 
 
 create table souscats (
