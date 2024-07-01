@@ -5,7 +5,9 @@ create table roles(
   id int primary key auto_increment not null,
   name varchar(20) not null
 );
-
+INSERT INTO roles(id, name) VALUES 
+    ("1", "admin"),
+    ("2", "user");
 create table abonnements (
   id int primary key auto_increment not null,
   name varchar(30),
@@ -40,6 +42,12 @@ create table categories (
   id int primary key auto_increment not null,
   name varchar(30) not null
 );
+INSERT INTO categories(id, name) VALUES 
+    ("1", "Sport"),
+    ("2", "Actualité"),
+    ("3", "Tech"),
+    ("4", "Juniors");
+
 
 create table souscats (
   id int primary key auto_increment not null,
