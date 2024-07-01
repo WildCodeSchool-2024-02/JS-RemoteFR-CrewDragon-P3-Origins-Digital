@@ -3,9 +3,11 @@ create table roles(
   name varchar(20) not null
 );
 
+
 INSERT INTO roles(id, name) VALUES 
     (1, "admin"),
     (2, "user");
+
 
 create table abonnements (
   id int primary key auto_increment not null,
@@ -46,6 +48,7 @@ INSERT INTO categories(id, name,image) VALUES
     (2, "Actualité","https://static8.depositphotos.com/1391774/933/i/450/depositphotos_9334068-stock-photo-ripped-newspapers.jpg"),
     (3, "Tech","https://e0.pxfuel.com/wallpapers/171/486/desktop-wallpaper-cpu.jpg"),
     (4, "Juniors","https://www.denofgeek.com/wp-content/uploads/2020/03/Best-Kids-TV-Shows-Streaming-in-the-UK-Lead.jpg?fit=1200%2C675");
+
 
 create table souscats (
   id int primary key auto_increment not null,
