@@ -88,10 +88,13 @@ create table videos (
   Foreign Key (souscats_id) REFERENCES souscats(id)
 );
 
-create table videos_sections (
-  videos_id INT NOT NULL,
-  sections_id INT NOT NULL,
-  Foreign Key (videos_id) REFERENCES videos(id),
-  Foreign Key (sections_id) REFERENCES sections(id),
-  PRIMARY KEY (videos_id, sections_id)
-);
+
+  create table videos_sections (
+    videos_id INT NOT NULL,
+    sections_id INT NOT NULL,
+    Foreign Key (videos_id) REFERENCES videos(id),
+    Foreign Key (sections_id) REFERENCES sections(id),
+    PRIMARY KEY (videos_id, sections_id)
+  );
+
+
