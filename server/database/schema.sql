@@ -24,7 +24,7 @@ create table users (
   firstname varchar(30) not null,
   lastname varchar(30) not null,
   birthday date not null,
-  roles_id INT NOT NULL,
+  roles_id INT NOT NULL DEFAULT 2,
   abonnements_id INT NOT NULL,
   Foreign Key (roles_id) REFERENCES roles(id),
   Foreign Key (abonnements_id) REFERENCES abonnements(id)
