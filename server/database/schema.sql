@@ -24,7 +24,7 @@ create table users (
   firstname varchar(30) not null,
   lastname varchar(30) not null,
   birthday date not null,
-  roles_id INT NOT NULL,
+  roles_id INT NOT NULL DEFAULT 2,
   abonnements_id INT NOT NULL,
   Foreign Key (roles_id) REFERENCES roles(id),
   Foreign Key (abonnements_id) REFERENCES abonnements(id)
@@ -89,6 +89,7 @@ create table videos (
   Foreign Key (souscats_id) REFERENCES souscats(id),
    duree TIME
 );
+
 
 INSERT INTO videos (categories_id, souscats_id, url, title, description, date, duree) VALUES
 -- Catégorie Sport
@@ -155,3 +156,6 @@ create table videos_sections (
   Foreign Key (sections_id) REFERENCES sections(id),
   PRIMARY KEY (videos_id, sections_id)
 );
+
+
+ 
