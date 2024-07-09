@@ -14,7 +14,7 @@ function AccountForm() {
   const handleAddUser = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      alert("Les mots de passe ne correspondent pas");
+      console.error("Les mots de passe ne correspondent pas");
       return;
     }
     const NewUser = {

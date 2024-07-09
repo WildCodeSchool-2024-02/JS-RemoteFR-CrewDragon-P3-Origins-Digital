@@ -16,7 +16,7 @@ const login = async (req, res, next) => {
 
     const verified = await argon2.verify(
       user.hashed_password,
-      req.body.password
+      req.body.hashedPassword
     );
 
     if (verified) {
@@ -43,7 +43,23 @@ const login = async (req, res, next) => {
     next(err);
   }
 };
+const add = async (req, res, next) => {
+  // Extract the user data from the request body
+  const user = req.body;
+
+  try {
+    // Insert the user into the database
+    const insertId = await tables.user.create(user);
+
+    // Respond with HTTP 201 (Created) and the ID of the newly inserted user
+    res.status(201).json({ insertId });
+  } catch (err) {
+    // Pass any errors to the error-handling middleware
+    next(err);
+  }
+};
 
 module.exports = {
   login,
+  add,
 };

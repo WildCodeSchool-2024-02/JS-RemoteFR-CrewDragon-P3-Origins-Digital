@@ -2,8 +2,9 @@ const express = require("express");
 
 const router = express.Router();
 
-const authActions = require("../../../controllers/authActions");
+const { hashPassword } = require("../../../services/auth");
+const { login } = require("../../../controllers/authActions");
 
-router.post("/login", authActions.login);
+router.post("/", hashPassword, login);
 
 module.exports = router;

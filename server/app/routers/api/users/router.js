@@ -6,6 +6,7 @@ const router = express.Router();
 // Define Your API Routes Here
 /* ************************************************************************* */
 
+const { hashPassword } = require("../../../services/auth");
 // Import item-related actions
 const {
   browse,
@@ -25,7 +26,7 @@ router.get("/:id", read);
 router.put("/:id", edit);
 
 // Route to add a new user
-router.post("/", add);
+router.post("/", hashPassword, add);
 
 // Route to remove a new user by ID
 router.delete("/:id", destroy);
