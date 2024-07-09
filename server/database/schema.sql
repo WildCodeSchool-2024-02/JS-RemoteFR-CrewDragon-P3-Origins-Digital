@@ -17,15 +17,19 @@ create table abonnements (
   date_de_fin date not null
 );
 
+INSERT INTO abonnements (id, name, montant, date_de_paiement, date_de_fin) VALUES
+    (1, "Compte gratuit", 0, '2024-07-09', '2024-09-09'),
+    (2, "Freemium", 9.99 , '2024-07-09', '2024-09-09');
+
 create table users (
   id int primary key auto_increment not null,
   email varchar(255) not null UNIQUE,
-  password varchar(30) not null,
+  hashed_password varchar(255) not null,
   firstname varchar(30) not null,
   lastname varchar(30) not null,
   birthday date not null,
   roles_id INT NOT NULL DEFAULT 2,
-  abonnements_id INT NOT NULL,
+  abonnements_id INT NULL DEFAULT 1,
   Foreign Key (roles_id) REFERENCES roles(id),
   Foreign Key (abonnements_id) REFERENCES abonnements(id)
 );
