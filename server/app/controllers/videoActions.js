@@ -59,11 +59,10 @@ const edit = async (req, res, next) => {
 // The A of BREAD - Add (Create) operation
 const add = async (req, res, next) => {
   // Extract the item data from the request body
-  const video = req.body;
 
   try {
     // Insert the item into the database
-    const insertId = await tables.video.create(video);
+    const insertId = await tables.video.create(req.body);
 
     // Respond with HTTP 201 (Created) and the ID of the newly inserted item
     res.status(201).json({ insertId });

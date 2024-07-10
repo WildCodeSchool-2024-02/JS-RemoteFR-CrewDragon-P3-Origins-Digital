@@ -259,6 +259,38 @@
   border: none;
 }
 
+// Popup-Add
+
+.popup-add {
+  position: absolute;
+  text-align: center;
+  z-index: 2;
+  left: 4vw;
+  width: 70vw;
+  border: solid 2px $background-color-dark;
+  padding: 20px;
+  margin-top: 10px;
+  color: $text-color-black;
+  background-color: $background-color-light;
+  border-radius: 20px;
+  label {
+    margin-top: 10px;
+  }
+  button {
+    cursor: pointer;
+  }
+}
+
+.popup-position {
+  display: flex;
+  flex-direction: column;
+}
+.button-position {
+  display: flex;
+  justify-content: end;
+  margin-bottom: 10px;
+}
+
 // Responsive
 
 @media only screen and (min-width: 1024px) {
@@ -351,5 +383,10 @@
 
   .svg-bin {
     width: 3rem;
+  }
+
+  // Popup-add
+  .popup-add {
+    width: 40vw;
   }
 }
