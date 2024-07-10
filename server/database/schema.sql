@@ -34,6 +34,10 @@ create table users (
   Foreign Key (abonnements_id) REFERENCES abonnements(id)
 );
 
+INSERT INTO users (id, email, hashed_password, firstname, lastname, birthday, roles_id, abonnements_id) VALUES
+  (1, "admin@gmail.com", "$argon2id$v=19$m=19456,t=2,p=1$N7schKnCLmVxudwqb9TfJA$PKS3b0/p8vhZ6oLUOb8et/HM8zf+6V58PEHXviiOrTs", "admin", "admin", '2024-07-09', 1, 2 );
+
+
 create table sections (
   id int primary key auto_increment not null,
   name varchar(30) not null,
