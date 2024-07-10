@@ -16,7 +16,7 @@ const login = async (req, res, next) => {
 
     const verified = await argon2.verify(
       user.hashed_password,
-      req.body.hashedPassword
+      req.body.password
     );
 
     if (verified) {
@@ -24,7 +24,7 @@ const login = async (req, res, next) => {
       delete user.hashed_password;
 
       const token = await jwt.sign(
-        { sub: user.id, isAdmin: user.is_admin },
+        { userId: user.id },
         process.env.APP_SECRET,
         {
           expiresIn: "1h",
@@ -36,7 +36,7 @@ const login = async (req, res, next) => {
         user,
       });
     } else {
-      res.sendStatus(422);
+      res.sendStatus(420);
     }
   } catch (err) {
     // Pass any errors to the error-handling middleware

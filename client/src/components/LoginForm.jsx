@@ -11,7 +11,7 @@ function LoginForm() {
   const handleValidation = async (e) => {
     e.preventDefault();
     try {
-      const loginUrl = "http://localhost:3310/api/auths";
+      const loginUrl = `${import.meta.env.VITE_API_URL}/api/auths`;
 
       const response = await fetch(loginUrl, {
         method: "POST",
@@ -27,7 +27,8 @@ function LoginForm() {
 
       const userData = await response.json();
 
-      localStorage.setItem("userData", JSON.stringify(userData));
+      localStorage.setItem("token", JSON.stringify(userData.token));
+      localStorage.setItem("user", JSON.stringify(userData.user));
 
       navigate("/profil");
     } catch (error) {
