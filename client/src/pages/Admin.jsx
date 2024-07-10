@@ -60,7 +60,7 @@ function Admin() {
       // Utilisation de Promise.all pour supprimer
       await Promise.all(
         selectedVideos.map((id) => {
-          axios.delete(`http://localhost:3310/api/videos/${id}`);
+          axios.delete(`${import.meta.env.VITE_API_URL}/api/videos/${id}`);
           // ici, je vais supprimer ma vidéo de mon tableau de vidéo
           return setVideoAdmin(
             videos.filter((video) => !selectedVideos.includes(video.id))
@@ -83,8 +83,10 @@ function Admin() {
 
     const formJson = Object.fromEntries(formData.entries());
 
-    await axios.post(`http://localhost:3310/api/videos/`, formJson);
-    const response = await axios.get("http://localhost:3310/api/videos");
+    await axios.post(`${import.meta.env.VITE_API_URL}/api/videos/`, formJson);
+    const response = await axios.get(
+      `${import.meta.env.VITE_API_URL}/api/videos`
+    );
     setVideoAdmin(response.data);
     notifyAdd();
     setIsPopupAddOpen(false);

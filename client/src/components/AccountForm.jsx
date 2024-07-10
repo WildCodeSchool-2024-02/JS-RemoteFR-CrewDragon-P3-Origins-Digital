@@ -28,7 +28,7 @@ function AccountForm() {
     const UserData = new FormData(User);
     const Userjson = Object.fromEntries(UserData.entries());
     try {
-      await axios.post(`http://localhost:3310/api/users`, Userjson);
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/users`, Userjson);
       setUser(NewUser);
     } catch (error) {
       console.error("Erreur lors de la création du compte : ", error);

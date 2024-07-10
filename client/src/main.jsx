@@ -40,7 +40,9 @@ const router = createBrowserRouter([
         path: "/Contenue",
         element: <Contenue />,
         loader: async () => {
-          const response = await axios.get(`http://localhost:3310/api/videos`);
+          const response = await axios.get(
+            `${import.meta.env.VITE_API_URL}/api/videos`
+          );
           return response.data;
         },
       },
@@ -55,9 +57,9 @@ const router = createBrowserRouter([
         loader: async () => {
           const [videosResponse, categoriesResponse, souscatsResponse] =
             await Promise.all([
-              axios.get(`http://localhost:3310/api/videos/`),
-              axios.get(`http://localhost:3310/api/categories/`),
-              axios.get(`http://localhost:3310/api/souscats/`),
+              axios.get(`${import.meta.env.VITE_API_URL}/api/videos/`),
+              axios.get(`${import.meta.env.VITE_API_URL}/api/categories/`),
+              axios.get(`${import.meta.env.VITE_API_URL}/api/souscats/`),
             ]);
           const videos = videosResponse.data;
           const categories = categoriesResponse.data;
