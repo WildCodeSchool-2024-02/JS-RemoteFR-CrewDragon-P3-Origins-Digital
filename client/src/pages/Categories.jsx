@@ -12,7 +12,7 @@ function Categories() {
   }, []);
   return (
     <>
-      <h1>
+      <h1 className="choose-categorie">
         Veuillez choisir une <span>catégorie</span>
       </h1>
       <div className="layout">

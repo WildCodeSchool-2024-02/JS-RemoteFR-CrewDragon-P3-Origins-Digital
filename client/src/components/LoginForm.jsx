@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
@@ -7,6 +8,9 @@ function LoginForm() {
   const navigate = useNavigate();
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
+
+  // Message de Toastify quand l'utilisateur se log
+  const notifyUser = () => toast("Connexion ok ! Vous allez être redirigée !");
 
   const handleValidation = async (e) => {
     e.preventDefault();
@@ -29,8 +33,11 @@ function LoginForm() {
 
       localStorage.setItem("token", JSON.stringify(userData.token));
       localStorage.setItem("user", JSON.stringify(userData.user));
+      notifyUser();
 
-      navigate("/profil");
+      setTimeout(() => {
+        navigate(`/Profil/${userData.user.id}`);
+      }, 5000);
     } catch (error) {
       console.error(error.message);
     }
@@ -59,6 +66,7 @@ function LoginForm() {
       <button className="login-button" type="submit" onClick={handleValidation}>
         Connexion
       </button>
+      <Toaster />
       <Link to="/account" className="login-account">
         Pas de compte ? Inscrivez-vous
       </Link>
