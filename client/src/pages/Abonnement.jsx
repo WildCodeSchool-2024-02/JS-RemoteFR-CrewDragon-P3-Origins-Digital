@@ -6,6 +6,9 @@ function Abonnement() {
   const [abonnements, setAbonnements] = useState([]);
   const [userSubscription, setUserSubscription] = useState("");
 
+  const token = localStorage.getItem("token");
+  const userId = token ? JSON.parse(atob(token.split(".")[1])).userId : null;
+
   useEffect(() => {
     const fetchAbonnements = async () => {
       try {
@@ -22,14 +25,23 @@ function Abonnement() {
   }, []);
 
   const handleSubscribe = async (abonnementName, abonnementsid) => {
+    if (!userId) {
+      toast.error("Utilisateur non connecté");
+      return;
+    }
+
     try {
       setUserSubscription(abonnementName);
 
-      const userId = 2;
       await axios.put(
         `${import.meta.env.VITE_API_URL}/api/users/${userId}/abonnement`,
         {
           abonnementsid,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 

@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, Link } from "react-router-dom";
 
 function Profil() {
   const users = useLoaderData();
@@ -42,9 +42,11 @@ function Profil() {
                 <span className="userDesc">Votre abonnement :</span>{" "}
                 {users.abonnements.name}
               </p>
-              <button type="button" className="modify-button">
-                changer d'abonnement
-              </button>
+              <Link to="/abo">
+                <button type="button" className="modify-button">
+                  changer d'abonnement
+                </button>
+              </Link>
             </div>
             <div className="modDates">
               <p>
