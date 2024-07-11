@@ -22,6 +22,8 @@ import Contact from "./pages/Contact";
 import Abonnement from "./pages/Abonnement"; //
 
 import Profil from "./pages/Profil";
+import ErrorBoundary from "./pages/ErrorBoundary";
+
 
 // router creation
 
@@ -96,11 +98,23 @@ const router = createBrowserRouter([
 {
         path: "/Profil/:id",
         element: <Profil />,
+        errorElement: <ErrorBoundary />,
         loader: async ({ params }) => {
-          const response = await axios.get(
-            `${import.meta.env.VITE_API_URL}/api/users/${params.id}`
-          );
-          return response.data;
+          const token = localStorage.getItem("token");
+          try {
+            const response = await axios.get(
+              `${import.meta.env.VITE_API_URL}/api/users/${params.id}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            );
+            return response.data;
+          } catch (error) {
+            console.error(error);
+            throw error;
+          }
         },
 
       },

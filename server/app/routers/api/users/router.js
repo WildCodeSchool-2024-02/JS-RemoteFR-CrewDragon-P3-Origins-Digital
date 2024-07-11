@@ -2,7 +2,17 @@ const express = require("express");
 
 const router = express.Router();
 
-const { hashPassword } = require("../../../services/auth");
+/* ************************************************************************* */
+// Define Your API Routes Here
+/* ************************************************************************* */
+
+const {
+  hashPassword,
+  verifyToken,
+  currentUser,
+} = require("../../../services/auth");
+
+// Import item-related actions
 
 const {
   browse,
@@ -17,7 +27,7 @@ const {
 router.get("/", browse);
 
 // Route to get a specific user by ID
-router.get("/:id", read);
+router.get("/:id", verifyToken, currentUser, read);
 
 // Route to update abonnements_id for a specific user by ID
 router.put("/:id", edit);
