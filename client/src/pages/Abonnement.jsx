@@ -29,7 +29,7 @@ function Abonnement() {
       await axios.put(
         `${import.meta.env.VITE_API_URL}/api/users/${userId}/abonnement`,
         {
-          abonnementsid, // Utilisation de la syntaxe de raccourci
+          abonnementsid,
         }
       );
 
