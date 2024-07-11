@@ -7,7 +7,7 @@ class AbonnementRepository extends AbstractRepository {
 
   async create(abonnement) {
     const [result] = await this.database.query(
-      `INSERT INTO ${this.table} (name, montant, duréee, description, date_de_paiement, date_de_fin) VALUES (?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO ${this.table} (name, montant, durée, description, date_de_paiement, date_de_fin) VALUES (?, ?, ?, ?, ?, ?)`,
       [
         abonnement.name,
         abonnement.montant,
