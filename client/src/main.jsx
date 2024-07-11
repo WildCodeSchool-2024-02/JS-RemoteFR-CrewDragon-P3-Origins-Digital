@@ -1,6 +1,7 @@
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 // Import du Composant App
 
@@ -23,7 +24,6 @@ import Abonnement from "./pages/Abonnement"; //
 
 import Profil from "./pages/Profil";
 import ErrorBoundary from "./pages/ErrorBoundary";
-
 
 // router creation
 
@@ -60,18 +60,32 @@ const router = createBrowserRouter([
       {
         path: "/Admin",
         element: <Admin />,
-
+        errorElement: <ErrorBoundary />,
         loader: async () => {
-          const [videosResponse, categoriesResponse, souscatsResponse] =
-            await Promise.all([
-              axios.get(`${import.meta.env.VITE_API_URL}/api/videos/`),
-              axios.get(`${import.meta.env.VITE_API_URL}/api/categories/`),
-              axios.get(`${import.meta.env.VITE_API_URL}/api/souscats/`),
-            ]);
-          const videos = videosResponse.data;
-          const categories = categoriesResponse.data;
-          const souscats = souscatsResponse.data;
-          return { videos, categories, souscats };
+          try {
+            const token = localStorage.getItem("token");
+            const decoded = jwtDecode(token);
+
+            console.info(decoded);
+
+            if (decoded.userId === 1) {
+              const [videosResponse, categoriesResponse, souscatsResponse] =
+                await Promise.all([
+                  axios.get(`${import.meta.env.VITE_API_URL}/api/videos/`),
+                  axios.get(`${import.meta.env.VITE_API_URL}/api/categories/`),
+                  axios.get(`${import.meta.env.VITE_API_URL}/api/souscats/`),
+                ]);
+              const videos = videosResponse.data;
+              const categories = categoriesResponse.data;
+              const souscats = souscatsResponse.data;
+              return { videos, categories, souscats };
+            }
+            // eslint-disable-next-line no-throw-literal
+            throw { message: "Oups, tu n'as pas les droits le 💯" };
+          } catch (error) {
+            console.error(error);
+            throw error;
+          }
         },
       },
       {
@@ -91,11 +105,10 @@ const router = createBrowserRouter([
         element: <Contact />,
       },
       {
-
         path: "/abo",
         element: <Abonnement />,
-},
-{
+      },
+      {
         path: "/Profil/:id",
         element: <Profil />,
         errorElement: <ErrorBoundary />,
@@ -116,7 +129,6 @@ const router = createBrowserRouter([
             throw error;
           }
         },
-
       },
     ],
   },
