@@ -4,7 +4,7 @@ import toast, { Toaster } from "react-hot-toast";
 
 function Abonnement() {
   const [abonnements, setAbonnements] = useState([]);
-  const [userSubscription, setUserSubscription] = useState(""); // Utilisé pour gérer l'état de l'abonnement sélectionné
+  const [userSubscription, setUserSubscription] = useState("");
 
   useEffect(() => {
     const fetchAbonnements = async () => {
