@@ -2,16 +2,16 @@ const AbstractRepository = require("./AbstractRepository");
 
 class UserRepository extends AbstractRepository {
   constructor() {
-    // Call the constructor of the parent class (AbstractRepository)
-    // and pass the table name "user" as configuration
+    // Appel du constructeur de la classe parent (AbstractRepository)
+    // et passe le nom de la table "users" en tant que configuration
     super({ table: "users" });
   }
 
-  // The C of CRUD - Create operation
+  // L'opération de création (Create) du CRUD
   async create(user) {
-    // Execute the SQL INSERT query to add a new user to the "users" table
+    // Exécute la requête SQL INSERT pour ajouter un nouvel utilisateur dans la table "users"
     const [result] = await this.database.query(
-      `insert into ${this.table} (firstname, lastname, birthday, email, hashed_password) values (?, ?, ?, ?, ? )`,
+      `INSERT INTO ${this.table} (firstname, lastname, birthday, email, hashed_password) VALUES (?, ?, ?, ?, ?)`,
       [
         user.firstname,
         user.lastname,
@@ -21,79 +21,77 @@ class UserRepository extends AbstractRepository {
       ]
     );
 
-    // Return the ID of the newly inserted user
+    // Retourne l'ID du nouvel utilisateur inséré
     return result.insertId;
   }
 
-  // The R of CRUD - Read operations
+  // L'opération de lecture (Read) du CRUD
   async read(id) {
+    // Exécute la requête SQL SELECT pour récupérer un utilisateur spécifique par son ID
     const [rows] = await this.database.query(
-      `
-      SELECT
-        u.*,
-        JSON_OBJECT(
-          'id', a.id,
-          'name', a.name,
-          'date_de_paiement', a.date_de_paiement,
-          'date_de_fin', a.date_de_fin
-        ) AS abonnements
-      FROM ${this.table} AS u
-      JOIN abonnements AS a ON u.abonnements_id = a.id
-      WHERE u.id = ?`,
+      `SELECT * FROM ${this.table} WHERE id = ?`,
       [id]
     );
 
+    // Retourne la première ligne du résultat, qui représente l'utilisateur
     return rows[0];
   }
 
+  // L'opération de lecture (Read All) du CRUD
   async readAll() {
-    // Execute the SQL SELECT query to retrieve all users from the "user" table
-    const [rows] = await this.database.query(`select * from ${this.table}`);
+    // Exécute la requête SQL SELECT pour récupérer tous les utilisateurs de la table "users"
+    const [rows] = await this.database.query(`SELECT * FROM ${this.table}`);
 
-    // Return the array of users
+    // Retourne le tableau d'utilisateurs
     return rows;
   }
 
-  // The U of CRUD - Update operation
-  // TODO: Implement the update operation to modify an existing user
-
+  // L'opération de mise à jour (Update) du CRUD pour tous les champs
   async update(user) {
     const [edit] = await this.database.query(
-      `update ${this.table} set email =?, password =?, firstname =?, lastname =?, birthday =?, roles_id =?, abonnements_id =? where id =?`,
+      `update ${this.table} set email =?, hashed_password =?, firstname =?, lastname =?, birthday =?, roles_id =?, abonnementsid =? where id =?`,
       [
         user.email,
-        user.password,
+        user.hashedPassword,
         user.firstname,
         user.lastname,
         user.birthday,
         user.roles_id,
-        user.abonnements_id,
+        user.abonnementsid,
         user.id,
       ]
     );
     return edit;
   }
 
-  // The D of CRUD - Delete operation
-  // TODO: Implement the delete operation to remove an user by its ID
+  // L'opération de mise à jour (Update) du CRUD pour abonnement_id uniquement
+  async updateAbonnement(userId, abonnementsid) {
+    const [edit] = await this.database.query(
+      `UPDATE ${this.table} SET abonnementsid = ? WHERE id = ?`,
+      [abonnementsid, userId]
+    );
+    return edit;
+  }
 
+  // L'opération de suppression (Delete) du CRUD
   async delete(id) {
-    // Execute the SQL DELETE query to remove an user from the "users" table
+    // Exécute la requête SQL DELETE pour supprimer un utilisateur de la table "users"
     const [destroy] = await this.database.query(
-      `delete from ${this.table} where id = ?`,
+      `DELETE FROM ${this.table} WHERE id = ?`,
       [id]
     );
     return destroy;
   }
 
+  // Méthode supplémentaire pour lire un utilisateur par email avec mot de passe
   async readByEmailWithPassword(email) {
-    // Execute the SQL SELECT query to retrieve a specific user by its email
+    // Exécute la requête SQL SELECT pour récupérer un utilisateur spécifique par son email
     const [rows] = await this.database.query(
-      `select * from ${this.table} where email = ?`,
+      `SELECT * FROM ${this.table} WHERE email = ?`,
       [email]
     );
 
-    // Return the first row of the result, which represents the user
+    // Retourne la première ligne du résultat, qui représente l'utilisateur
     return rows[0];
   }
 }

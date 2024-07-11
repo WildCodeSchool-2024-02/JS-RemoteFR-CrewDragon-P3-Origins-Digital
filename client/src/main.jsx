@@ -18,8 +18,12 @@ import Error404 from "./pages/Error404";
 import Login from "./pages/Login";
 import Account from "./pages/Account";
 import Contact from "./pages/Contact";
+
+import Abonnement from "./pages/Abonnement"; //
+
 import Profil from "./pages/Profil";
 import ErrorBoundary from "./pages/ErrorBoundary";
+
 
 // router creation
 
@@ -87,6 +91,11 @@ const router = createBrowserRouter([
         element: <Contact />,
       },
       {
+
+        path: "/abo",
+        element: <Abonnement />,
+},
+{
         path: "/Profil/:id",
         element: <Profil />,
         errorElement: <ErrorBoundary />,
@@ -107,6 +116,7 @@ const router = createBrowserRouter([
             throw error;
           }
         },
+
       },
     ],
   },
