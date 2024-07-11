@@ -9,17 +9,19 @@ INSERT INTO roles(id, name) VALUES
     (2, "user");
 
 
-create table abonnements (
-  id int primary key auto_increment not null,
-  name varchar(30),
-  montant int UNSIGNED not null,
-  date_de_paiement date not null,
-  date_de_fin date not null
+CREATE TABLE abonnements (
+  id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+  name VARCHAR(30),
+  montant INT UNSIGNED NULL,
+  duréee VARCHAR(20) NULL,
+  description TEXT NOT NULL,
+  date_de_paiement DATE NOT NULL,
+  date_de_fin DATE NOT NULL
 );
 
-INSERT INTO abonnements (id, name, montant, date_de_paiement, date_de_fin) VALUES
-    (1, "Compte gratuit", 0, '2024-07-09', '2024-09-09'),
-    (2, "Freemium", 9.99 , '2024-07-09', '2024-09-09');
+INSERT INTO abonnements (name, montant, duréee, description, date_de_paiement, date_de_fin) VALUES
+    ('Compte gratuit', 0, '', 'Avec un compte gratuit, vous avez accès à une sélection limitée de nos vidéos. C''est une excellente option pour découvrir notre contenu et voir si notre offre correspond à vos attentes. Profitez de cette opportunité pour explorer nos vidéos les plus populaires et découvrir la qualité de notre production.', CURRENT_DATE(), '2024-09-09'),
+    ('Compte Premium', 9.99, '3 mois', 'En souscrivant à un abonnement, vous débloquez l''accès à l''intégralité de notre bibliothèque de vidéos pour une durée de 3 mois. Cela comprend toutes les vidéos premium, les nouvelles sorties, et les contenus exclusifs. Cet abonnement est idéal pour ceux qui souhaitent bénéficier de tout notre contenu sans restriction et maximiser leur expérience de visionnage. Rejoignez nos abonnés pour profiter pleinement de tout ce que nous avons à offrir.', CURRENT_DATE(), '2024-09-09');
 
 create table users (
   id int primary key auto_increment not null,
@@ -29,12 +31,12 @@ create table users (
   lastname varchar(30) not null,
   birthday date not null,
   roles_id INT NOT NULL DEFAULT 2,
-  abonnements_id INT NULL DEFAULT 1,
+  abonnementsid INT NULL DEFAULT 1,
   Foreign Key (roles_id) REFERENCES roles(id),
-  Foreign Key (abonnements_id) REFERENCES abonnements(id)
+  Foreign Key (abonnementsid) REFERENCES abonnements(id)
 );
 
-INSERT INTO users (id, email, hashed_password, firstname, lastname, birthday, roles_id, abonnements_id) VALUES
+INSERT INTO users (id, email, hashed_password, firstname, lastname, birthday, roles_id, abonnementsid) VALUES
   (1, "admin@gmail.com", "$argon2id$v=19$m=19456,t=2,p=1$N7schKnCLmVxudwqb9TfJA$PKS3b0/p8vhZ6oLUOb8et/HM8zf+6V58PEHXviiOrTs", "admin", "admin", '2024-07-09', 1, 2 );
 
 

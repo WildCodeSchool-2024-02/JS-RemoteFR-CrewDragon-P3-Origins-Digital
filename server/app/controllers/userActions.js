@@ -91,6 +91,19 @@ const destroy = async (req, res, next) => {
     next(err);
   }
 };
+const updateAbonnement = async (req, res, next) => {
+  const { abonnementsid } = req.body;
+  const userId = req.params.id;
+
+  try {
+    await tables.user.updateAbonnement(userId, abonnementsid);
+
+    res.sendStatus(204);
+  } catch (error) {
+    next(error);
+  }
+};
+
 // This operation is not yet implemented
 
 // Ready to export the controller functions
@@ -100,4 +113,5 @@ module.exports = {
   edit,
   add,
   destroy,
+  updateAbonnement,
 };
