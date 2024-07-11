@@ -27,13 +27,22 @@ class UserRepository extends AbstractRepository {
 
   // The R of CRUD - Read operations
   async read(id) {
-    // Execute the SQL SELECT query to retrieve a specific user by its ID
     const [rows] = await this.database.query(
-      `select * from ${this.table} where id = ?`,
+      `
+      SELECT
+        u.*,
+        JSON_OBJECT(
+          'id', a.id,
+          'name', a.name,
+          'date_de_paiement', a.date_de_paiement,
+          'date_de_fin', a.date_de_fin
+        ) AS abonnements
+      FROM ${this.table} AS u
+      JOIN abonnements AS a ON u.abonnements_id = a.id
+      WHERE u.id = ?`,
       [id]
     );
 
-    // Return the first row of the result, which represents the user
     return rows[0];
   }
 
