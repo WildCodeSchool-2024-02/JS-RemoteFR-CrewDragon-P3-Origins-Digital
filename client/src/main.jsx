@@ -18,7 +18,9 @@ import Error404 from "./pages/Error404";
 import Login from "./pages/Login";
 import Account from "./pages/Account";
 import Contact from "./pages/Contact";
-import Abonnement from "./pages/Abonnement"; //
+import Abonnement from "./pages/Abonnement"; 
+import Profil from "./pages/Profil";
+
 // router creation
 
 const router = createBrowserRouter([
@@ -87,6 +89,17 @@ const router = createBrowserRouter([
       {
         path: "/abo",
         element: <Abonnement />,
+},
+{
+        path: "/Profil/:id",
+        element: <Profil />,
+        loader: async ({ params }) => {
+          const response = await axios.get(
+            `${import.meta.env.VITE_API_URL}/api/users/${params.id}`
+          );
+          return response.data;
+        },
+
       },
     ],
   },
