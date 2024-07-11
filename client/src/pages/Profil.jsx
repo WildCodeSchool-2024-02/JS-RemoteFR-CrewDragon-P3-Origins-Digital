@@ -2,6 +2,7 @@ import { useLoaderData } from "react-router-dom";
 
 function Profil() {
   const users = useLoaderData();
+
   return (
     <div>
       <div className="profil-container">

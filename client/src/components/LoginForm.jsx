@@ -11,6 +11,8 @@ function LoginForm() {
 
   // Message de Toastify quand l'utilisateur se log
   const notifyUser = () => toast("Connexion ok ! Vous allez être redirigée !");
+  const notifyError = () =>
+    toast("Votre mot de passe n'est pas correct ! Réessayer !");
 
   const handleValidation = async (e) => {
     e.preventDefault();
@@ -26,18 +28,19 @@ function LoginForm() {
       });
 
       if (!response.ok) {
+        notifyError();
         throw new Error("Email ou mot de passe incorrect !");
       }
 
       const userData = await response.json();
 
-      localStorage.setItem("token", JSON.stringify(userData.token));
+      localStorage.setItem("token", userData.token);
       localStorage.setItem("user", JSON.stringify(userData.user));
       notifyUser();
 
       setTimeout(() => {
         navigate(`/Profil/${userData.user.id}`);
-      }, 5000);
+      }, 2000);
     } catch (error) {
       console.error(error.message);
     }
