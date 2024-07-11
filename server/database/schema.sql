@@ -13,13 +13,13 @@ CREATE TABLE abonnements (
   id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
   name VARCHAR(30),
   montant INT UNSIGNED NULL,
-  duréee VARCHAR(20) NULL,
+  durée VARCHAR(20) NULL,
   description TEXT NOT NULL,
   date_de_paiement DATE NOT NULL,
   date_de_fin DATE NOT NULL
 );
 
-INSERT INTO abonnements (name, montant, duréee, description, date_de_paiement, date_de_fin) VALUES
+INSERT INTO abonnements (name, montant, durée, description, date_de_paiement, date_de_fin) VALUES
     ('Compte gratuit', 0, '', 'Avec un compte gratuit, vous avez accès à une sélection limitée de nos vidéos. C''est une excellente option pour découvrir notre contenu et voir si notre offre correspond à vos attentes. Profitez de cette opportunité pour explorer nos vidéos les plus populaires et découvrir la qualité de notre production.', CURRENT_DATE(), '2024-09-09'),
     ('Compte Premium', 9.99, '3 mois', 'En souscrivant à un abonnement, vous débloquez l''accès à l''intégralité de notre bibliothèque de vidéos pour une durée de 3 mois. Cela comprend toutes les vidéos premium, les nouvelles sorties, et les contenus exclusifs. Cet abonnement est idéal pour ceux qui souhaitent bénéficier de tout notre contenu sans restriction et maximiser leur expérience de visionnage. Rejoignez nos abonnés pour profiter pleinement de tout ce que nous avons à offrir.', CURRENT_DATE(), '2024-09-09');
 
