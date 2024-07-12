@@ -203,6 +203,9 @@ function Header() {
           >
             pourquoi pas s'abonner ?
           </Link>
+          <Link className="glitch" data-glitch="Mon Profil" to="/Login">
+            Mon Profil
+          </Link>
           <Link className="glitch" data-glitch="se connecter" to="/Login">
             se connecter
           </Link>

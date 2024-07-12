@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 function Abonnement() {
   const [abonnements, setAbonnements] = useState([]);
   const [userSubscription, setUserSubscription] = useState("");
+  const navigate = useNavigate();
+
+  const token = localStorage.getItem("token");
+  const userId = token ? JSON.parse(atob(token.split(".")[1])).userId : null;
 
   useEffect(() => {
     const fetchAbonnements = async () => {
@@ -22,19 +27,29 @@ function Abonnement() {
   }, []);
 
   const handleSubscribe = async (abonnementName, abonnementsid) => {
+    if (!userId) {
+      toast.error("Utilisateur non connecté");
+      return;
+    }
+
     try {
       setUserSubscription(abonnementName);
 
-      const userId = 2;
       await axios.put(
         `${import.meta.env.VITE_API_URL}/api/users/${userId}/abonnement`,
         {
           abonnementsid,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
       setUserSubscription("");
       toast.success(`Vous avez bien souscrit à ${abonnementName}`);
+      navigate(`/profil/${userId}`);
     } catch (error) {
       console.error("Erreur lors de la mise à jour de l'abonnement :", error);
       toast.error("Erreur lors de la mise à jour de l'abonnement");
