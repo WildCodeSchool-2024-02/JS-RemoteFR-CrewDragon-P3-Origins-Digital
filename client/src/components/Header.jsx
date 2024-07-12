@@ -1,4 +1,3 @@
-// Importations
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import HeroSlider, { Overlay, Slide, MenuNav } from "hero-slider";
@@ -37,12 +36,17 @@ function Header() {
     if (token) {
       try {
         const decodedToken = JSON.parse(atob(token.split(".")[1]));
-        const { userId } = decodedToken; // Utilisation correcte de la déstructuration d'objet
+        const { userId } = decodedToken;
         navigate(`/profil/${userId}`);
       } catch (error) {
         console.error("Erreur lors du décodage du token :", error);
       }
     }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/Login");
   };
 
   return (
@@ -241,6 +245,15 @@ function Header() {
             <Link className="glitch" data-glitch="se connecter" to="/Login">
               se connecter
             </Link>
+          </li>
+          <li>
+            <button
+              className="button-profil"
+              type="button"
+              onClick={handleLogout}
+            >
+              Déconnexion
+            </button>
           </li>
         </ul>
       </div>
