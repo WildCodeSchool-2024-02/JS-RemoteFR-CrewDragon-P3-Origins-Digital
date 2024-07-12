@@ -1,45 +1,53 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 import "../style/Categories.scss";
-import { Link } from "react-router-dom";
 
 function Categories() {
+  const [categories, setCategories] = useState([]);
   useEffect(() => {
     window.scrollBy({
       top: window.innerHeight,
       behavior: "smooth",
     });
   }, []);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/api/categories`
+        );
+        setCategories(response.data);
+      } catch (error) {
+        console.error("Erreur lors du chargement des categories :", error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
   return (
-    <>
+    <div>
       <h1 className="choose-categorie">
         Veuillez choisir une <span>catégorie</span>
       </h1>
       <div className="layout">
-        <Link to="/Categories/sport">
-          <div className="image-container">
-            <div className="overlay-text">Sport</div>
+        {categories.map((categorie) => (
+          <div key={categorie} className="image-container">
+            <div className="text-categorie-container">
+              <h2 className="text-categorie">{categorie.name}</h2>
+            </div>
+            <img
+              className="image-categorie"
+              src={categorie.image}
+              alt="images-categories"
+            />
           </div>
-        </Link>
-        <Link to="/Categories/actualite">
-          <div className="image-container2">
-            <div className="overlay-text">Actualité</div>
-          </div>
-        </Link>
-
-        <Link to="/Categories/tech">
-          <div className="image-container3">
-            <div className="overlay-text">Technologie</div>
-          </div>
-        </Link>
-
-        <Link to="/Categories/junior">
-          <div className="image-container4">
-            <div className="overlay-text">Junior</div>
-          </div>
-        </Link>
+        ))}
+        ;
       </div>
-    </>
+    </div>
   );
 }
 export default Categories;
