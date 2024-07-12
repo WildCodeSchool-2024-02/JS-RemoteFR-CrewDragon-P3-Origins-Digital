@@ -1,7 +1,7 @@
-// Import react
-import HeroSlider, { Overlay, Slide, MenuNav } from "hero-slider";
+// Importations
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import HeroSlider, { Overlay, Slide, MenuNav } from "hero-slider";
 
 // Import des images
 import LOGO from "../assets/images/origindigital.svg";
@@ -17,6 +17,7 @@ import videohomepage5 from "../assets/images/images-header/videohomepage5.mp4";
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -24,38 +25,38 @@ function Header() {
 
   const [theme, setTheme] = useState("light");
   const toggleTheme = () => {
-    if (theme === "light") {
-      setTheme("dark");
-    } else {
-      setTheme("light");
-    }
+    setTheme(theme === "light" ? "dark" : "light");
   };
+
   useEffect(() => {
     document.body.className = theme;
   }, [theme]);
+
+  const goToProfile = () => {
+    const { token } = localStorage;
+    if (token) {
+      try {
+        const decodedToken = JSON.parse(atob(token.split(".")[1]));
+        const { userId } = decodedToken; // Utilisation correcte de la déstructuration d'objet
+        navigate(`/profil/${userId}`);
+      } catch (error) {
+        console.error("Erreur lors du décodage du token :", error);
+      }
+    }
+  };
 
   return (
     <div className="header">
       <div className="filter-video" />
       <HeroSlider
         height={0}
-        // autoplay
         controller={{
           initialSlide: 1,
           slidingDuration: 0,
           slidingDelay: 0,
-          onSliding: (nextSlide) =>
-            console.info("onSliding(nextSlide): ", nextSlide),
-          onBeforeSliding: (previousSlide, nextSlide) =>
-            console.info(
-              "onBeforeSliding(previousSlide, nextSlide): ",
-              previousSlide,
-              nextSlide
-            ),
-          onAfterSliding: (nextSlide) =>
-            console.info("onAfterSliding(nextSlide): ", nextSlide),
         }}
       >
+        {/* Slide 1 */}
         <Slide>
           <Overlay>
             <div className="text-hero-slider">
@@ -73,6 +74,8 @@ function Header() {
             <source src={videohomepage1} type="video/mp4" />
           </video>
         </Slide>
+
+        {/* Slide 2 */}
         <Slide>
           <Overlay>
             <div className="text-hero-slider">
@@ -90,12 +93,14 @@ function Header() {
             <source src={videohomepage} type="video/mp4" />
           </video>
         </Slide>
+
+        {/* Slide 3 */}
         <Slide>
           <Overlay>
             <div className="text-hero-slider">
               <h1>
                 Retrouvez les{" "}
-                <span className="span-decoration">Actualitées</span>
+                <span className="span-decoration">Actualités</span>
               </h1>
               <p>
                 Afin de suivre vos vidéos favorites de divers sports disponibles
@@ -107,6 +112,8 @@ function Header() {
             <source src={videohomepage3} type="video/mp4" />
           </video>
         </Slide>
+
+        {/* Slide 4 */}
         <Slide>
           <Overlay>
             <div className="text-hero-slider">
@@ -121,6 +128,8 @@ function Header() {
             <source src={videohomepage2} type="video/mp4" />
           </video>
         </Slide>
+
+        {/* Slide 5 */}
         <Slide>
           <Overlay>
             <div className="text-hero-slider">
@@ -138,6 +147,8 @@ function Header() {
             <source src={videohomepage4} type="video/mp4" />
           </video>
         </Slide>
+
+        {/* Slide 6 */}
         <Slide>
           <Overlay>
             <div className="text-hero-slider">
@@ -156,8 +167,10 @@ function Header() {
             <source src={videohomepage5} type="video/mp4" />
           </video>
         </Slide>
+
         <MenuNav />
       </HeroSlider>
+
       <img className="logo" src={LOGO} alt="logo" />
 
       <div className="theme">
@@ -165,10 +178,9 @@ function Header() {
           {" "}
         </button>
       </div>
+
+      {/* Menu latéral */}
       <div className={menuOpen ? "sidenav active" : "sidenav"}>
-        <video autoPlay muted loop className="background-video">
-          <source src={videoMenuBurger} type="video/mp4" />
-        </video>
         <video autoPlay muted loop className="background-video">
           <source src={videoMenuBurger} type="video/mp4" />
         </video>
@@ -177,40 +189,62 @@ function Header() {
         </button>
 
         <ul>
-          <Link className="glitch" data-glitch="Accueil" to="/">
-            Accueil
-          </Link>
-          <Link className="glitch" data-glitch="Catégories" to="/Categories">
-            Catégories
-          </Link>
-          <Link
-            className="glitch"
-            data-glitch="Sous-Catégories"
-            to="/SousCategories"
-          >
-            Sous-Catégories
-          </Link>
-          <Link className="glitch" data-glitch="Contenue" to="/Contenue">
-            Contenue
-          </Link>
-          <Link className="glitch" data-glitch="Admin" to="/Admin">
-            Admin
-          </Link>
-          <Link
-            className="glitch"
-            data-glitch="pourquoi pas s'abonner ?"
-            to="/Abo"
-          >
-            pourquoi pas s'abonner ?
-          </Link>
-          <Link className="glitch" data-glitch="Mon Profil" to="/Login">
-            Mon Profil
-          </Link>
-          <Link className="glitch" data-glitch="se connecter" to="/Login">
-            se connecter
-          </Link>
+          {/* Liens vers différentes pages */}
+          <li>
+            <Link className="glitch" data-glitch="Accueil" to="/">
+              Accueil
+            </Link>
+          </li>
+          <li>
+            <Link className="glitch" data-glitch="Catégories" to="/Categories">
+              Catégories
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="glitch"
+              data-glitch="Sous-Catégories"
+              to="/SousCategories"
+            >
+              Sous-Catégories
+            </Link>
+          </li>
+          <li>
+            <Link className="glitch" data-glitch="Contenue" to="/Contenue">
+              Contenue
+            </Link>
+          </li>
+          <li>
+            <Link className="glitch" data-glitch="Admin" to="/Admin">
+              Admin
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="glitch"
+              data-glitch="pourquoi pas s'abonner ?"
+              to="/Abo"
+            >
+              pourquoi pas s'abonner ?
+            </Link>
+          </li>
+          <li>
+            <button
+              className="button-profil"
+              type="button"
+              onClick={goToProfile}
+            >
+              Mon Profil
+            </button>
+          </li>
+          <li>
+            <Link className="glitch" data-glitch="se connecter" to="/Login">
+              se connecter
+            </Link>
+          </li>
         </ul>
       </div>
+
       <button type="button" id="openBtn" onClick={toggleMenu}>
         <span className="burger-icon">
           <img className="logo-burger" src={MENU} alt="menu burger" />
