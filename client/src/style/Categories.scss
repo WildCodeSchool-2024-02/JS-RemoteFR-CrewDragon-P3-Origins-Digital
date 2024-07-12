@@ -20,28 +20,42 @@
 
 // Img cover catégorie
 
-[class*="image-container"] {
+.layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image-container {
   position: relative;
   display: inline-block;
   margin-bottom: 8rem;
   border: solid #ff7105 5px;
   border-radius: 20px;
-  width: 100%;
-  height: 15rem;
-  background-image: url("https://aarp-content.brightspotcdn.com/dims4/default/cc18043/2147483647/strip/true/crop/1279x704+0+0/resize/876x482!/quality/90/?url=http%3A%2F%2Faarp-brightspot.s3.amazonaws.com%2Fcontent%2Faa%2Fc9%2Fcbf66962478cb9e8f92d5641b070%2Fsportsgoat-neiljamieson-1280.jpg");
-  background-size: cover;
-  background-position: center;
-}
-.image-container2 {
-  background-image: url("https://static8.depositphotos.com/1391774/933/i/450/depositphotos_9334068-stock-photo-ripped-newspapers.jpg");
-}
-
-.image-container3 {
-  background-image: url("https://e0.pxfuel.com/wallpapers/171/486/desktop-wallpaper-cpu.jpg");
+  width: 80%;
+  height: 35vh;
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 14px;
+  }
 }
 
-.image-container4 {
-  background-image: url("https://www.denofgeek.com/wp-content/uploads/2020/03/Best-Kids-TV-Shows-Streaming-in-the-UK-Lead.jpg?fit=1200%2C675");
+.text-categorie-container {
+  display: flex;
+  justify-content: center;
+}
+
+.text-categorie {
+  position: absolute;
+  color: white;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-text-stroke-width: 1.5px;
+  -webkit-text-stroke-color: black;
+  font-weight: bolder;
+  font-size: 3rem;
 }
 
 @media only screen and (min-width: 1080px) {
@@ -50,15 +64,14 @@
     grid-template-rows: repeat(2, 1fr);
     grid-template-columns: repeat(2, 1fr);
     gap: 8px;
-
     justify-items: center;
   }
 
-  [class*="image-container"] {
+  .image-container {
     width: 35rem;
-    height: 35rem;
+    height: 35vh;
   }
-  .overlay-text {
+  .text-categorie {
     font-size: 6rem;
   }
 }
