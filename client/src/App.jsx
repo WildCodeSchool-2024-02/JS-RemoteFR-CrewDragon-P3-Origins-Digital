@@ -1,21 +1,16 @@
 import { Outlet } from "react-router-dom";
-
-// Import des Composants
-
+import { AuthProvider } from "./contexte/AuthContext";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-
-// Import du SCSS
-
 import "./App.scss";
 
 function App() {
   return (
-    <>
+    <AuthProvider>
       <Header />
       <Outlet />
       <Footer />
-    </>
+    </AuthProvider>
   );
 }
 

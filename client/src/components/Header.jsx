@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+// Header.jsx
 import HeroSlider, { Overlay, Slide, MenuNav } from "hero-slider";
-
-// Import des images
+import { useState, useEffect, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../contexte/AuthContext";
 import LOGO from "../assets/images/origindigital.svg";
 import MENU from "../assets/images/images-header/menu.svg";
 import CROSS from "../assets/images/images-header/cross.svg";
@@ -16,13 +16,14 @@ import videohomepage5 from "../assets/images/images-header/videohomepage5.mp4";
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [theme, setTheme] = useState("light");
   const navigate = useNavigate();
+  const { isAuthenticated, logout } = useContext(AuthContext);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
 
-  const [theme, setTheme] = useState("light");
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
   };
@@ -32,8 +33,8 @@ function Header() {
   }, [theme]);
 
   const goToProfile = () => {
-    const { token } = localStorage;
-    if (token) {
+    if (isAuthenticated) {
+      const token = localStorage.getItem("token");
       try {
         const decodedToken = JSON.parse(atob(token.split(".")[1]));
         const { userId } = decodedToken;
@@ -42,11 +43,6 @@ function Header() {
         console.error("Erreur lors du décodage du token :", error);
       }
     }
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/Login");
   };
 
   return (
@@ -183,7 +179,6 @@ function Header() {
         </button>
       </div>
 
-      {/* Menu latéral */}
       <div className={menuOpen ? "sidenav active" : "sidenav"}>
         <video autoPlay muted loop className="background-video">
           <source src={videoMenuBurger} type="video/mp4" />
@@ -232,29 +227,34 @@ function Header() {
               pourquoi pas s'abonner ?
             </Link>
           </li>
-          <li>
-            <button
-              className="button-profil"
-              type="button"
-              onClick={goToProfile}
-            >
-              Mon Profil
-            </button>
-          </li>
-          <li>
-            <Link className="glitch" data-glitch="se connecter" to="/Login">
-              se connecter
-            </Link>
-          </li>
-          <li>
-            <button
-              className="button-profil"
-              type="button"
-              onClick={handleLogout}
-            >
-              Déconnexion
-            </button>
-          </li>
+          {isAuthenticated ? (
+            <>
+              <li>
+                <button
+                  className="button-profil"
+                  type="button"
+                  onClick={goToProfile}
+                >
+                  Mon Profil
+                </button>
+              </li>
+              <li>
+                <button
+                  className="button-profil"
+                  type="button"
+                  onClick={logout}
+                >
+                  Déconnexion
+                </button>
+              </li>
+            </>
+          ) : (
+            <li>
+              <Link className="glitch" data-glitch="se connecter" to="/Login">
+                se connecter
+              </Link>
+            </li>
+          )}
         </ul>
       </div>
 
