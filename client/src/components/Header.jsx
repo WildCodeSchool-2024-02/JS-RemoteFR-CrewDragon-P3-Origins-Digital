@@ -196,18 +196,18 @@ function Header() {
             </Link>
           </li>
           <li>
-            <Link className="glitch" data-glitch="Catégories" to="/Categories">
+            <Link className="glitch" data-glitch="Catégories" to="/categories">
               Catégories
             </Link>
           </li>
           <li>
-            <Link className="glitch" data-glitch="Contenue" to="/Contenue">
+            <Link className="glitch" data-glitch="Contenue" to="/contenue">
               Contenue
             </Link>
           </li>
           {isAdmin() && (
             <li>
-              <Link className="glitch" data-glitch="Admin" to="/Admin">
+              <Link className="glitch" data-glitch="Admin" to="/admin">
                 Admin
               </Link>
             </li>
@@ -216,7 +216,7 @@ function Header() {
             <Link
               className="glitch"
               data-glitch="pourquoi pas s'abonner ?"
-              to="/Abo"
+              to="/abo"
             >
               Pourquoi s'abonner ?
             </Link>
@@ -244,7 +244,7 @@ function Header() {
             </>
           ) : (
             <li>
-              <Link className="glitch" data-glitch="se connecter" to="/Login">
+              <Link className="glitch" data-glitch="se connecter" to="/login">
                 Se connecter
               </Link>
             </li>
