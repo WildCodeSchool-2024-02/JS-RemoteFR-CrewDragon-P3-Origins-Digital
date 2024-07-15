@@ -12,7 +12,7 @@ class SousCatRepository extends AbstractRepository {
     // Execute the SQL INSERT query to add a new souscat to the "souscats" table
     const [result] = await this.database.query(
       `insert into ${this.table} (name, categories_id) values (?, ?)`,
-      [souscat.name, souscat.categorieId]
+      [souscat.name, souscat.categories_id]
     );
 
     // Return the ID of the newly inserted souscat

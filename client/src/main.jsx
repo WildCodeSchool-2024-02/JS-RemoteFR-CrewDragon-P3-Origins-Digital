@@ -19,6 +19,7 @@ import Error404 from "./pages/Error404";
 import Login from "./pages/Login";
 import Account from "./pages/Account";
 import Contact from "./pages/Contact";
+import FormCatSousCat from "./components/FormCatSousCat";
 
 import Abonnement from "./pages/Abonnement"; //
 
@@ -36,7 +37,7 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/Categories",
+        path: "/categories",
         element: <Categories />,
       },
       {
@@ -44,7 +45,7 @@ const router = createBrowserRouter([
         element: <SousCategories />,
       },
       {
-        path: "/Contenue",
+        path: "/contenue",
         element: <Contenue />,
         loader: async () => {
           const response = await axios.get(
@@ -58,15 +59,14 @@ const router = createBrowserRouter([
         element: <VideoUnique />,
       },
       {
-        path: "/Admin",
+        path: "/admin",
         element: <Admin />,
+
         errorElement: <ErrorBoundary />,
         loader: async () => {
           try {
             const token = localStorage.getItem("token");
             const decoded = jwtDecode(token);
-
-            console.info(decoded);
 
             if (decoded.userId === 1) {
               const [videosResponse, categoriesResponse, souscatsResponse] =
@@ -89,11 +89,11 @@ const router = createBrowserRouter([
         },
       },
       {
-        path: "/Login",
+        path: "/login",
         element: <Login />,
       },
       {
-        path: "/Account",
+        path: "/account",
         element: <Account />,
       },
       {
@@ -101,7 +101,11 @@ const router = createBrowserRouter([
         element: <Error404 />,
       },
       {
-        path: "/Contact",
+        path: "/admin/catsouscats",
+        element: <FormCatSousCat />,
+      },
+      {
+        path: "/contact",
         element: <Contact />,
       },
       {
@@ -109,7 +113,7 @@ const router = createBrowserRouter([
         element: <Abonnement />,
       },
       {
-        path: "/Profil/:id",
+        path: "/profil/:id",
         element: <Profil />,
         errorElement: <ErrorBoundary />,
         loader: async ({ params }) => {

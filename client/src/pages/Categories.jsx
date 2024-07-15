@@ -48,7 +48,6 @@ function Categories() {
             </Link>
           </div>
         ))}
-        ;
       </div>
     </div>
   );
