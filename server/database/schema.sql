@@ -93,10 +93,10 @@ create table videos (
   carouDynamique VARCHAR(5) DEFAULT "off",
   freemium VARCHAR(5) DEFAULT "off",
   miniature varchar(255)  null,
-  categories_id INT NOT NULL,
   souscats_id INT NOT NULL,
-  Foreign Key (categories_id) REFERENCES categories(id),
+  categories_id INT NOT NULL,
   Foreign Key (souscats_id) REFERENCES souscats(id),
+  Foreign Key (categories_id) REFERENCES categories(id),
    duree TIME
 );
 

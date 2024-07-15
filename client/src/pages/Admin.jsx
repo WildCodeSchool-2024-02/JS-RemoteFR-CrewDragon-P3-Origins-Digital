@@ -263,7 +263,7 @@ function Admin() {
               />
             </div>
             <span className="container-align-text">
-              <p>Catégorie / Sous-Catégorie</p>
+              <p>Sous-Catégorie / Catégorie</p>
             </span>
             <p>Date</p>
           </div>
