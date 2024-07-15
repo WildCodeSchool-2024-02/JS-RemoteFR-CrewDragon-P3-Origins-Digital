@@ -135,7 +135,7 @@ function Header() {
             <div className="text-hero-slider">
               <h1>
                 Retrouvez du contenu pour{" "}
-                <span className="span-decoration">Jeune âge</span>
+                <span className="span-decoration">Juniors</span>
               </h1>
               <p>
                 Nos vidéos sont soigneusement sélectionnées pour garantir une

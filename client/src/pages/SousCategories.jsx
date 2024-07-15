@@ -3,14 +3,15 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import YouTube from "react-youtube";
 import Slider from "react-slick";
-import categoriesData from "../Data/CategorieData";
+import axios from "axios";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 function SousCategories() {
-  const { categoryName } = useParams();
+  const { categoryId } = useParams();
   const [subCategories, setSubCategories] = useState([]);
+  const [videos, setVideos] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   useEffect(() => {
@@ -19,16 +20,41 @@ function SousCategories() {
       behavior: "smooth",
     });
 
-    const category = categoriesData.find(
-      (cat) => cat.name.toLowerCase() === categoryName.toLowerCase()
-    );
-    if (category) {
-      setSelectedCategory(category);
-      if (category.sousCategorie) {
-        setSubCategories(category.sousCategorie);
+    const fetchCategoryData = async () => {
+      try {
+        // Récupérer la catégorie sélectionnée
+        const categoryResponse = await axios.get(
+          `${import.meta.env.VITE_API_URL}/api/categories/${categoryId}`
+        );
+        const category = categoryResponse.data;
+        setSelectedCategory(category);
+
+        // Récupérer toutes les sous-catégories
+        const sousCategoriesResponse = await axios.get(
+          `${import.meta.env.VITE_API_URL}/api/souscats`
+        );
+        const allSubCategories = sousCategoriesResponse.data;
+
+        const videosResponse = await axios.get(
+          `${import.meta.env.VITE_API_URL}/api/videos`
+        );
+
+        const allVideos = videosResponse.data;
+        setVideos(allVideos);
+
+        // Filtrer les sous-catégories pour celles qui correspondent à la catégorie sélectionnée
+        const filteredSubCategories = allSubCategories.filter(
+          (sousCategorie) =>
+            sousCategorie.categories_id === categoryResponse.data.id
+        );
+        setSubCategories(filteredSubCategories);
+      } catch (error) {
+        console.error("Erreur lors du chargement des données :", error);
       }
-    }
-  }, [categoryName]);
+    };
+
+    fetchCategoryData();
+  }, [categoryId]);
 
   const settings = {
     arrows: true,
@@ -56,84 +82,33 @@ function SousCategories() {
         <div key={sousCategorie.id}>
           <h2 className="title-sous-categorie">{sousCategorie.name}</h2>
           <Slider {...settings}>
-            {sousCategorie.video1 && (
-              <div key={sousCategorie.video1}>
-                <YouTube
-                  className="container-sous-categorie"
-                  videoId={sousCategorie.video1.split("v=")[1]}
-                  opts={opts}
-                />
-                <div className="button-container">
-                  <Link
-                    to={`/video/${sousCategorie.video1.split("v=")[1]}`}
-                    // passe un state dans le link pour UniqueVideo.jsx
-                    state={{
-                      title: sousCategorie.titre1,
-                      description: sousCategorie.description1,
-                      date: sousCategorie.date1,
-                      duration: sousCategorie.durée1,
-                      categories: sousCategorie.name,
-                    }}
-                  >
-                    <button className="button-style" type="button">
-                      voir plus
-                    </button>
-                  </Link>
+            {videos
+              .filter((video) => video.souscats_id === sousCategorie.id)
+              .map((filteredVideo) => (
+                <div key={filteredVideo.id}>
+                  <YouTube
+                    className="container-sous-categorie"
+                    videoId={filteredVideo.url.split("v=")[1]}
+                    opts={opts}
+                  />
+                  <div className="button-container">
+                    <Link
+                      to={`/video/${filteredVideo.url.split("v=")[1]}`}
+                      state={{
+                        title: filteredVideo.title,
+                        description: filteredVideo.description,
+                        date: filteredVideo.date,
+                        duration: filteredVideo.duration,
+                        categories: sousCategorie.name,
+                      }}
+                    >
+                      <button className="button-style" type="button">
+                        voir plus
+                      </button>
+                    </Link>
+                  </div>
                 </div>
-              </div>
-            )}
-            {sousCategorie.video2 && (
-              <div key={sousCategorie.video2}>
-                <YouTube
-                  className="container-sous-categorie"
-                  videoId={sousCategorie.video2.split("v=")[1]}
-                  opts={opts}
-                />
-                <div className="button-container">
-                  <Link
-                    to={`/video/${sousCategorie.video2.split("v=")[1]}`}
-                    // passe un state dans le link pour UniqueVideo.jsx
-                    state={{
-                      title: sousCategorie.titre2,
-                      description: sousCategorie.description2,
-                      date: sousCategorie.date2,
-                      duration: sousCategorie.durée2,
-                      categories: sousCategorie.name,
-                    }}
-                  >
-                    <button className="button-style" type="button">
-                      voir plus
-                    </button>
-                  </Link>
-                </div>
-              </div>
-            )}
-            {sousCategorie.video3 && (
-              <div key={sousCategorie.video3}>
-                <YouTube
-                  className="container-sous-categorie"
-                  videoId={sousCategorie.video3.split("v=")[1]}
-                  opts={opts}
-                />
-                <div className="button-container">
-                  <Link
-                    to={`/video/${sousCategorie.video3.split("v=")[1]}`}
-                    // passe un state dans le link pour UniqueVideo.jsx
-                    state={{
-                      title: sousCategorie.titre3,
-                      description: sousCategorie.description3,
-                      date: sousCategorie.date3,
-                      duration: sousCategorie.durée3,
-                      categories: sousCategorie.name,
-                    }}
-                  >
-                    <button className="button-style" type="button">
-                      voir plus
-                    </button>
-                  </Link>
-                </div>
-              </div>
-            )}
+              ))}
           </Slider>
         </div>
       ))}
