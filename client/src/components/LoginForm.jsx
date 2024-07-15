@@ -1,18 +1,21 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import { AuthContext } from "../contexte/AuthContext";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
+
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
 
-  // Message de Toastify quand l'utilisateur se log
-  const notifyUser = () => toast("Connexion ok ! Vous allez être redirigée !");
+  const notifyUser = () =>
+    toast("Connexion réussie ! Vous allez être redirigé(e) !");
   const notifyError = () =>
-    toast("Votre mot de passe n'est pas correct ! Réessayer !");
+    toast.error("Email ou mot de passe incorrect ! Réessayez.");
 
   const handleValidation = async (e) => {
     e.preventDefault();
@@ -33,28 +36,29 @@ function LoginForm() {
       }
 
       const userData = await response.json();
+      login(userData.token); // Utilisation de la fonction login du contexte
 
-      localStorage.setItem("token", userData.token);
-      localStorage.setItem("user", JSON.stringify(userData.user));
+      localStorage.setItem("user", JSON.stringify(userData.user)); // Stockage des données utilisateur si nécessaire
       notifyUser();
 
       setTimeout(() => {
         navigate(`/Profil/${userData.user.id}`);
       }, 2000);
     } catch (error) {
-      console.error(error.message);
+      console.error("Erreur lors de la connexion :", error);
     }
   };
 
   return (
     <form className="login-form">
       <div className="form-group">
-        <label htmlFor="username">Nom d'utilisateur</label>
+        <label htmlFor="email">Email</label>
         <input
           type="email"
           value={email}
           onChange={handleEmailChange}
           placeholder="Email"
+          required
         />
       </div>
       <div className="form-group">
@@ -64,6 +68,7 @@ function LoginForm() {
           value={password}
           onChange={handlePasswordChange}
           placeholder="Mot de passe"
+          required
         />
       </div>
       <button className="login-button" type="submit" onClick={handleValidation}>

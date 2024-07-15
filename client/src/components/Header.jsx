@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import HeroSlider, { Overlay, Slide, MenuNav } from "hero-slider";
+import { useState, useEffect, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../contexte/AuthContext";
 
-// Import des images
 import LOGO from "../assets/images/origindigital.svg";
 import MENU from "../assets/images/images-header/menu.svg";
 import CROSS from "../assets/images/images-header/cross.svg";
@@ -16,13 +16,14 @@ import videohomepage5 from "../assets/images/images-header/videohomepage5.mp4";
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [theme, setTheme] = useState("light");
   const navigate = useNavigate();
+  const { isAuthenticated, isAdmin, logout } = useContext(AuthContext);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
 
-  const [theme, setTheme] = useState("light");
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
   };
@@ -32,8 +33,8 @@ function Header() {
   }, [theme]);
 
   const goToProfile = () => {
-    const { token } = localStorage;
-    if (token) {
+    if (isAuthenticated) {
+      const token = localStorage.getItem("token");
       try {
         const decodedToken = JSON.parse(atob(token.split(".")[1]));
         const { userId } = decodedToken;
@@ -44,10 +45,7 @@ function Header() {
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/login");
-  };
+  useEffect(() => {}, [isAuthenticated, isAdmin]);
 
   return (
     <div className="header">
@@ -179,11 +177,10 @@ function Header() {
 
       <div className="theme">
         <button type="button" onClick={toggleTheme}>
-          {" "}
+          Changer de thème
         </button>
       </div>
 
-      {/* Menu latéral */}
       <div className={menuOpen ? "sidenav active" : "sidenav"}>
         <video autoPlay muted loop className="background-video">
           <source src={videoMenuBurger} type="video/mp4" />
@@ -193,7 +190,6 @@ function Header() {
         </button>
 
         <ul>
-          {/* Liens vers différentes pages */}
           <li>
             <Link className="glitch" data-glitch="Accueil" to="/">
               Accueil
@@ -205,56 +201,54 @@ function Header() {
             </Link>
           </li>
           <li>
-            <Link
-              className="glitch"
-              data-glitch="Sous-Catégories"
-              to="/SousCategories"
-            >
-              Sous-Catégories
-            </Link>
-          </li>
-          <li>
             <Link className="glitch" data-glitch="Contenue" to="/contenue">
               Contenue
             </Link>
           </li>
-          <li>
-            <Link className="glitch" data-glitch="Admin" to="/admin">
-              Admin
-            </Link>
-          </li>
+          {isAdmin() && (
+            <li>
+              <Link className="glitch" data-glitch="Admin" to="/admin">
+                Admin
+              </Link>
+            </li>
+          )}
           <li>
             <Link
               className="glitch"
               data-glitch="pourquoi pas s'abonner ?"
               to="/abo"
             >
-              pourquoi pas s'abonner ?
+              Pourquoi s'abonner ?
             </Link>
           </li>
-          <li>
-            <button
-              className="button-profil"
-              type="button"
-              onClick={goToProfile}
-            >
-              Mon Profil
-            </button>
-          </li>
-          <li>
-            <Link className="glitch" data-glitch="se connecter" to="/login">
-              se connecter
-            </Link>
-          </li>
-          <li>
-            <button
-              className="button-profil"
-              type="button"
-              onClick={handleLogout}
-            >
-              Déconnexion
-            </button>
-          </li>
+          {isAuthenticated ? (
+            <>
+              <li>
+                <button
+                  className="button-profil"
+                  type="button"
+                  onClick={goToProfile}
+                >
+                  Mon Profil
+                </button>
+              </li>
+              <li>
+                <button
+                  className="button-profil"
+                  type="button"
+                  onClick={logout}
+                >
+                  Déconnexion
+                </button>
+              </li>
+            </>
+          ) : (
+            <li>
+              <Link className="glitch" data-glitch="se connecter" to="/login">
+                Se connecter
+              </Link>
+            </li>
+          )}
         </ul>
       </div>
 
