@@ -1,6 +1,5 @@
-// LoginForm.jsx
-import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useState, useContext } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { AuthContext } from "../contexte/AuthContext";
 
@@ -15,7 +14,8 @@ function LoginForm() {
 
   const notifyUser = () =>
     toast("Connexion réussie ! Vous allez être redirigé(e) !");
-  const notifyError = () => toast.error("Email ou mot de passe incorrect !");
+  const notifyError = () =>
+    toast.error("Email ou mot de passe incorrect ! Réessayez.");
 
   const handleValidation = async (e) => {
     e.preventDefault();
@@ -36,8 +36,9 @@ function LoginForm() {
       }
 
       const userData = await response.json();
-      login(userData.token);
+      login(userData.token); // Utilisation de la fonction login du contexte
 
+      localStorage.setItem("user", JSON.stringify(userData.user)); // Stockage des données utilisateur si nécessaire
       notifyUser();
 
       setTimeout(() => {

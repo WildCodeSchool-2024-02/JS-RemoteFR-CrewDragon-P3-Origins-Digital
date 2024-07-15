@@ -199,15 +199,7 @@ function Header() {
               Catégories
             </Link>
           </li>
-          <li>
-            <Link
-              className="glitch"
-              data-glitch="Sous-Catégories"
-              to="/SousCategories"
-            >
-              Sous-Catégories
-            </Link>
-          </li>
+
           <li>
             <Link className="glitch" data-glitch="Contenue" to="/Contenue">
               Contenue
