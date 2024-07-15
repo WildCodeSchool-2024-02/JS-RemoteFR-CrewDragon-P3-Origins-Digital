@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 import "../style/Categories.scss";
@@ -35,14 +36,16 @@ function Categories() {
       <div className="layout">
         {categories.map((categorie) => (
           <div key={categorie} className="image-container">
-            <div className="text-categorie-container">
-              <h2 className="text-categorie">{categorie.name}</h2>
-            </div>
-            <img
-              className="image-categorie"
-              src={categorie.image}
-              alt="images-categories"
-            />
+            <Link to={`/Categories/${categorie.id}`}>
+              <div className="text-categorie-container">
+                <h2 className="text-categorie">{categorie.name}</h2>
+              </div>
+              <img
+                className="image-categorie"
+                src={categorie.image}
+                alt="images-categories"
+              />
+            </Link>
           </div>
         ))}
         ;

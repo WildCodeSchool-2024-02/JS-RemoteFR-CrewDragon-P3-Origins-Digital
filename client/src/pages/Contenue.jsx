@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, Link } from "react-router-dom";
 import YouTube from "react-youtube";
 import fleche from "../assets/images/fleche.png";
 
@@ -27,7 +27,18 @@ function Contenue() {
               <div className="infosVideo">
                 <p>{video.title}</p>
               </div>
-              <button type="button">Détails</button>
+              <Link
+                to={`/video/${video.url.split("v=")[1]}`}
+                state={{
+                  title: video.title,
+                  description: video.description,
+                  date: video.date,
+                  duration: video.duration,
+                  categories: video.name,
+                }}
+              >
+                <button type="button">Détails</button>
+              </Link>
             </div>
           </div>
         ))}
