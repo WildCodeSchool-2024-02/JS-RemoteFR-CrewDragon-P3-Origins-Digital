@@ -1,8 +1,8 @@
-// Header.jsx
 import HeroSlider, { Overlay, Slide, MenuNav } from "hero-slider";
 import { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexte/AuthContext";
+
 import LOGO from "../assets/images/origindigital.svg";
 import MENU from "../assets/images/images-header/menu.svg";
 import CROSS from "../assets/images/images-header/cross.svg";
@@ -18,7 +18,7 @@ function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [theme, setTheme] = useState("light");
   const navigate = useNavigate();
-  const { isAuthenticated, logout } = useContext(AuthContext);
+  const { isAuthenticated, isAdmin, logout } = useContext(AuthContext);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -44,6 +44,8 @@ function Header() {
       }
     }
   };
+
+  useEffect(() => {}, [isAuthenticated, isAdmin]);
 
   return (
     <div className="header">
@@ -175,7 +177,7 @@ function Header() {
 
       <div className="theme">
         <button type="button" onClick={toggleTheme}>
-          {" "}
+          Changer de thème
         </button>
       </div>
 
@@ -188,7 +190,6 @@ function Header() {
         </button>
 
         <ul>
-          {/* Liens vers différentes pages */}
           <li>
             <Link className="glitch" data-glitch="Accueil" to="/">
               Accueil
@@ -199,24 +200,25 @@ function Header() {
               Catégories
             </Link>
           </li>
-
           <li>
             <Link className="glitch" data-glitch="Contenue" to="/Contenue">
               Contenue
             </Link>
           </li>
-          <li>
-            <Link className="glitch" data-glitch="Admin" to="/Admin">
-              Admin
-            </Link>
-          </li>
+          {isAdmin() && (
+            <li>
+              <Link className="glitch" data-glitch="Admin" to="/Admin">
+                Admin
+              </Link>
+            </li>
+          )}
           <li>
             <Link
               className="glitch"
               data-glitch="pourquoi pas s'abonner ?"
               to="/Abo"
             >
-              pourquoi pas s'abonner ?
+              Pourquoi s'abonner ?
             </Link>
           </li>
           {isAuthenticated ? (
@@ -243,7 +245,7 @@ function Header() {
           ) : (
             <li>
               <Link className="glitch" data-glitch="se connecter" to="/Login">
-                se connecter
+                Se connecter
               </Link>
             </li>
           )}
