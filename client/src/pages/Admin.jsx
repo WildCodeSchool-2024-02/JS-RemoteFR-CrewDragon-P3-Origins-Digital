@@ -21,6 +21,7 @@ function Admin() {
 
   // useState Popup pour ajouter une vidéo
   const [isPopupAddOpen, setIsPopupAddOpen] = useState(false);
+  const [isPopupUpdateOpen, setIsPopupUpdateOpen] = useState(false);
 
   const { videos, categories, souscats } = useLoaderData();
 
@@ -55,6 +56,7 @@ function Admin() {
   };
 
   // Fonction pour supprimer les vidéos sélectionnées
+
   const handleDeleteVideos = async () => {
     try {
       // Utilisation de Promise.all pour supprimer
@@ -74,7 +76,8 @@ function Admin() {
     }
   };
 
-  // Fonction pour ajouter une vidéos et la mettre a jour sur le front
+  // Fonction pour ajouter une vidéo
+
   const handleAddVideos = async (e) => {
     e.preventDefault();
     const form = e.target;
@@ -98,6 +101,47 @@ function Admin() {
     });
   }, []);
 
+  // Fonction pour modifier une ou des vidéos
+
+  const handleUpdateVideo = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+    const updates = {};
+
+    formData.forEach((value, key) => {
+      if (value) {
+        updates[key] = value;
+      }
+    });
+
+    try {
+      await Promise.all(
+        selectedVideos.map((videoId) =>
+          axios.put(
+            `${import.meta.env.VITE_API_URL}/api/videos/${videoId}`,
+            updates,
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          )
+        )
+      );
+
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/api/videos`
+      );
+      setVideoAdmin(response.data);
+
+      // notifyUpdateSuccess();
+    } catch (error) {
+      console.error("Erreur lors de la mise à jour des vidéos :", error);
+      // notifyUpdateError();
+    }
+  };
+
   return (
     <div>
       <div className="container-admin-action">
@@ -115,7 +159,11 @@ function Admin() {
           </button>
         </div>
         <div className="svg-modify-container">
-          <button className="button-admin" type="button">
+          <button
+            className="button-admin"
+            type="button"
+            onClick={() => setIsPopupUpdateOpen(true)}
+          >
             <img className="svg-modify" src={MODIFY} alt="svg-modify" />
             <p className="text-admin">modifier</p>
           </button>
@@ -135,6 +183,36 @@ function Admin() {
           <Toaster />
         </div>
       </div>
+      {isPopupUpdateOpen && (
+        <div className="popup-update">
+          <div className="button-position">
+            <button type="button" onClick={() => setIsPopupUpdateOpen(false)}>
+              ❌
+            </button>
+          </div>
+          <h2>Modifier une vidéo</h2>
+          <form method="put" onSubmit={handleUpdateVideo}>
+            <div className="popup-position">
+              <label htmlFor="update-title">Titre</label>
+              <input type="text" id="update-title" name="title" />
+            </div>
+            <div className="popup-position">
+              <label htmlFor="update-description">Description</label>
+              <textarea id="update-description" name="description" />
+            </div>
+            <div className="popup-position">
+              <label htmlFor="update-url">URL</label>
+              <input type="text" id="update-url" name="url" />
+            </div>
+            <div className="popup-position">
+              <label htmlFor="update-date">Durée</label>
+              <input type="text" id="update-date" name="date" />
+            </div>
+            <button type="submit">Mettre à jour</button>
+            <Toaster />
+          </form>
+        </div>
+      )}
       {isPopupAddOpen && (
         <div className="popup-add">
           <div className="button-position">
