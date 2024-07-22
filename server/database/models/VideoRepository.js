@@ -21,7 +21,7 @@ class VideoRepository extends AbstractRepository {
         video.hero,
         video.carouStatique,
         video.carouDynamique,
-        video.freemium,
+        video.abonnementsid,
         video.miniature,
         video.categories_id,
         video.souscats_id,

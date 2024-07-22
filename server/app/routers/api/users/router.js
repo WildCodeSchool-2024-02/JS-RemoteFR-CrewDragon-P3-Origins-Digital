@@ -12,8 +12,7 @@ const {
   currentUser,
 } = require("../../../services/auth");
 
-// Import item-related actions
-
+// Importer les actions liées aux utilisateurs
 const {
   browse,
   read,
@@ -23,20 +22,21 @@ const {
   updateAbonnement,
 } = require("../../../controllers/userActions");
 
-// Route to get a list of users
+// Route pour obtenir une liste d'utilisateurs
 router.get("/", browse);
 
-// Route to get a specific user by ID
+// Route pour obtenir un utilisateur spécifique par ID
 router.get("/:id", verifyToken, currentUser, read);
 
-// Route to update abonnements_id for a specific user by ID
+// Route pour mettre à jour l'abonnement d'un utilisateur par ID
 router.put("/:id", edit);
 
-// Route to add a new user
+// Route pour ajouter un nouvel utilisateur
 router.post("/", hashPassword, add);
 
-// Route to delete a user by ID
+// Route pour supprimer un utilisateur par ID
 router.delete("/:id", destroy);
+
 // Route pour mettre à jour l'abonnement d'un utilisateur par ID
 router.put("/:id/abonnement", updateAbonnement);
 

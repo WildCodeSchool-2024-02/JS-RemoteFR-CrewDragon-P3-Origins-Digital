@@ -1,7 +1,7 @@
 const argon2 = require("argon2");
 const jwt = require("jsonwebtoken");
 
-// Import access to database tables
+// Import accès aux tables de base de données
 const tables = require("../../database/tables");
 
 const login = async (req, res, next) => {
@@ -20,15 +20,17 @@ const login = async (req, res, next) => {
     );
 
     if (verified) {
-      // Respond with the user and a signed token in JSON format (but without the hashed password)
+      // Répondez avec l'utilisateur et un token signé au format JSON (mais sans le mot de passe haché)
       delete user.hashed_password;
 
       const token = await jwt.sign(
-        { userId: user.id, rolesId: user.roles_id },
-        process.env.APP_SECRET,
         {
-          expiresIn: "1h",
-        }
+          userId: user.id,
+          rolesId: user.roles_id,
+          abonnementId: user.abonnementsid,
+        }, // Utilisez abonnementId ici
+        process.env.APP_SECRET,
+        { expiresIn: "1h" }
       );
 
       res.json({
@@ -39,22 +41,23 @@ const login = async (req, res, next) => {
       res.sendStatus(420);
     }
   } catch (err) {
-    // Pass any errors to the error-handling middleware
+    // Passer les erreurs éventuelles au middleware de gestion des erreurs
     next(err);
   }
 };
+
 const add = async (req, res, next) => {
-  // Extract the user data from the request body
+  // Extraire les données utilisateur du corps de la requête
   const user = req.body;
 
   try {
-    // Insert the user into the database
+    // Insérer l'utilisateur dans la base de données
     const insertId = await tables.user.create(user);
 
-    // Respond with HTTP 201 (Created) and the ID of the newly inserted user
+    // Répondre avec le statut HTTP 201 (Créé) et l'ID de l'utilisateur nouvellement inséré
     res.status(201).json({ insertId });
   } catch (err) {
-    // Pass any errors to the error-handling middleware
+    // Passer les erreurs éventuelles au middleware de gestion des erreurs
     next(err);
   }
 };
