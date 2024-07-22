@@ -73,25 +73,23 @@ class VideoRepository extends AbstractRepository {
   // TODO: Implement the update operation to modify an existing video
 
   async update(video) {
+    // Récupérer les clés et les valeurs de l'objet video
+    const keys = Object.keys(video);
+    const values = Object.values(video);
+
+    // Construire dynamiquement la requête SQL
+    const setClause = keys.map((key) => `${key} = ?`).join(", ");
+
+    // Ajouter la clé primaire (id) à la fin des valeurs
+    values.push(video.id);
+
+    // Exécuter la requête SQL
     const [edit] = await this.database.query(
-      `update ${this.table} set title =?, description =?, url =?, date =?, grille =?, hero =?, carouStatique =?, carouDynamique =?, freemium =?, miniature =? where id =? `,
-      [
-        video.title,
-        video.description,
-        video.url,
-        video.date,
-        video.grille,
-        video.hero,
-        video.carouStatique,
-        video.carouDynamique,
-        video.freemium,
-        video.miniature,
-        video.id,
-      ]
+      `UPDATE ${this.table} SET ${setClause} WHERE id = ?`,
+      values
     );
     return edit;
   }
-
   // The D of CRUD - Delete operation
   // TODO: Implement the delete operation to remove an video by its ID
 
