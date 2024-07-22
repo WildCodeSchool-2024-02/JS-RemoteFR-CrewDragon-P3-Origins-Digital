@@ -21,6 +21,7 @@ function Contenue() {
       <div className="AllVideos">
         {videos.map((video) => {
           const hasAccess = hasAccessToVideo(video.id);
+
           return hasAccess ? (
             <div key={video.id}>
               <YouTube
