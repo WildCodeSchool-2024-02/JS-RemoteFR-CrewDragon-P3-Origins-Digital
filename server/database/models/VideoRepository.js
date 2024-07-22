@@ -51,16 +51,16 @@ class VideoRepository extends AbstractRepository {
       SELECT
         v.*,
         JSON_OBJECT(
-          'id', c.id,
-          'name', c.name
-        ) AS categories,
-        JSON_OBJECT(
           'id', sc.id,
           'name', sc.name
+        ) AS categories,
+        JSON_OBJECT(
+          'id', c.id,
+          'name', c.name
         ) AS souscats
       FROM ${this.table} AS v
-      JOIN categories AS c ON v.categories_id = c.id
-      LEFT JOIN souscats AS sc ON v.souscats_id = sc.id
+      JOIN souscats AS sc ON v.souscats_id = sc.id
+      LEFT JOIN categories AS c ON v.categories_id = c.id
     `);
 
     // const [rows] = await this.database.query(`select * from videos`);

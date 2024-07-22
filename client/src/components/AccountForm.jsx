@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 function AccountForm() {
@@ -118,8 +119,15 @@ function AccountForm() {
       </form>
       {user && ( // Utilisation de l'état user pour afficher un message de confirmation
         <div className="confirmation-message">
-          <h2>Bienvenue, {user.firstname}!</h2>
-          <p>Votre compte a été créé avec succès.</p>
+          <h2 className="user-greeting">
+            Bienvenue, <span className="user-color">{user.firstname}</span> !
+          </h2>
+          <p className="user-greeting">Votre compte a été créé avec succès.</p>
+          <Link to="/Login">
+            <button className="account-log" type="button">
+              Se connecter
+            </button>
+          </Link>
         </div>
       )}
     </div>
