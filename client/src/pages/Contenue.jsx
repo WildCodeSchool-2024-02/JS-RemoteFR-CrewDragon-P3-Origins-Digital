@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLoaderData, Link } from "react-router-dom";
 import YouTube from "react-youtube";
 import fleche from "../assets/images/fleche.png";
@@ -14,10 +14,28 @@ function Contenue() {
     });
   }, []);
 
+  const [limiteVideo, setLimiteVideo] = useState(9);
+
+    const handleVoirPlus = () => {
+      setLimiteVideo((precLimiteVideos) => precLimiteVideos + 9)
+      ;
+     setTimeout(() => {
+       window.scrollBy({
+         top: window.innerHeight, 
+         behavior: "smooth",
+       });
+     }, 50);
+    };
+
+
+  const firstPage = videos.slice(0,limiteVideo);
+
+
+
   return (
     <>
       <div className="AllVideos">
-        {videos.map((video) => (
+        {firstPage.map((video) => (
           <div key={video.id}>
             <YouTube
               videoId={video.url.split("v=")[1]}
@@ -45,7 +63,7 @@ function Contenue() {
       </div>
       <div className="voirPlus">
         <p>Voir plus</p>
-        <button className="buttonVP" type="button">
+        <button className="buttonVP" type="button" onClick={handleVoirPlus}>
           <img src={fleche} alt="voir plus" />
         </button>
       </div>
