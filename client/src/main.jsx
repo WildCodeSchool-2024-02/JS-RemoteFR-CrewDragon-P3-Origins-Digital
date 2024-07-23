@@ -103,6 +103,25 @@ const router = createBrowserRouter([
       {
         path: "/admin/catsouscats",
         element: <FormCatSousCat />,
+        loader: async () => {
+          try {
+            const [categoriesResponse, souscatsResponse] = await Promise.all([
+              axios.get(`${import.meta.env.VITE_API_URL}/api/categories`),
+              axios.get(`${import.meta.env.VITE_API_URL}/api/souscats`),
+            ]);
+
+            const categories = categoriesResponse.data;
+            const souscats = souscatsResponse.data;
+
+            return { categories, souscats };
+          } catch (error) {
+            console.error(
+              "Erreur lors du chargement des catégories et sous-catégories:",
+              error
+            );
+            return { categories: [], souscats: [] }; // Valeurs par défaut en cas d'erreur
+          }
+        },
       },
       {
         path: "/contact",
