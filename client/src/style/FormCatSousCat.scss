@@ -1,0 +1,47 @@
+@use "./Variables.scss" as *;
+
+.formcatsouscat-container {
+  margin-top: 40px;
+  margin-bottom: 40px;
+  h1,
+  h2,
+  h3 {
+    text-align: center;
+  }
+  p {
+    text-align: center;
+  }
+  input {
+    text-align: center;
+  }
+}
+
+.button-container {
+  gap: 10vw;
+  button {
+    cursor: pointer;
+  }
+}
+
+.input-container {
+  display: flex;
+  justify-content: center;
+}
+.list-container {
+  display: flex;
+  justify-content: center;
+}
+.button-container-catsouscats {
+  display: flex;
+  justify-content: center;
+}
+.popup-categorie {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.add-sous-categorie-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

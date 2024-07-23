@@ -215,7 +215,7 @@ function Header() {
           </li>
           <li>
             <Link className="glitch" data-glitch="Contenue" to="/contenue">
-              Contenue
+              Contenu
             </Link>
           </li>
           <li>

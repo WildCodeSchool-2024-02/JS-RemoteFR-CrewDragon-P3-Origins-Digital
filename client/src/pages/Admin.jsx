@@ -14,10 +14,12 @@ import BIN from "../assets/images/svg-admin/bin.svg";
 
 function Admin() {
   // Message de Toastify Ajoutée
-  const notifyAdd = () => toast("La vidéo à bien été ajoutée");
+  const notifyAdd = () => toast("La vidéo à bien été ajoutée !");
 
   // Message de Toastify Delete
-  const notifyDelete = () => toast("La vidéo à bien été supprimée");
+  const notifyDelete = () => toast("La vidéo à bien été supprimée !");
+
+  const notifyUpdate = () => toast("La vidéo à bien été modifiée  !");
 
   // useState Popup pour ajouter une vidéo
   const [isPopupAddOpen, setIsPopupAddOpen] = useState(false);
@@ -208,7 +210,9 @@ function Admin() {
               <label htmlFor="update-date">Durée</label>
               <input type="text" id="update-date" name="date" />
             </div>
-            <button type="submit">Mettre à jour</button>
+            <button onClick={notifyUpdate} type="submit">
+              Mettre à jour
+            </button>
             <Toaster />
           </form>
         </div>
