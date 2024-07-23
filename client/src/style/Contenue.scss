@@ -49,6 +49,7 @@
   border: none;
   background-color: $text-color-white;
   animation: float 2s infinite;
+  cursor: pointer;
 }
 
 @keyframes float {
