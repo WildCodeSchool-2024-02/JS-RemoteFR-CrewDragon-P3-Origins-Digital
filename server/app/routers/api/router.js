@@ -2,10 +2,6 @@ const express = require("express");
 
 const router = express.Router();
 
-/* ************************************************************************* */
-// Import And Use Routers Here
-/* ************************************************************************* */
-
 const rolesRouter = require("./roles/router");
 const abonnementsRouter = require("./abonnements/router");
 const usersRouter = require("./users/router");
@@ -23,7 +19,5 @@ router.use("/souscats", souscatsRouter);
 router.use("/sections", sectionsRouter);
 router.use("/videos", videosRouter);
 router.use("/auths", authRouter);
-
-/* ************************************************************************* */
 
 module.exports = router;

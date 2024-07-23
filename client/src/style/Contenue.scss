@@ -51,6 +51,10 @@
   animation: float 2s infinite;
   cursor: pointer;
 }
+.videoContainer.restricted {
+  opacity: 0.5;
+  pointer-events: none;
+}
 
 @keyframes float {
   0% {
