@@ -16,7 +16,6 @@ class AbonnementRepository extends AbstractRepository {
         abonnement.date_de_paiement || new Date(),
       ]
     );
-
     return result.insertId;
   }
 
@@ -25,7 +24,6 @@ class AbonnementRepository extends AbstractRepository {
       `SELECT * FROM ${this.table} WHERE id = ?`,
       [id]
     );
-
     return rows[0];
   }
 

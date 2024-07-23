@@ -6,7 +6,6 @@ export const AuthContext = createContext();
 const decodeToken = (token) => {
   try {
     const decoded = JSON.parse(atob(token.split(".")[1]));
-
     return decoded;
   } catch (error) {
     console.error("Erreur lors du décodage du token :", error);
