@@ -50,6 +50,10 @@
   background-color: $text-color-white;
   animation: float 2s infinite;
 }
+.videoContainer.restricted {
+  opacity: 0.5;
+  pointer-events: none;
+}
 
 @keyframes float {
   0% {

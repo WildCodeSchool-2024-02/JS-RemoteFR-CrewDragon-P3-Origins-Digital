@@ -50,7 +50,8 @@ export function AuthProvider({ children }) {
   const authContextValue = useMemo(() => {
     const isAdmin = () => rolesId === 1;
 
-    const hasAccessToVideo = () => abonnementId === 2 || abonnementId === 1;
+    const hasAccessToVideo = (videoAbonnementId) =>
+      abonnementId === 2 || (abonnementId === 1 && videoAbonnementId === 1);
 
     return {
       isAuthenticated,

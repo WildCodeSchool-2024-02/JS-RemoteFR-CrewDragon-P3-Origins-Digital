@@ -7,7 +7,7 @@ import "../style/Contenue.scss";
 
 function Contenue() {
   const videos = useLoaderData();
-  const { hasAccessToVideo } = useContext(AuthContext);
+  const { abonnementId } = useContext(AuthContext);
 
   useEffect(() => {
     window.scrollBy({
@@ -20,33 +20,44 @@ function Contenue() {
     <>
       <div className="AllVideos">
         {videos.map((video) => {
-          const hasAccess = hasAccessToVideo(video.id);
+          const hasAccess =
+            abonnementId === 2 ||
+            (abonnementId === 1 && video.abonnementsid === 1);
 
-          return hasAccess ? (
-            <div key={video.id}>
-              <YouTube
-                videoId={video.url.split("v=")[1]}
-                opts={{ autoplay: 0, width: "500", height: "400" }}
-              />
-              <div className="blocDetails">
-                <div className="infosVideo">
-                  <p>{video.title}</p>
-                </div>
-                <Link
-                  to={`/video/${video.url.split("v=")[1]}`}
-                  state={{
-                    title: video.title,
-                    description: video.description,
-                    date: video.date,
-                    duration: video.duration,
-                    categories: video.name,
+          return (
+            <div key={video.id} className="videoItem">
+              <div
+                className={`videoContainer ${hasAccess ? "" : "restricted"}`}
+              >
+                <YouTube
+                  videoId={video.url.split("v=")[1]}
+                  opts={{ autoplay: 0, width: "500", height: "400" }}
+                  onPlay={(event) => {
+                    if (!hasAccess) {
+                      event.target.pauseVideo();
+                    }
                   }}
-                >
-                  <button type="button">Détails</button>
-                </Link>
+                />
+                <div className="blocDetails">
+                  <div className="infosVideo">
+                    <p>{video.title}</p>
+                  </div>
+                  <Link
+                    to={`/video/${video.url.split("v=")[1]}`}
+                    state={{
+                      title: video.title,
+                      description: video.description,
+                      date: video.date,
+                      duration: video.duration,
+                      categories: video.name,
+                    }}
+                  >
+                    <button type="button">Détails</button>
+                  </Link>
+                </div>
               </div>
             </div>
-          ) : null;
+          );
         })}
       </div>
       <div className="voirPlus">
