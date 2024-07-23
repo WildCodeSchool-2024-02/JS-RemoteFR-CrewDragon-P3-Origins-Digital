@@ -291,6 +291,28 @@
   margin-bottom: 10px;
 }
 
+// Popup-Update
+
+.popup-update {
+  position: absolute;
+  text-align: center;
+  z-index: 2;
+  left: 16vw;
+  width: 70vw;
+  border: solid 2px $background-color-dark;
+  padding: 20px;
+  margin-top: 10px;
+  color: $text-color-black;
+  background-color: $background-color-light;
+  border-radius: 20px;
+  label {
+    margin-top: 10px;
+  }
+  button {
+    cursor: pointer;
+  }
+}
+
 // Responsive
 
 @media only screen and (min-width: 1024px) {
