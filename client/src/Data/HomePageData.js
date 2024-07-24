@@ -37,3 +37,4 @@ const HomepageData = [
 ];
 
 export default HomepageData;
+
