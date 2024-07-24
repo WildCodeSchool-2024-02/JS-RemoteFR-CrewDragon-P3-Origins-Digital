@@ -4,9 +4,9 @@
 .video-unique-container {
   display: flex;
   justify-content: center;
-  margin-top: 80px;
+  margin: 30px;
   iframe {
-    width: 100vw;
+    width: 90vw;
     height: 40vh;
   }
 }
@@ -23,8 +23,8 @@
   font-size: 1.3rem;
 }
 .data-container {
-  margin: 0 5px;
-  padding: 10px;
+  margin: 20px;
+  padding: 30px;
   border: solid 1px;
   border-radius: 25px;
 }
@@ -34,6 +34,7 @@
   // vidéo responsive tablette
   .video-unique-container {
     iframe {
+      margin: 10px;
       width: 100vw;
       height: 80vh;
     }
