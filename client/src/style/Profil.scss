@@ -54,6 +54,7 @@
     color: $title-color;
   }
 }
+
 .user-profil-container {
   background: linear-gradient(
     90deg,
@@ -64,4 +65,28 @@
   margin: 0 50px;
   padding: 30px;
   border: solid 2px;
+}
+
+@media only screen and (max-width: 600px) {
+  .userInfos {
+    width: 90vw;
+  }
+
+  .modMail,
+  .modName,
+  .modBirthday,
+  .modAbo {
+    font-size: 1rem;
+    margin: 8px 0;
+  }
+
+  .modify-button {
+    font-size: 16px;
+    padding: 8px;
+  }
+
+  .user-profil-container {
+    margin: 0 20px;
+    padding: 20px;
+  }
 }
