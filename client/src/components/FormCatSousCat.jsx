@@ -210,7 +210,7 @@ export default function FormCatSousCat() {
       </div>
       <div className="form-container">
         {isAddMode && (
-          <div>
+          <>
             <form
               method="post"
               onSubmit={handleAddCategorie}
@@ -295,11 +295,11 @@ export default function FormCatSousCat() {
                 </button>
               </div>
             </form>
-          </div>
+          </>
         )}
 
         {isUpdateMode && (
-          <div>
+          <>
             <form
               method="post"
               onSubmit={handleUpdateCategorie}
@@ -330,7 +330,7 @@ export default function FormCatSousCat() {
                 </select>
               </div>
               {selectedCategorieId && (
-                <div>
+                <>
                   <p>Nom de la Catégorie</p>
                   <div className="input-container">
                     <input type="text" id="updateCategorieName" name="name" />
@@ -344,7 +344,7 @@ export default function FormCatSousCat() {
                       Modifier
                     </button>
                   </div>
-                </div>
+                </>
               )}
             </form>
             <form
@@ -377,7 +377,7 @@ export default function FormCatSousCat() {
                 </select>
               </div>
               {selectedSousCatsId && (
-                <div>
+                <>
                   <p>Nom de la Sous-catégorie</p>
                   <div className="input-container">
                     <input
@@ -402,73 +402,71 @@ export default function FormCatSousCat() {
                       Modifier
                     </button>
                   </div>
-                </div>
+                </>
               )}
             </form>
-          </div>
+          </>
         )}
 
         {isDeleteMode && (
-          <div>
-            <form
-              method="post"
-              onSubmit={(e) => {
-                e.preventDefault();
-                if (deleteCategorieId) {
-                  handleDeleteCategorie();
-                } else if (deleteSousCatsId) {
-                  handleDeleteSousCats();
-                }
-              }}
-              className="form-content"
+          <form
+            method="post"
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (deleteCategorieId) {
+                handleDeleteCategorie();
+              } else if (deleteSousCatsId) {
+                handleDeleteSousCats();
+              }
+            }}
+            className="form-content"
+          >
+            <button
+              className="close-button"
+              onClick={() => setIsDeleteMode(false)}
+              type="button"
             >
-              <button
-                className="close-button"
-                onClick={() => setIsDeleteMode(false)}
-                type="button"
+              <img src={CROSSADMIN} alt="fermer" />
+            </button>
+            <h2>Supprimer</h2>
+            <p>Choisissez une Catégorie à supprimer</p>
+            <div className="input-container">
+              <select
+                id="deleteCategorieId"
+                name="id"
+                value={deleteCategorieId}
+                onChange={(e) => setDeleteCategorieId(e.target.value)}
               >
-                <img src={CROSSADMIN} alt="fermer" />
+                <option value="">Sélectionner une catégorie</option>
+                {categories.map((cat) => (
+                  <option key={cat.id} value={cat.id}>
+                    {cat.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <p>Choisissez une Sous-catégorie à supprimer</p>
+            <div className="input-container">
+              <select
+                id="deleteSousCatsId"
+                name="id"
+                value={deleteSousCatsId}
+                onChange={(e) => setDeleteSousCatsId(e.target.value)}
+              >
+                <option value="">Sélectionner une sous-catégorie</option>
+                {souscats.map((scat) => (
+                  <option key={scat.id} value={scat.id}>
+                    {scat.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="button-container">
+              <button type="submit" className="submit-delete">
+                Supprimer
               </button>
-              <h2>Supprimer</h2>
-              <p>Choisissez une Catégorie à supprimer</p>
-              <div className="input-container">
-                <select
-                  id="deleteCategorieId"
-                  name="id"
-                  value={deleteCategorieId}
-                  onChange={(e) => setDeleteCategorieId(e.target.value)}
-                >
-                  <option value="">Sélectionner une catégorie</option>
-                  {categories.map((cat) => (
-                    <option key={cat.id} value={cat.id}>
-                      {cat.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <p>Choisissez une Sous-catégorie à supprimer</p>
-              <div className="input-container">
-                <select
-                  id="deleteSousCatsId"
-                  name="id"
-                  value={deleteSousCatsId}
-                  onChange={(e) => setDeleteSousCatsId(e.target.value)}
-                >
-                  <option value="">Sélectionner une sous-catégorie</option>
-                  {souscats.map((scat) => (
-                    <option key={scat.id} value={scat.id}>
-                      {scat.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="button-container">
-                <button type="submit" className="submit-delete">
-                  Supprimer
-                </button>
-              </div>
-            </form>
-          </div>
+            </div>
+          </form>
         )}
       </div>
       <Toaster />
