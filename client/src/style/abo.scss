@@ -15,7 +15,7 @@
   padding: 100px;
   max-width: 600px;
   height: auto;
-  box-shadow: 0 12px 24px rgba(255, 69, 0, 0.5); /* Ajuster les valeurs pour une ombre portée plus prononcée */
+  box-shadow: 0 12px 24px rgba(255, 69, 0, 0.5);
   border: 5px solid;
   border-image: linear-gradient(to right, red, orange);
   border-image-slice: 1;
@@ -36,6 +36,7 @@
   font-size: 24px;
   font-weight: bold;
 }
+
 .abo-button {
   width: 100%;
   padding: 10px;
@@ -51,5 +52,32 @@
   &:hover {
     background-color: $background-color-light;
     color: $title-color;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .abonnements-container {
+    margin-top: 20px;
+    gap: 20px;
+    padding: 10px;
+  }
+
+  .card {
+    padding: 20px;
+    max-width: 90%;
+  }
+
+  .card h2 {
+    font-size: 24px;
+  }
+
+  .card p {
+    font-size: 16px;
+    margin: 20px 0;
+  }
+
+  .abo-button {
+    font-size: 16px;
+    padding: 8px;
   }
 }

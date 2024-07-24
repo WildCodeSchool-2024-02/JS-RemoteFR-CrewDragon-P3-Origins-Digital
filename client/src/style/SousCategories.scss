@@ -8,9 +8,12 @@
 // Titre style
 
 .title-h1 {
+  margin-top: 20px;
+  font-size: 40px;
   text-decoration: underline;
   text-decoration-color: $text-color-black;
   text-align: center;
+  text-decoration-color: $title-color;
 }
 .title-sous-categorie {
   text-align: center;
