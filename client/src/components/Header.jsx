@@ -2,7 +2,7 @@ import HeroSlider, { Overlay, Slide, MenuNav } from "hero-slider";
 import { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexte/AuthContext";
-import { useTheme } from '../contexte/ThemeContext'; 
+import { useTheme } from "../contexte/ThemeContext";
 
 import LOGO from "../assets/images/origindigital.svg";
 import MENU from "../assets/images/images-header/menu.svg";
@@ -24,11 +24,7 @@ function Header() {
     setMenuOpen(!menuOpen);
   };
 
-  
-
   const { darkMode, toggleDarkMode } = useTheme();
-
-
 
   const goToProfile = () => {
     if (isAuthenticated) {
@@ -175,7 +171,7 @@ function Header() {
 
       <div className="theme">
         <button type="button" onClick={toggleDarkMode}>
-         {darkMode ? "clair" : "sombre"}
+          {darkMode ? "clair" : "sombre"}
         </button>
       </div>
 
@@ -213,7 +209,7 @@ function Header() {
           <li>
             <Link
               className="glitch"
-              data-glitch="pourquoi pas s'abonner ?"
+              data-glitch="pourquoi s'abonner ?"
               to="/abo"
             >
               Pourquoi s'abonner ?
