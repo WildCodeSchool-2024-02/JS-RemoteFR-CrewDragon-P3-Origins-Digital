@@ -10,6 +10,10 @@ export default function FormCatSousCat() {
   const [sousCategorieName, setSousCategorieName] = useState("");
   const [image, setImage] = useState("");
   const [categoriesId, setCategoriesId] = useState("");
+  const [selectedCategorieId, setSelectedCategorieId] = useState("");
+  const [selectedSousCatsId, setSelectedSousCatsId] = useState("");
+  const [deleteCategorieId, setDeleteCategorieId] = useState("");
+  const [deleteSousCatsId, setDeleteSousCatsId] = useState("");
   const { categories, souscats } = useLoaderData();
 
   // Route pour ajouté une catégorie
@@ -41,9 +45,87 @@ export default function FormCatSousCat() {
 
       setIsPopupAddOpen(false);
     } catch (error) {
-      console.error("Erreur lors de l'ajout de la catégorie:", error);
+      console.error("Erreur lors de l'ajout de la sous-catégorie:", error);
     }
     setSousCategorieName(event.data);
+  };
+
+  // Route pour modifier une catégorie
+  const handleUpdateCategorie = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+    const updates = {};
+
+    formData.forEach((value, key) => {
+      if (value) {
+        updates[key] = value;
+      }
+    });
+
+    try {
+      await axios.put(
+        `${import.meta.env.VITE_API_URL}/api/categories/${selectedCategorieId}`,
+        updates
+      );
+
+      setIsPopupAddOpen(false);
+    } catch (error) {
+      console.error("Erreur lors de la modification de la catégorie:", error);
+    }
+    setCategorieName(e.data);
+  };
+  // Route pour modifier une sous-catégorie
+  const handleUpdateSousCats = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+    const updates = {};
+
+    formData.forEach((value, key) => {
+      if (value) {
+        updates[key] = value;
+      }
+    });
+
+    try {
+      await axios.put(
+        `${import.meta.env.VITE_API_URL}/api/souscats/${selectedSousCatsId}`,
+        updates
+      );
+
+      setIsPopupAddOpen(false);
+    } catch (error) {
+      console.error(
+        "Erreur lors de la modification de la sous-catégorie:",
+        error
+      );
+    }
+    setSousCategorieName(e.data);
+  };
+  // Route pour supprimer une catégorie
+  const handleDeleteCategorie = async () => {
+    try {
+      await axios.delete(
+        `${import.meta.env.VITE_API_URL}/api/categories/${deleteCategorieId}`
+      );
+
+      setIsPopupAddOpen(false);
+    } catch (error) {
+      console.error("Erreur lors de la suppression de la catégorie:", error);
+    }
+  };
+  // Route pour supprimer une sous-catégorie
+  const handleDeleteSousCats = async () => {
+    try {
+      await axios.delete(
+        `${import.meta.env.VITE_API_URL}/api/souscats/${deleteSousCatsId}`
+      );
+
+      setIsPopupAddOpen(false);
+    } catch (error) {
+      console.error("Erreur lors de la suppression de la catégorie:", error);
+    }
   };
 
   return (
@@ -148,28 +230,87 @@ export default function FormCatSousCat() {
               </button>
             </div>
             <h2>Modifier une Catégorie ou Sous-Catégorie</h2>
-            <label>
-              Choisissez une catégorie : <br />
-              <select name="Categorie-list">
-                {categories.map((categorie) => (
-                  <option value={categorie.id} key={categorie.id}>
-                    {categorie.name}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label>
-              {" "}
-              <br />
-              Choisissez une Sous-catégorie : <br />
-              <select name="Souscategorie-list">
-                {souscats.map((souscat) => (
-                  <option value={souscat.id} key={souscat.id}>
-                    {souscat.name}
-                  </option>
-                ))}
-              </select>
-            </label>
+            <form method="put" onSubmit={handleUpdateCategorie}>
+              <label>
+                Choisissez une catégorie : <br />
+                <select
+                  name="categories.id"
+                  onChange={(e) => setSelectedCategorieId(e.target.value)}
+                >
+                  {categories.map((categorie) => (
+                    <option value={categorie.id} key={categorie.id}>
+                      {categorie.name}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <p>Nouveau nom de la Catégorie</p>
+              <div className="input-container">
+                <input
+                  type="text"
+                  id="categorieName"
+                  name="name"
+                  value={categorieName}
+                  onChange={(e) => setCategorieName(e.target.value)}
+                />
+              </div>
+              <p>Nouvelle image de la catégorie (format URL)</p>
+              <div className="input-container">
+                <input
+                  type="text"
+                  id="image"
+                  name="image"
+                  onChange={(e) => setImage(e.target.value)}
+                />
+              </div>
+              <button type="submit">Modifier</button>
+            </form>
+            <form method="put" onSubmit={handleUpdateSousCats}>
+              <label>
+                {" "}
+                <br />
+                Choisissez une Sous-catégorie : <br />
+                <select
+                  name="souscats.id"
+                  onChange={(e) => setSelectedSousCatsId(e.target.value)}
+                >
+                  {souscats.map((souscat) => (
+                    <option value={souscat.id} key={souscat.id}>
+                      {souscat.name}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <p>Nouveau nom de la sous-catégorie</p>
+              <div className="input-container">
+                <input
+                  type="text"
+                  name="name"
+                  id="name"
+                  value={sousCategorieName}
+                  onChange={(e) => setSousCategorieName(e.target.value)}
+                />{" "}
+                <br />
+              </div>
+              <p>
+                Liée à la nouvelle Catégorie / Selectionner la catégorie
+                actuelle
+              </p>
+              <div className="list-container">
+                <select
+                  name="categories_id"
+                  id="categories_id"
+                  onChange={(e) => setCategoriesId(e.target.value)}
+                >
+                  {categories.map((categorie) => (
+                    <option value={categorie.id} key={categorie.id}>
+                      {categorie.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <button type="submit">Modifier</button>
+            </form>
           </div>
         </div>
       )}
@@ -188,7 +329,51 @@ export default function FormCatSousCat() {
             </div>
             <h2>Supprimer une Catégorie ou Sous-Catégorie</h2>
             <p>Supprimer une catégorie</p>
+            <label>
+              Choisissez une catégorie : <br />
+              <select
+                name="categories.id"
+                onChange={(e) => setDeleteCategorieId(e.target.value)}
+              >
+                {categories.map((categorie) => (
+                  <option value={categorie.id} key={categorie.id}>
+                    {categorie.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <button
+              type="button"
+              onClick={() => {
+                handleDeleteCategorie();
+              }}
+            >
+              Supprimer
+            </button>
             <p>Supprimer une sous-catégorie</p>
+            <label>
+              {" "}
+              <br />
+              Choisissez une Sous-catégorie : <br />
+              <select
+                name="souscats.id"
+                onChange={(e) => setDeleteSousCatsId(e.target.value)}
+              >
+                {souscats.map((souscat) => (
+                  <option value={souscat.id} key={souscat.id}>
+                    {souscat.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <button
+              type="button"
+              onClick={() => {
+                handleDeleteSousCats();
+              }}
+            >
+              Supprimer
+            </button>
           </div>
         </div>
       )}
