@@ -43,9 +43,20 @@ class CategorieRepository extends AbstractRepository {
   // TODO: Implement the update operation to modify an existing categorie
 
   async update(categorie) {
+    // Récupérer les clés et les valeurs de l'objet categorie
+    const keys = Object.keys(categorie);
+    const values = Object.values(categorie);
+
+    // Construire dynamiquement la requête SQL
+    const setClause = keys.map((key) => `${key} = ?`).join(", ");
+
+    // Ajouter la clé primaire (id) à la fin des valeurs
+    values.push(categorie.id);
+
+    // Exécuter la requête SQL
     const [edit] = await this.database.query(
-      `update ${this.table} set name =? where id =?`,
-      [categorie.name, categorie.id]
+      `UPDATE ${this.table} SET ${setClause} WHERE id = ?`,
+      values
     );
     return edit;
   }
