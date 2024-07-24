@@ -13,7 +13,7 @@ function SousCategories() {
   const [subCategories, setSubCategories] = useState([]);
   const [videos, setVideos] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const { abonnementId } = useContext(AuthContext); // Accéder à l'ID d'abonnement de l'utilisateur
+  const { abonnementId } = useContext(AuthContext);
 
   useEffect(() => {
     window.scrollBy({
@@ -36,10 +36,10 @@ function SousCategories() {
         );
         const allSubCategories = sousCategoriesResponse.data;
 
+        // Récupérer toutes les vidéos
         const videosResponse = await axios.get(
           `${import.meta.env.VITE_API_URL}/api/videos`
         );
-
         const allVideos = videosResponse.data;
 
         // Filtrer les sous-catégories pour celles qui correspondent à la catégorie sélectionnée
@@ -49,12 +49,23 @@ function SousCategories() {
         );
         setSubCategories(filteredSubCategories);
 
-        // Mettre à jour les vidéos pour inclure uniquement celles accessibles par l'utilisateur
-        const filteredVideos = allVideos.filter(
-          (video) =>
-            abonnementId === 2 ||
-            (abonnementId === 1 && video.abonnementsid === 1)
-        );
+        // Mettre à jour les vidéos en fonction de l'ID d'abonnement
+        let filteredVideos = [];
+        if (abonnementId === 2) {
+          // Pour les abonnés premium, montrer toutes les vidéos
+          filteredVideos = allVideos;
+        } else if (abonnementId === 1) {
+          // Pour les abonnés standard, montrer uniquement les vidéos avec abonnementsid 1
+          filteredVideos = allVideos.filter(
+            (video) => video.abonnementsid === 1
+          );
+        } else {
+          // Pour les non-connectés, montrer uniquement les vidéos avec abonnementsid 1
+          filteredVideos = allVideos.filter(
+            (video) => video.abonnementsid === 1
+          );
+        }
+
         setVideos(filteredVideos);
       } catch (error) {
         console.error("Erreur lors du chargement des données :", error);
@@ -62,7 +73,7 @@ function SousCategories() {
     };
 
     fetchCategoryData();
-  }, [categoryId, abonnementId]); // Inclure `abonnementId` comme dépendance
+  }, [categoryId, abonnementId]);
 
   const settings = {
     arrows: true,
@@ -104,7 +115,7 @@ function SousCategories() {
               .map((filteredVideo) => (
                 <div key={filteredVideo.id}>
                   <YouTube
-                    className="container-sous-categorie"
+                    className={`container-sous-categorie ${abonnementId === 2 || filteredVideo.abonnementsid === 1 ? "" : "video-unavailable"}`}
                     videoId={filteredVideo.url.split("v=")[1]}
                     opts={opts}
                   />

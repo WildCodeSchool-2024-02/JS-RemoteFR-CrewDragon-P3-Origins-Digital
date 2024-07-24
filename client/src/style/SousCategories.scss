@@ -83,6 +83,32 @@
   -webkit-text-stroke-color: black;
 }
 
+.video-unavailable {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.container-sous-categorie-unavailable {
+  display: flex;
+  justify-content: center;
+  iframe {
+    width: 70vw;
+    max-height: auto;
+  }
+}
+
+// Responsive adjustments
+@media only screen and (min-width: 1080px) {
+  .container-sous-categorie-unavailable {
+    display: flex;
+    justify-content: center;
+    iframe {
+      width: 40vw;
+      max-height: auto;
+    }
+  }
+}
+
 @media only screen and (min-width: 1080px) {
   // Vidéos custom responsive
 
