@@ -36,7 +36,8 @@ function Contenue() {
         {firstPage.map((video) => {
           const hasAccess =
             abonnementId === 2 ||
-            (abonnementId === 1 && video.abonnementsid === 1);
+            (abonnementId === 1 && video.abonnementsid === 1) ||
+            (!abonnementId && video.abonnementsid === 1); // Allow non-authenticated users to see only videos with abonnementsid 1
 
           return (
             <div key={video.id} className="videoItem">
