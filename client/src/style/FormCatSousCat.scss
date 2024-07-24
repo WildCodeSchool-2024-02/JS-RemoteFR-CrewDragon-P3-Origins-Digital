@@ -1,47 +1,136 @@
 @use "./Variables.scss" as *;
 
-.formcatsouscat-container {
-  margin-top: 40px;
-  margin-bottom: 40px;
-  h1,
-  h2,
-  h3 {
-    text-align: center;
+/* Styles par défaut */
+.form-container {
+  position: absolute;
+  top: 1100px;
+  left: 800px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 800px;
+  width: 100%;
+  max-height: 700px;
+  z-index: 1;
+}
+
+/* Styles pour le bouton de fermeture */
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 5px;
+  cursor: pointer;
+  z-index: 10;
+  transition: background-color 0.3s;
+
+  img {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
   }
-  p {
-    text-align: center;
+
+  &:hover {
+    background-color: darkred;
   }
-  input {
-    text-align: center;
-  }
+}
+
+/* Styles pour le contenu du formulaire */
+.form-content {
+  width: 100%;
+  max-width: 600px;
+  margin: 20px 0;
+}
+
+/* Styles pour les sections du formulaire */
+.input-container,
+.list-container,
+.button-container {
+  margin-bottom: 20px;
+}
+
+.input-container input,
+.list-container select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 
 .button-container {
-  gap: 10vw;
+  display: flex;
+  justify-content: center;
+
   button {
     cursor: pointer;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    background-color: $arrow-color;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: darken($arrow-color, 10%);
+    }
   }
 }
 
-.input-container {
-  display: flex;
-  justify-content: center;
-}
-.list-container {
-  display: flex;
-  justify-content: center;
-}
-.button-container-catsouscats {
-  display: flex;
-  justify-content: center;
-}
-.popup-categorie {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
 .add-sous-categorie-container {
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+@media (max-width: 900px) {
+  .form-container {
+    position: static;
+    top: auto;
+    left: auto;
+    margin: 20px;
+    width: calc(100% - 40px);
+    padding: 15px;
+  }
+
+  .close-button {
+    top: 1000px;
+    right: 40px;
+    padding: 8px;
+
+    img {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  .form-content {
+    margin: 10px 0;
+  }
+
+  .input-container,
+  .list-container,
+  .button-container {
+    margin-bottom: 15px;
+  }
+
+  .input-container input,
+  .list-container select {
+    padding: 8px;
+  }
+
+  .button-container button {
+    padding: 8px 16px;
+  }
+
+  h1 {
+    font-size: 0.9rem;
+  }
 }
