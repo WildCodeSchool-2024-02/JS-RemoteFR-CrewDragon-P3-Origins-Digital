@@ -12,12 +12,33 @@ import BIN from "../assets/images/svg-admin/bin.svg";
 
 function Admin() {
   // Message de Toastify Ajoutée
-  const notifyAdd = () => toast("La vidéo à bien été ajoutée !");
+  const notifyAdd = () =>
+    toast("La vidéo à bien été ajoutée !", {
+      style: {
+        border: "solid 2px #000000",
+        backgroundColor: "#FF7105",
+        color: "#ffffff",
+      },
+    });
 
   // Message de Toastify Delete
-  const notifyDelete = () => toast("La vidéo à bien été supprimée !");
+  const notifyDelete = () =>
+    toast("La vidéo à bien été supprimée !", {
+      style: {
+        border: "solid 2px #000000",
+        backgroundColor: "#FF7105",
+        color: "#ffffff",
+      },
+    });
 
-  const notifyUpdate = () => toast("La vidéo à bien été modifiée  !");
+  const notifyUpdate = () =>
+    toast("La vidéo à bien été modifiée  !", {
+      style: {
+        border: "solid 2px #000000",
+        backgroundColor: "#FF7105",
+        color: "#ffffff",
+      },
+    });
 
   // useState Popup pour ajouter une vidéo
   const [isPopupAddOpen, setIsPopupAddOpen] = useState(false);
@@ -95,7 +116,7 @@ function Admin() {
     setIsPopupAddOpen(false);
   };
 
-  // Fonction pour modifier une ou des vidéos
+  // Fonction pour modifier une ou plusieurs vidéos
   const handleUpdateVideo = async (e) => {
     e.preventDefault();
 
@@ -127,11 +148,8 @@ function Admin() {
         `${import.meta.env.VITE_API_URL}/api/videos`
       );
       setVideoAdmin(response.data);
-
-      // notifyUpdateSuccess();
     } catch (error) {
       console.error("Erreur lors de la mise à jour des vidéos :", error);
-      // notifyUpdateError();
     }
   };
 
@@ -340,8 +358,11 @@ function Admin() {
             <Link className="admin-link" to="/categories">
               Catégories
             </Link>
+            <Link className="admin-link" to="/admin">
+              Gérer mes vidéos
+            </Link>
             <Link className="admin-link" to="/admin/catsouscats">
-              Modifier Catégorie / Sous-catégorie
+              Gérer mes Catégories et Sous-catégories
             </Link>
             <Link className="admin-link" to="/contenue">
               Contenue
