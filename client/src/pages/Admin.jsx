@@ -1,5 +1,3 @@
-// Import react
-
 import { useState, useEffect } from "react";
 import { useLoaderData, Link } from "react-router-dom";
 import YouTube from "react-youtube";
@@ -28,11 +26,13 @@ function Admin() {
   const { videos, categories, souscats } = useLoaderData();
 
   const [videoAdmin, setVideoAdmin] = useState(videos);
-
   const [menuOpen, setMenuOpen] = useState(false);
 
   const [selectAll, setSelectAll] = useState(false);
   const [selectedVideos, setSelectedVideos] = useState([]);
+
+  // Nouvelle state pour les abonnements
+  const [abonnements, setAbonnements] = useState([]);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -58,7 +58,6 @@ function Admin() {
   };
 
   // Fonction pour supprimer les vidéos sélectionnées
-
   const handleDeleteVideos = async () => {
     try {
       // Utilisation de Promise.all pour supprimer
@@ -79,7 +78,6 @@ function Admin() {
   };
 
   // Fonction pour ajouter une vidéo
-
   const handleAddVideos = async (e) => {
     e.preventDefault();
     const form = e.target;
@@ -96,15 +94,8 @@ function Admin() {
     notifyAdd();
     setIsPopupAddOpen(false);
   };
-  useEffect(() => {
-    window.scrollBy({
-      top: window.innerHeight,
-      behavior: "smooth",
-    });
-  }, []);
 
   // Fonction pour modifier une ou des vidéos
-
   const handleUpdateVideo = async (e) => {
     e.preventDefault();
 
@@ -143,6 +134,22 @@ function Admin() {
       // notifyUpdateError();
     }
   };
+
+  useEffect(() => {
+    window.scrollBy({
+      top: window.innerHeight,
+      behavior: "smooth",
+    });
+    // Fetch abonnements data
+    const fetchAbonnements = async () => {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/api/abonnements`
+      );
+      setAbonnements(response.data);
+    };
+
+    fetchAbonnements();
+  }, []);
 
   return (
     <div>
@@ -188,7 +195,11 @@ function Admin() {
       {isPopupUpdateOpen && (
         <div className="popup-update">
           <div className="button-position">
-            <button type="button" onClick={() => setIsPopupUpdateOpen(false)}>
+            <button
+              className="close-button"
+              type="button"
+              onClick={() => setIsPopupUpdateOpen(false)}
+            >
               ❌
             </button>
           </div>
@@ -210,7 +221,7 @@ function Admin() {
               <label htmlFor="update-date">Durée</label>
               <input type="text" id="update-date" name="date" />
             </div>
-            <button onClick={notifyUpdate} type="submit">
+            <button className="submit-add" onClick={notifyUpdate} type="submit">
               Mettre à jour
             </button>
             <Toaster />
@@ -220,7 +231,11 @@ function Admin() {
       {isPopupAddOpen && (
         <div className="popup-add">
           <div className="button-position">
-            <button type="button" onClick={() => setIsPopupAddOpen(false)}>
+            <button
+              className="close-button"
+              type="button"
+              onClick={() => setIsPopupAddOpen(false)}
+            >
               ❌
             </button>
           </div>
@@ -242,41 +257,45 @@ function Admin() {
               <label htmlFor="date">Date</label>
               <input type="text" id="date" name="date" required />
             </div>
-            <div className="popup-position">
+            <div className="checkbox-container">
               <label>
                 <input type="checkbox" name="grille" />
                 Grille
               </label>
             </div>
-            <div className="popup-position">
+            <div className="checkbox-container">
               <label>
                 <input type="checkbox" name="hero" />
                 Hero
               </label>
             </div>
-            <div className="popup-position">
+            <div className="checkbox-container">
               <label>
                 <input type="checkbox" name="carouStatique" />
                 Carrousel Statique
               </label>
             </div>
-            <div className="popup-position">
+            <div className="checkbox-container">
               <label>
                 <input type="checkbox" name="carouDynamique" />
                 Carrousel Dynamique
               </label>
             </div>
             <div className="popup-position">
-              <label>
-                <input type="checkbox" name="freemium" />
-                Freemium
-              </label>
+              <label htmlFor="abonnementsid">Choisissez un abonnement :</label>
+              <select name="abonnementsid" id="abonnements">
+                {abonnements.map((abonnement) => (
+                  <option key={abonnement.id} value={abonnement.id}>
+                    {abonnement.name}
+                  </option>
+                ))}
+              </select>
             </div>
             <div className="popup-position">
               <label htmlFor="miniature">Miniature</label>
               <input type="text" id="miniature" name="miniature" required />
             </div>
-            <label htmlFor="categories_id"> Choisissez une catégorie :</label>{" "}
+            <label htmlFor="categories_id">Choisissez une catégorie :</label>{" "}
             <br />
             <select name="categories_id" id="categories">
               {categories.map((categorie) => (
@@ -284,11 +303,9 @@ function Admin() {
                   {categorie.name}
                 </option>
               ))}
-              ;
             </select>{" "}
             <br />
             <label htmlFor="souscats_id">
-              {" "}
               Choisissez une sous-catégorie :
             </label>{" "}
             <br />
@@ -298,10 +315,11 @@ function Admin() {
                   {souscat.name}
                 </option>
               ))}
-              ;
             </select>{" "}
             <br />
-            <button type="submit">Ajouter</button>
+            <button className="submit-add" type="submit">
+              Ajouter
+            </button>
             <Toaster />
           </form>
         </div>
@@ -365,7 +383,7 @@ function Admin() {
                           }}
                         />
                         <p>
-                          {video.categories.name} /{video.souscats.name}
+                          {video.categories.name} / {video.souscats.name}
                         </p>
                         <p>{video.date}</p>
                       </div>
