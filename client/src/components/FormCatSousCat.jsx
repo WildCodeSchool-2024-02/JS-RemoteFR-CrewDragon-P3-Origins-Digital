@@ -1,21 +1,122 @@
 import { useState } from "react";
 import { useLoaderData } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 
 export default function FormCatSousCat() {
   const [isPopupAddOpen, setIsPopupAddOpen] = useState(false);
   const [isPopupUpdateOpen, setIsPopupUpdateOpen] = useState(false);
   const [isPopupDeleteOpen, setIsPopupDeleteOpen] = useState(false);
-  const [categorieName, setCategorieName] = useState("");
-  const [sousCategorieName, setSousCategorieName] = useState("");
+  const [categorieName, setCategorieName] = useState(null);
+  const [sousCategorieName, setSousCategorieName] = useState(null);
   const [image, setImage] = useState("");
-  const [categoriesId, setCategoriesId] = useState("");
+  const [categoriesId, setCategoriesId] = useState(1);
   const [selectedCategorieId, setSelectedCategorieId] = useState("");
   const [selectedSousCatsId, setSelectedSousCatsId] = useState("");
   const [deleteCategorieId, setDeleteCategorieId] = useState("");
   const [deleteSousCatsId, setDeleteSousCatsId] = useState("");
   const { categories, souscats } = useLoaderData();
 
+  // Message de Toastify Ajouter une catégorie
+  const notifyAddCategorie = () =>
+    toast("La Catégorie à bien été ajoutée !", {
+      style: {
+        border: "solid 2px #000000",
+        backgroundColor: "#FF7105",
+        color: "#ffffff",
+      },
+    });
+  // Message de Toastify Ajouter une sous-catégorie
+  const notifyAddSousCats = () =>
+    toast("La Sous-Catégorie à bien été ajoutée !", {
+      style: {
+        border: "solid 2px #000000",
+        backgroundColor: "#FF7105",
+        color: "#ffffff",
+      },
+    });
+  // // Message de Toastify modifier une catégorie
+  const notifyUpdateCategorie = () =>
+    toast("La Catégorie à bien été modifiée  !", {
+      style: {
+        border: "solid 2px #000000",
+        backgroundColor: "#FF7105",
+        color: "#ffffff",
+      },
+    });
+  // Message de Toastify modifier une sous-catégorie
+  const notifyUpdateSousCats = () =>
+    toast("La Catégorie à bien été modifiée  !", {
+      style: {
+        border: "solid 2px #000000",
+        backgroundColor: "#FF7105",
+        color: "#ffffff",
+      },
+    });
+  // Message de Toastify supprimer une catégorie
+  const notifyDeleteCategorie = () =>
+    toast("La Catégorie à bien été supprimée !", {
+      style: {
+        border: "solid 2px #000000",
+        backgroundColor: "#FF7105",
+        color: "#ffffff",
+      },
+    });
+
+  // Message de Toastify supprimer une sous-catégorie
+  const notifyDeleteSousCats = () =>
+    toast("La Sous-Catégorie à bien été supprimée !", {
+      style: {
+        border: "solid 2px #000000",
+        backgroundColor: "#FF7105",
+        color: "#ffffff",
+      },
+    });
+  // Message de Toastify Ajouter une sous-catégorie
+  const notifyErrorCategories = () =>
+    toast("La catégories a une sous-catégorie liée. Veuillez la supprimer", {
+      style: {
+        border: "solid 2px #000000",
+        backgroundColor: "#FF7105",
+        color: "#ffffff",
+      },
+    });
+  // Message de Toastify Ajouter une sous-catégorie
+  const notifyErrorSousCats = () =>
+    toast("Cette sous catégorie à des vidéos liées. Veuillez les supprimer", {
+      style: {
+        border: "solid 2px #000000",
+        backgroundColor: "#FF7105",
+        color: "#ffffff",
+      },
+    });
+  // Message de Toastify pour les champs non remplis
+  const notifyFill = () =>
+    toast("Veuillez remplir les champs", {
+      style: {
+        border: "solid 2px #000000",
+        backgroundColor: "#FF7105",
+        color: "#ffffff",
+      },
+    });
+  // Message de Toastify pour les champs non remplis
+  const notifyFillCategories = () =>
+    toast("Veuillez ajouter au moins un nouveau nom à votre catégorie", {
+      style: {
+        border: "solid 2px #000000",
+        backgroundColor: "#FF7105",
+        color: "#ffffff",
+      },
+    });
+  // Message de Toastify pour les champs non remplis
+  const notifyFillSousCats = () =>
+    toast("Veuillez ajouter le nouveau nom de votre sous-catégories", {
+      style: {
+        border: "solid 2px #000000",
+        backgroundColor: "#FF7105",
+        color: "#ffffff",
+      },
+    });
   // Route pour ajouté une catégorie
   const handleAddCategorie = async (event) => {
     event.preventDefault();
@@ -25,9 +126,10 @@ export default function FormCatSousCat() {
         name: categorieName,
         image,
       });
-
+      notifyAddCategorie();
       setIsPopupAddOpen(false);
     } catch (error) {
+      notifyFill();
       console.error("Erreur lors de l'ajout de la catégorie:", error);
     }
     setCategorieName(event.data);
@@ -42,9 +144,10 @@ export default function FormCatSousCat() {
         name: sousCategorieName,
         categories_id: categoriesId,
       });
-
+      notifyAddSousCats();
       setIsPopupAddOpen(false);
     } catch (error) {
+      notifyFill();
       console.error("Erreur lors de l'ajout de la sous-catégorie:", error);
     }
     setSousCategorieName(event.data);
@@ -68,9 +171,10 @@ export default function FormCatSousCat() {
         `${import.meta.env.VITE_API_URL}/api/categories/${selectedCategorieId}`,
         updates
       );
-
+      notifyUpdateCategorie();
       setIsPopupAddOpen(false);
     } catch (error) {
+      notifyFillCategories();
       console.error("Erreur lors de la modification de la catégorie:", error);
     }
     setCategorieName(e.data);
@@ -93,9 +197,10 @@ export default function FormCatSousCat() {
         `${import.meta.env.VITE_API_URL}/api/souscats/${selectedSousCatsId}`,
         updates
       );
-
+      notifyUpdateSousCats();
       setIsPopupAddOpen(false);
     } catch (error) {
+      notifyFillSousCats();
       console.error(
         "Erreur lors de la modification de la sous-catégorie:",
         error
@@ -110,8 +215,10 @@ export default function FormCatSousCat() {
         `${import.meta.env.VITE_API_URL}/api/categories/${deleteCategorieId}`
       );
 
+      notifyDeleteCategorie();
       setIsPopupAddOpen(false);
     } catch (error) {
+      notifyErrorCategories();
       console.error("Erreur lors de la suppression de la catégorie:", error);
     }
   };
@@ -121,9 +228,10 @@ export default function FormCatSousCat() {
       await axios.delete(
         `${import.meta.env.VITE_API_URL}/api/souscats/${deleteSousCatsId}`
       );
-
+      notifyDeleteSousCats();
       setIsPopupAddOpen(false);
     } catch (error) {
+      notifyErrorSousCats();
       console.error("Erreur lors de la suppression de la catégorie:", error);
     }
   };
@@ -142,10 +250,12 @@ export default function FormCatSousCat() {
           Supprimer
         </button>
       </div>
+      <Toaster />
       {/* Popup pour Ajouter  */}
       {isPopupAddOpen && (
         <div className="popup-add-container">
           <div className="popup-categorie">
+            {/* Formulaire pour catégorie  */}
             <form method="post" onSubmit={handleAddCategorie}>
               <div className="button-container">
                 <button
@@ -177,10 +287,13 @@ export default function FormCatSousCat() {
                 />
               </div>
               <div className="button-container-catsouscats">
-                <button type="submit">Ajouter</button>
+                <button type="submit" onSubmit={notifyAddCategorie}>
+                  Ajouter
+                </button>
               </div>
             </form>
           </div>
+          {/* Formulaire pour souscategories  */}
           <form method="post" onSubmit={handleAddSouscat}>
             <div className="add-sous-categorie-container">
               <h3>Ajouter une sous-catégorie</h3>
@@ -216,6 +329,7 @@ export default function FormCatSousCat() {
           </form>
         </div>
       )}
+
       {/* Popup pour modifier  */}
       {isPopupUpdateOpen && (
         <div className="popup-update-container">
@@ -230,6 +344,7 @@ export default function FormCatSousCat() {
               </button>
             </div>
             <h2>Modifier une Catégorie ou Sous-Catégorie</h2>
+            {/* Formulaire pour catégorie  */}
             <form method="put" onSubmit={handleUpdateCategorie}>
               <label>
                 Choisissez une catégorie : <br />
@@ -265,6 +380,7 @@ export default function FormCatSousCat() {
               </div>
               <button type="submit">Modifier</button>
             </form>
+            {/* Formulaire pour souscategories  */}
             <form method="put" onSubmit={handleUpdateSousCats}>
               <label>
                 {" "}
@@ -328,6 +444,7 @@ export default function FormCatSousCat() {
               </button>
             </div>
             <h2>Supprimer une Catégorie ou Sous-Catégorie</h2>
+            {/* Formulaire pour catégorie  */}
             <p>Supprimer une catégorie</p>
             <label>
               Choisissez une catégorie : <br />
@@ -350,6 +467,7 @@ export default function FormCatSousCat() {
             >
               Supprimer
             </button>
+            {/* Formulaire pour souscategories  */}
             <p>Supprimer une sous-catégorie</p>
             <label>
               {" "}
