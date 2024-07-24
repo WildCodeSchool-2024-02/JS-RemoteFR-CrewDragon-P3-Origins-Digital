@@ -1,26 +1,67 @@
 @use "./Variables.scss" as *;
 
-/* Styles par défaut */
 .form-container {
   position: absolute;
-  top: 1100px;
-  left: 800px;
-  padding: 20px;
+  top: 102%;
+  left: 26%;
   background-color: #ffffff;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  max-width: 800px;
-  width: 100%;
+  width: 70%;
   max-height: 700px;
   z-index: 1;
+
+  h1 {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 2.5rem;
+  }
+}
+.popup-categorie {
+  border: 2px solid $arrow-color;
+  border-radius: 20px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 5px 4px 8px rgba(182, 142, 142, 0.1);
+  margin: 10px;
+
+  h2 {
+    font-size: 1.8rem;
+    padding-bottom: 30px;
+    padding-top: 10px;
+  }
+  input {
+    margin: 20px 0;
+    padding: 5px;
+  }
+  p {
+    font-size: 1.2rem;
+    font-weight: 400;
+  }
+  select {
+    margin: 12px 0;
+    padding: 5px 0;
+    font-size: 0.9rem;
+  }
+  label {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+}
+.form-cat-souscat {
+  display: flex;
+  justify-content: center;
+  gap: 150px;
+}
+.crossbutton {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
-/* Styles pour le bouton de fermeture */
-.close-button {
-  position: absolute;
+.close-button-categorie {
   top: 10px;
   right: 10px;
   background-color: white;
@@ -34,7 +75,6 @@
   img {
     width: 20px;
     height: 20px;
-    vertical-align: middle;
   }
 
   &:hover {
@@ -42,34 +82,14 @@
   }
 }
 
-/* Styles pour le contenu du formulaire */
-.form-content {
-  width: 100%;
-  max-width: 600px;
-  margin: 20px 0;
-}
-
 /* Styles pour les sections du formulaire */
-.input-container,
-.list-container,
-.button-container {
-  margin-bottom: 20px;
-}
-
-.input-container input,
-.list-container select {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
 
 .button-container {
   display: flex;
-  justify-content: center;
-
+  justify-content: space-evenly;
+  margin-bottom: 20px;
   button {
+    font-size: 1.2rem;
     cursor: pointer;
     padding: 10px 20px;
     border: none;
@@ -98,6 +118,11 @@
     margin: 20px;
     width: calc(100% - 40px);
     padding: 15px;
+  }
+
+  .form-cat-souscat {
+    flex-direction: column;
+    gap: 50px;
   }
 
   .close-button {

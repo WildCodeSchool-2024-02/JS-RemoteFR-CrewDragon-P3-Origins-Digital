@@ -1,191 +1,244 @@
 import { useState } from "react";
 import { useLoaderData, Link } from "react-router-dom";
-import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-import OPENMENU from "../assets/images/svg-admin/openmenu.svg";
-import CROSSADMIN from "../assets/images/svg-admin/crossadmin.svg";
-import FOLDER from "../assets/images/svg-admin/folder.svg";
-import MODIFY from "../assets/images/svg-admin/pen.svg";
-import BIN from "../assets/images/svg-admin/bin.svg";
+import axios from "axios";
 
 export default function FormCatSousCat() {
-  const [isAddMode, setIsAddMode] = useState(true);
-  const [isUpdateMode, setIsUpdateMode] = useState(false);
-  const [isDeleteMode, setIsDeleteMode] = useState(false);
-  const [categorieName, setCategorieName] = useState("");
-  const [sousCategorieName, setSousCategorieName] = useState("");
+  const [isPopupAddOpen, setIsPopupAddOpen] = useState(false);
+  const [isPopupUpdateOpen, setIsPopupUpdateOpen] = useState(false);
+  const [isPopupDeleteOpen, setIsPopupDeleteOpen] = useState(false);
+  const [categorieName, setCategorieName] = useState(null);
+  const [sousCategorieName, setSousCategorieName] = useState(null);
   const [image, setImage] = useState("");
-  const [categoriesId, setCategoriesId] = useState("");
+  const [categoriesId, setCategoriesId] = useState(1);
   const [selectedCategorieId, setSelectedCategorieId] = useState("");
   const [selectedSousCatsId, setSelectedSousCatsId] = useState("");
   const [deleteCategorieId, setDeleteCategorieId] = useState("");
   const [deleteSousCatsId, setDeleteSousCatsId] = useState("");
-  const [menuOpen, setMenuOpen] = useState(false);
   const { categories, souscats } = useLoaderData();
 
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
+  // Message de Toastify Ajouter une catégorie
+  const notifyAddCategorie = () =>
+    toast("La Catégorie à bien été ajoutée !", {
+      style: {
+        border: "solid 2px #000000",
+        backgroundColor: "#FF7105",
+        color: "#ffffff",
+      },
+    });
+  // Message de Toastify Ajouter une sous-catégorie
+  const notifyAddSousCats = () =>
+    toast("La Sous-Catégorie à bien été ajoutée !", {
+      style: {
+        border: "solid 2px #000000",
+        backgroundColor: "#FF7105",
+        color: "#ffffff",
+      },
+    });
+  // // Message de Toastify modifier une catégorie
+  const notifyUpdateCategorie = () =>
+    toast("La Catégorie à bien été modifiée  !", {
+      style: {
+        border: "solid 2px #000000",
+        backgroundColor: "#FF7105",
+        color: "#ffffff",
+      },
+    });
+  // Message de Toastify modifier une sous-catégorie
+  const notifyUpdateSousCats = () =>
+    toast("La Catégorie à bien été modifiée  !", {
+      style: {
+        border: "solid 2px #000000",
+        backgroundColor: "#FF7105",
+        color: "#ffffff",
+      },
+    });
+  // Message de Toastify supprimer une catégorie
+  const notifyDeleteCategorie = () =>
+    toast("La Catégorie à bien été supprimée !", {
+      style: {
+        border: "solid 2px #000000",
+        backgroundColor: "#FF7105",
+        color: "#ffffff",
+      },
+    });
 
+  // Message de Toastify supprimer une sous-catégorie
+  const notifyDeleteSousCats = () =>
+    toast("La Sous-Catégorie à bien été supprimée !", {
+      style: {
+        border: "solid 2px #000000",
+        backgroundColor: "#FF7105",
+        color: "#ffffff",
+      },
+    });
+  // Message de Toastify Ajouter une sous-catégorie
+  const notifyErrorCategories = () =>
+    toast("La catégories a une sous-catégorie liée. Veuillez la supprimer", {
+      style: {
+        border: "solid 2px #000000",
+        backgroundColor: "#FF7105",
+        color: "#ffffff",
+      },
+    });
+  // Message de Toastify Ajouter une sous-catégorie
+  const notifyErrorSousCats = () =>
+    toast("Cette sous catégorie à des vidéos liées. Veuillez les supprimer", {
+      style: {
+        border: "solid 2px #000000",
+        backgroundColor: "#FF7105",
+        color: "#ffffff",
+      },
+    });
+  // Message de Toastify pour les champs non remplis
+  const notifyFill = () =>
+    toast("Veuillez remplir les champs", {
+      style: {
+        border: "solid 2px #000000",
+        backgroundColor: "#FF7105",
+        color: "#ffffff",
+      },
+    });
+  // Message de Toastify pour les champs non remplis
+  const notifyFillCategories = () =>
+    toast("Veuillez ajouter au moins un nouveau nom à votre catégorie", {
+      style: {
+        border: "solid 2px #000000",
+        backgroundColor: "#FF7105",
+        color: "#ffffff",
+      },
+    });
+  // Message de Toastify pour les champs non remplis
+  const notifyFillSousCats = () =>
+    toast("Veuillez ajouter le nouveau nom de votre sous-catégories", {
+      style: {
+        border: "solid 2px #000000",
+        backgroundColor: "#FF7105",
+        color: "#ffffff",
+      },
+    });
+  // Route pour ajouté une catégorie
   const handleAddCategorie = async (event) => {
     event.preventDefault();
+
     try {
       await axios.post(`${import.meta.env.VITE_API_URL}/api/categories`, {
         name: categorieName,
         image,
       });
-      setCategorieName("");
-      setImage("");
-      setIsAddMode(false);
-      toast.success("Catégorie ajoutée avec succès !");
+      notifyAddCategorie();
+      setIsPopupAddOpen(false);
     } catch (error) {
+      notifyFill();
       console.error("Erreur lors de l'ajout de la catégorie:", error);
-      toast.error("Erreur lors de l'ajout de la catégorie.");
     }
+    setCategorieName(event.data);
   };
 
+  // Route pour ajouté une souscatégorie
   const handleAddSouscat = async (event) => {
     event.preventDefault();
+
     try {
       await axios.post(`${import.meta.env.VITE_API_URL}/api/souscats`, {
         name: sousCategorieName,
         categories_id: categoriesId,
       });
-      setSousCategorieName("");
-      setCategoriesId("");
-      setIsAddMode(false);
-      toast.success("Sous-catégorie ajoutée avec succès !");
+      notifyAddSousCats();
+      setIsPopupAddOpen(false);
     } catch (error) {
+      notifyFill();
       console.error("Erreur lors de l'ajout de la sous-catégorie:", error);
-      toast.error("Erreur lors de l'ajout de la sous-catégorie.");
     }
+    setSousCategorieName(event.data);
   };
 
+  // Route pour modifier une catégorie
   const handleUpdateCategorie = async (e) => {
     e.preventDefault();
+
     const formData = new FormData(e.target);
     const updates = {};
+
     formData.forEach((value, key) => {
       if (value) {
         updates[key] = value;
       }
     });
+
     try {
       await axios.put(
         `${import.meta.env.VITE_API_URL}/api/categories/${selectedCategorieId}`,
         updates
       );
-      setSelectedCategorieId("");
-      setIsUpdateMode(false);
-      toast.success("Catégorie modifiée avec succès !");
+      notifyUpdateCategorie();
+      setIsPopupAddOpen(false);
     } catch (error) {
+      notifyFillCategories();
       console.error("Erreur lors de la modification de la catégorie:", error);
-      toast.error("Erreur lors de la modification de la catégorie.");
     }
+    setCategorieName(e.data);
   };
-
+  // Route pour modifier une sous-catégorie
   const handleUpdateSousCats = async (e) => {
     e.preventDefault();
+
     const formData = new FormData(e.target);
     const updates = {};
+
     formData.forEach((value, key) => {
       if (value) {
         updates[key] = value;
       }
     });
+
     try {
       await axios.put(
         `${import.meta.env.VITE_API_URL}/api/souscats/${selectedSousCatsId}`,
         updates
       );
-      setSelectedSousCatsId("");
-      setIsUpdateMode(false);
-      toast.success("Sous-catégorie modifiée avec succès !");
+      notifyUpdateSousCats();
+      setIsPopupAddOpen(false);
     } catch (error) {
+      notifyFillSousCats();
       console.error(
         "Erreur lors de la modification de la sous-catégorie:",
         error
       );
-      toast.error("Erreur lors de la modification de la sous-catégorie.");
     }
+    setSousCategorieName(e.data);
   };
-
+  // Route pour supprimer une catégorie
   const handleDeleteCategorie = async () => {
     try {
       await axios.delete(
         `${import.meta.env.VITE_API_URL}/api/categories/${deleteCategorieId}`
       );
-      setDeleteCategorieId("");
-      setIsDeleteMode(false);
-      toast.success("Catégorie supprimée avec succès !");
+
+      notifyDeleteCategorie();
+      setIsPopupAddOpen(false);
     } catch (error) {
+      notifyErrorCategories();
       console.error("Erreur lors de la suppression de la catégorie:", error);
-      toast.error("Erreur lors de la suppression de la catégorie.");
     }
   };
-
+  // Route pour supprimer une sous-catégorie
   const handleDeleteSousCats = async () => {
     try {
       await axios.delete(
         `${import.meta.env.VITE_API_URL}/api/souscats/${deleteSousCatsId}`
       );
-      setDeleteSousCatsId("");
-      setIsDeleteMode(false);
-      toast.success("Sous-catégorie supprimée avec succès !");
+      notifyDeleteSousCats();
+      setIsPopupAddOpen(false);
     } catch (error) {
-      console.error(
-        "Erreur lors de la suppression de la sous-catégorie:",
-        error
-      );
-      toast.error("Erreur lors de la suppression de la sous-catégorie.");
+      notifyErrorSousCats();
+      console.error("Erreur lors de la suppression de la catégorie:", error);
     }
   };
 
   return (
-    <div className="container-admin">
-      <div className="container-admin-action">
-        <div className="management-header">
-          <button type="button" id="openBtn" onClick={toggleMenu}>
-            <img className="logo-arrow" src={OPENMENU} alt="menu burger" />
-          </button>
-          <h1>Gestion des Catégories et Sous-catégories</h1>
-        </div>
-
-        <div className="button-group">
-          <button
-            className="button-admin"
-            type="button"
-            onClick={() => setIsAddMode(true)}
-          >
-            <img className="svg-folder" src={FOLDER} alt="svg-fichier" />
-            <p className="text-admin">Ajouter</p>
-          </button>
-        </div>
-        <div className="button-group">
-          <button
-            className="button-admin"
-            type="button"
-            onClick={() => setIsUpdateMode(true)}
-          >
-            <img className="svg-modify" src={MODIFY} alt="svg-modify" />
-            <p className="text-admin">Modifier</p>
-          </button>
-        </div>
-        <div className="button-group">
-          <button
-            className="button-admin"
-            type="button"
-            onClick={() => setIsDeleteMode(true)}
-          >
-            <img className="svg-bin" src={BIN} alt="svg-bin" />
-            <p className="text-admin">Supprimer</p>
-          </button>
-        </div>
-      </div>
-      <div className={menuOpen ? "sideadmin active" : "sideadmin"}>
-        <button type="button" className="close" onClick={toggleMenu}>
-          <img className="cross-admin" src={CROSSADMIN} alt="fermer" />
-        </button>
+    <div className="formcatsouscat-container">
+      <div className="sideadmin">
         <ul>
           <h2>
             Bienvenue <br />
@@ -212,267 +265,282 @@ export default function FormCatSousCat() {
         </ul>
       </div>
       <div className="form-container">
-        {isAddMode && (
-          <>
-            <form
-              method="post"
-              onSubmit={handleAddCategorie}
-              className="form-content"
-            >
-              <button
-                className="close-button"
-                onClick={() => setIsAddMode(false)}
-                type="button"
-              >
-                <img src={CROSSADMIN} alt="fermer" />
-              </button>
-              <h2>Ajouter une Catégorie</h2>
-              <p>Nom de la Catégorie</p>
-              <div className="input-container">
-                <input
-                  type="text"
-                  id="categorieName"
-                  name="name"
-                  value={categorieName}
-                  onChange={(e) => setCategorieName(e.target.value)}
-                />
-              </div>
-              <p>Image de la Catégorie (format URL)</p>
-              <div className="input-container">
-                <input
-                  type="text"
-                  id="image"
-                  name="image"
-                  value={image}
-                  onChange={(e) => setImage(e.target.value)}
-                />
-              </div>
-              <div className="button-container">
-                <button type="submit" className="submit-add">
-                  Ajouter
-                </button>
-              </div>
-            </form>
-            <form
-              method="post"
-              onSubmit={handleAddSouscat}
-              className="form-content"
-            >
-              <button
-                className="close-button"
-                onClick={() => setIsAddMode(false)}
-                type="button"
-              >
-                <img src={CROSSADMIN} alt="fermer" />
-              </button>
-              <h2>Ajouter une Sous-catégorie</h2>
-              <p>Nom de la Sous-catégorie</p>
-              <div className="input-container">
-                <input
-                  type="text"
-                  id="sousCategorieName"
-                  name="name"
-                  value={sousCategorieName}
-                  onChange={(e) => setSousCategorieName(e.target.value)}
-                />
-              </div>
-              <p>Choisissez une Catégorie</p>
-              <div className="input-container">
-                <select
-                  id="categoriesId"
-                  name="categories_id"
-                  value={categoriesId}
-                  onChange={(e) => setCategoriesId(e.target.value)}
+        <div className="container-admin-videos">
+          <h1>Gérer mes catégories et sous-catégories</h1>
+          <div className="button-container">
+            <button type="button" onClick={() => setIsPopupAddOpen(true)}>
+              Ajouter
+            </button>
+            <button type="button" onClick={() => setIsPopupUpdateOpen(true)}>
+              Modifier
+            </button>
+            <button type="button" onClick={() => setIsPopupDeleteOpen(true)}>
+              Supprimer
+            </button>
+          </div>
+          <Toaster />
+          {/* Popup pour Ajouter  */}
+          {isPopupAddOpen && (
+            <div>
+              <div className="crossbutton">
+                <button
+                  type="button"
+                  className="close-button-categorie"
+                  onClick={() => setIsPopupAddOpen(false)}
                 >
-                  <option value="">Sélectionner une catégorie</option>
-                  {categories.map((cat) => (
-                    <option key={cat.id} value={cat.id}>
-                      {cat.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="button-container">
-                <button type="submit" className="submit-add">
-                  Ajouter
+                  ❌
                 </button>
               </div>
-            </form>
-          </>
-        )}
+              <div className="form-cat-souscat">
+                <div className="popup-categorie">
+                  {/* Formulaire pour catégorie  */}
+                  <form method="post" onSubmit={handleAddCategorie}>
+                    <h2>Ajouter une Catégorie</h2>
+                    <p>Nom de la Catégorie</p>
+                    <div className="input-container">
+                      <input
+                        type="text"
+                        id="categorieName"
+                        name="name"
+                        value={categorieName}
+                        onChange={(e) => setCategorieName(e.target.value)}
+                      />
+                    </div>
+                    <p>Ajouter une image à la catégorie (format URL)</p>
+                    <div className="input-container">
+                      <input
+                        type="text"
+                        id="image"
+                        name="image"
+                        onChange={(e) => setImage(e.target.value)}
+                      />
+                    </div>
+                    <div className="button-container">
+                      <button type="submit" onSubmit={notifyAddCategorie}>
+                        Ajouter
+                      </button>
+                    </div>
+                  </form>
+                </div>
+                {/* Formulaire pour souscategories  */}
+                <div className="popup-categorie">
+                  <form method="post" onSubmit={handleAddSouscat}>
+                    <div className="add-sous-categorie-container">
+                      <h2>Ajouter une sous-catégorie</h2>
+                      <p>Nom de la Sous-catégorie</p>
+                      <div className="input-container">
+                        <input
+                          type="text"
+                          name="name"
+                          id="name"
+                          value={sousCategorieName}
+                          onChange={(e) => setSousCategorieName(e.target.value)}
+                        />{" "}
+                        <br />
+                      </div>
+                      <p>Liée à la Catégorie</p>
+                      <div className="list-container">
+                        <select
+                          name="categories_id"
+                          id="categories_id"
+                          onChange={(e) => setCategoriesId(e.target.value)}
+                        >
+                          {categories.map((categorie) => (
+                            <option value={categorie.id} key={categorie.id}>
+                              {categorie.name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className="button-container">
+                        <button type="submit">Ajouter</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          )}
 
-        {isUpdateMode && (
-          <>
-            <form
-              method="post"
-              onSubmit={handleUpdateCategorie}
-              className="form-content"
-            >
-              <button
-                className="close-button"
-                onClick={() => setIsUpdateMode(false)}
-                type="button"
-              >
-                <img src={CROSSADMIN} alt="fermer" />
-              </button>
-              <h2>Modifier une Catégorie</h2>
-              <p>Choisissez une Catégorie</p>
-              <div className="input-container">
-                <select
-                  id="selectedCategorieId"
-                  name="id"
-                  value={selectedCategorieId}
-                  onChange={(e) => setSelectedCategorieId(e.target.value)}
+          {/* Popup pour modifier  */}
+          {isPopupUpdateOpen && (
+            <div>
+              <div className="crossbutton">
+                <button
+                  type="button"
+                  className="close-button-categorie"
+                  onClick={() => setIsPopupUpdateOpen(false)}
                 >
-                  <option value="">Sélectionner une catégorie</option>
-                  {categories.map((cat) => (
-                    <option key={cat.id} value={cat.id}>
-                      {cat.name}
-                    </option>
-                  ))}
-                </select>
+                  ❌
+                </button>
               </div>
-              {selectedCategorieId && (
-                <>
-                  <p>Nom de la Catégorie</p>
-                  <div className="input-container">
-                    <input type="text" id="updateCategorieName" name="name" />
-                  </div>
-                  <p>Image de la Catégorie (format URL)</p>
-                  <div className="input-container">
-                    <input type="text" id="updateImage" name="image" />
-                  </div>
-                  <div className="button-container">
-                    <button type="submit" className="submit-update">
-                      Modifier
-                    </button>
-                  </div>
-                </>
-              )}
-            </form>
-            <form
-              method="post"
-              onSubmit={handleUpdateSousCats}
-              className="form-content"
-            >
-              <button
-                className="close-button"
-                onClick={() => setIsUpdateMode(false)}
-                type="button"
-              >
-                <img src={CROSSADMIN} alt="fermer" />
-              </button>
-              <h2>Modifier une Sous-catégorie</h2>
-              <p>Choisissez une Sous-catégorie</p>
-              <div className="input-container">
-                <select
-                  id="selectedSousCatsId"
-                  name="id"
-                  value={selectedSousCatsId}
-                  onChange={(e) => setSelectedSousCatsId(e.target.value)}
+              <div className="form-cat-souscat">
+                {/* Formulaire pour catégorie  */}
+                <div className="popup-categorie">
+                  <form method="put" onSubmit={handleUpdateCategorie}>
+                    <h2>Modifier une Catégorie</h2>
+                    <label>
+                      Choisissez une catégorie : <br />
+                      <select
+                        name="categories.id"
+                        onChange={(e) => setSelectedCategorieId(e.target.value)}
+                      >
+                        {categories.map((categorie) => (
+                          <option value={categorie.id} key={categorie.id}>
+                            {categorie.name}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+                    <p>Nouveau nom de la Catégorie</p>
+                    <div className="input-container">
+                      <input
+                        type="text"
+                        id="categorieName"
+                        name="name"
+                        value={categorieName}
+                        onChange={(e) => setCategorieName(e.target.value)}
+                      />
+                    </div>
+                    <p>Nouvelle image de la catégorie (format URL)</p>
+                    <div className="input-container">
+                      <input
+                        type="text"
+                        id="image"
+                        name="image"
+                        onChange={(e) => setImage(e.target.value)}
+                      />
+                    </div>
+                    <div className="button-container">
+                      <button type="submit">Modifier</button>
+                    </div>
+                  </form>
+                </div>
+                {/* Formulaire pour souscategories  */}
+                <div className="popup-categorie">
+                  <form method="put" onSubmit={handleUpdateSousCats}>
+                    <h2>Modifier Sous-Catégorie</h2>
+                    <label>
+                      Choisissez une Sous-catégorie : <br />
+                      <select
+                        name="souscats.id"
+                        onChange={(e) => setSelectedSousCatsId(e.target.value)}
+                      >
+                        {souscats.map((souscat) => (
+                          <option value={souscat.id} key={souscat.id}>
+                            {souscat.name}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+                    <p>Nouveau nom de la sous-catégorie</p>
+                    <div className="input-container">
+                      <input
+                        type="text"
+                        name="name"
+                        id="name"
+                        value={sousCategorieName}
+                        onChange={(e) => setSousCategorieName(e.target.value)}
+                      />{" "}
+                      <br />
+                    </div>
+                    <p>
+                      Liée à la nouvelle Catégorie / Selectionner la catégorie
+                      actuelle
+                    </p>
+                    <div className="list-container">
+                      <select
+                        name="categories_id"
+                        id="categories_id"
+                        onChange={(e) => setCategoriesId(e.target.value)}
+                      >
+                        {categories.map((categorie) => (
+                          <option value={categorie.id} key={categorie.id}>
+                            {categorie.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="button-container">
+                      <button type="submit">Modifier</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          )}
+          {/* Popup pour supprimer  */}
+          {isPopupDeleteOpen && (
+            <div className="popup-delete-container">
+              <div className="crossbutton">
+                <button
+                  type="button"
+                  className="close-button-categorie"
+                  onClick={() => setIsPopupDeleteOpen(false)}
                 >
-                  <option value="">Sélectionner une sous-catégorie</option>
-                  {souscats.map((scat) => (
-                    <option key={scat.id} value={scat.id}>
-                      {scat.name}
-                    </option>
-                  ))}
-                </select>
+                  ❌
+                </button>
               </div>
-              {selectedSousCatsId && (
-                <>
-                  <p>Nom de la Sous-catégorie</p>
-                  <div className="input-container">
-                    <input
-                      type="text"
-                      id="updateSousCategorieName"
-                      name="name"
-                    />
-                  </div>
-                  <p>Catégorie Associée</p>
-                  <div className="input-container">
-                    <select id="updateCategoriesId" name="categories_id">
-                      <option value="">Sélectionner une catégorie</option>
-                      {categories.map((cat) => (
-                        <option key={cat.id} value={cat.id}>
-                          {cat.name}
+              {/* Formulaire pour catégorie  */}
+              <div className="form-cat-souscat">
+                <div className="popup-categorie">
+                  <h2>Supprimer une Catégorie</h2>
+                  <label>
+                    Choisissez une catégorie : <br />
+                    <select
+                      name="categories.id"
+                      onChange={(e) => setDeleteCategorieId(e.target.value)}
+                    >
+                      {categories.map((categorie) => (
+                        <option value={categorie.id} key={categorie.id}>
+                          {categorie.name}
                         </option>
                       ))}
                     </select>
-                  </div>
+                  </label>
                   <div className="button-container">
-                    <button type="submit" className="submit-update">
-                      Modifier
+                    <button
+                      type="button"
+                      onClick={() => {
+                        handleDeleteCategorie();
+                      }}
+                    >
+                      Supprimer
                     </button>
                   </div>
-                </>
-              )}
-            </form>
-          </>
-        )}
-
-        {isDeleteMode && (
-          <form
-            method="post"
-            onSubmit={(e) => {
-              e.preventDefault();
-              if (deleteCategorieId) {
-                handleDeleteCategorie();
-              } else if (deleteSousCatsId) {
-                handleDeleteSousCats();
-              }
-            }}
-            className="form-content"
-          >
-            <button
-              className="close-button"
-              onClick={() => setIsDeleteMode(false)}
-              type="button"
-            >
-              <img src={CROSSADMIN} alt="fermer" />
-            </button>
-            <h2>Supprimer</h2>
-            <p>Choisissez une Catégorie à supprimer</p>
-            <div className="input-container">
-              <select
-                id="deleteCategorieId"
-                name="id"
-                value={deleteCategorieId}
-                onChange={(e) => setDeleteCategorieId(e.target.value)}
-              >
-                <option value="">Sélectionner une catégorie</option>
-                {categories.map((cat) => (
-                  <option key={cat.id} value={cat.id}>
-                    {cat.name}
-                  </option>
-                ))}
-              </select>
+                </div>
+                {/* Formulaire pour souscategories  */}
+                <div className="popup-categorie">
+                  <h2>Supprimer une Sous-Catégorie</h2>
+                  <label>
+                    Choisissez une Sous-catégorie : <br />
+                    <select
+                      name="souscats.id"
+                      onChange={(e) => setDeleteSousCatsId(e.target.value)}
+                    >
+                      {souscats.map((souscat) => (
+                        <option value={souscat.id} key={souscat.id}>
+                          {souscat.name}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <div className="button-container">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        handleDeleteSousCats();
+                      }}
+                    >
+                      Supprimer
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
-            <p>Choisissez une Sous-catégorie à supprimer</p>
-            <div className="input-container">
-              <select
-                id="deleteSousCatsId"
-                name="id"
-                value={deleteSousCatsId}
-                onChange={(e) => setDeleteSousCatsId(e.target.value)}
-              >
-                <option value="">Sélectionner une sous-catégorie</option>
-                {souscats.map((scat) => (
-                  <option key={scat.id} value={scat.id}>
-                    {scat.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="button-container">
-              <button type="submit" className="submit-delete">
-                Supprimer
-              </button>
-            </div>
-          </form>
-        )}
+          )}
+        </div>
       </div>
-      <Toaster />
     </div>
   );
 }
