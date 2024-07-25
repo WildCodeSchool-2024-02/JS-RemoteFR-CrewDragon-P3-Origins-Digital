@@ -16,16 +16,16 @@ const decodeToken = (token) => {
 export function AuthProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [rolesId, setRolesId] = useState(null);
+  const [abonnementId, setAbonnementId] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
       const decodedToken = decodeToken(token);
-
       if (decodedToken) {
         setIsAuthenticated(true);
-        const id = decodedToken.rolesId;
-        setRolesId(id);
+        setRolesId(decodedToken.rolesId);
+        setAbonnementId(decodedToken.abonnementId);
       }
     }
   }, []);
@@ -35,8 +35,8 @@ export function AuthProvider({ children }) {
     if (decodedToken) {
       localStorage.setItem("token", token);
       setIsAuthenticated(true);
-      const id = decodedToken.rolesId;
-      setRolesId(id);
+      setRolesId(decodedToken.rolesId);
+      setAbonnementId(decodedToken.abonnementId);
     }
   };
 
@@ -44,20 +44,25 @@ export function AuthProvider({ children }) {
     localStorage.removeItem("token");
     setIsAuthenticated(false);
     setRolesId(null);
+    setAbonnementId(null);
   };
 
-  const isAdmin = () => rolesId === 1;
+  const authContextValue = useMemo(() => {
+    const isAdmin = () => rolesId === 1;
 
-  const authContextValue = useMemo(
-    () => ({
+    const hasAccessToVideo = (videoAbonnementId) =>
+      abonnementId === 2 || (abonnementId === 1 && videoAbonnementId === 1);
+
+    return {
       isAuthenticated,
       rolesId,
+      abonnementId,
       isAdmin,
       login,
       logout,
-    }),
-    [isAuthenticated, rolesId]
-  );
+      hasAccessToVideo,
+    };
+  }, [isAuthenticated, rolesId, abonnementId]);
 
   return (
     <AuthContext.Provider value={authContextValue}>

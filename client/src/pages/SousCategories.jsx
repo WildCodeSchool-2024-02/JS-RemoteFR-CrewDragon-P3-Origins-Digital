@@ -1,9 +1,9 @@
-/* eslint-disable react/jsx-props-no-spreading */
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useParams, Link } from "react-router-dom";
 import YouTube from "react-youtube";
 import Slider from "react-slick";
 import axios from "axios";
+import { AuthContext } from "../contexte/AuthContext";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -13,6 +13,7 @@ function SousCategories() {
   const [subCategories, setSubCategories] = useState([]);
   const [videos, setVideos] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const { abonnementId } = useContext(AuthContext);
 
   useEffect(() => {
     window.scrollBy({
@@ -35,12 +36,11 @@ function SousCategories() {
         );
         const allSubCategories = sousCategoriesResponse.data;
 
+        // Récupérer toutes les vidéos
         const videosResponse = await axios.get(
           `${import.meta.env.VITE_API_URL}/api/videos`
         );
-
         const allVideos = videosResponse.data;
-        setVideos(allVideos);
 
         // Filtrer les sous-catégories pour celles qui correspondent à la catégorie sélectionnée
         const filteredSubCategories = allSubCategories.filter(
@@ -48,13 +48,32 @@ function SousCategories() {
             sousCategorie.categories_id === categoryResponse.data.id
         );
         setSubCategories(filteredSubCategories);
+
+        // Mettre à jour les vidéos en fonction de l'ID d'abonnement
+        let filteredVideos = [];
+        if (abonnementId === 2) {
+          // Pour les abonnés premium, montrer toutes les vidéos
+          filteredVideos = allVideos;
+        } else if (abonnementId === 1) {
+          // Pour les abonnés standard, montrer uniquement les vidéos avec abonnementsid 1
+          filteredVideos = allVideos.filter(
+            (video) => video.abonnementsid === 1
+          );
+        } else {
+          // Pour les non-connectés, montrer uniquement les vidéos avec abonnementsid 1
+          filteredVideos = allVideos.filter(
+            (video) => video.abonnementsid === 1
+          );
+        }
+
+        setVideos(filteredVideos);
       } catch (error) {
         console.error("Erreur lors du chargement des données :", error);
       }
     };
 
     fetchCategoryData();
-  }, [categoryId]);
+  }, [categoryId, abonnementId]);
 
   const settings = {
     arrows: true,
@@ -81,13 +100,22 @@ function SousCategories() {
       {subCategories.map((sousCategorie) => (
         <div key={sousCategorie.id}>
           <h2 className="title-sous-categorie">{sousCategorie.name}</h2>
-          <Slider {...settings}>
+          <Slider
+            arrows={settings.arrows}
+            dots={settings.dots}
+            infinite={settings.infinite}
+            fade={settings.fade}
+            adaptiveHeight={settings.adaptiveHeight}
+            speed={settings.speed}
+            slidesToShow={settings.slidesToShow}
+            slidesToScroll={settings.slidesToScroll}
+          >
             {videos
               .filter((video) => video.souscats_id === sousCategorie.id)
               .map((filteredVideo) => (
                 <div key={filteredVideo.id}>
                   <YouTube
-                    className="container-sous-categorie"
+                    className={`container-sous-categorie ${abonnementId === 2 || filteredVideo.abonnementsid === 1 ? "" : "video-unavailable"}`}
                     videoId={filteredVideo.url.split("v=")[1]}
                     opts={opts}
                   />

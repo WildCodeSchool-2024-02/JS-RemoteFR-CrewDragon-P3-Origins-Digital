@@ -20,7 +20,7 @@ function Home() {
         <br />
         <p>
           Notre mission est de vous offrir un espace convivial et intuitif pour
-          explorer une variété de contenus vidéo sélectionnés avec soin. Voici
+          explorer une variété de contenus vidéo sélectionnée avec soin. Voici
           ce que vous trouverez sur notre site :
         </p>
       </div>

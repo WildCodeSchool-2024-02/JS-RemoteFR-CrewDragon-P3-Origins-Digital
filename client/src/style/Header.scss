@@ -88,7 +88,7 @@
 .span-decoration {
   background-color: $title-color;
   border-radius: 20px;
-  padding: 3px;
+  padding: 8px;
   color: white;
 }
 
@@ -496,6 +496,9 @@
     margin-top: 1px;
     margin-left: 3px;
     cursor: pointer;
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
   }
 }
 
@@ -511,5 +514,8 @@
     margin-top: 1px;
     margin-left: 3px;
     cursor: pointer;
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
   }
 }

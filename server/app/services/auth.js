@@ -1,5 +1,6 @@
 const argon2 = require("argon2");
 const jwt = require("jsonwebtoken");
+const tables = require("../../database/tables"); // Assurez-vous du chemin correct
 
 // Options de hachage (voir documentation : https://github.com/ranisalt/node-argon2/wiki/Options)
 // Recommandations **minimales** de l'OWASP : https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
@@ -64,8 +65,33 @@ const currentUser = (req, res, next) => {
   }
 };
 
+const updateAbonnement = async (req, res, next) => {
+  const { abonnementsId } = req.body;
+  const userId = req.params.id;
+  try {
+    await tables.user.updateAbonnement(userId, abonnementsId);
+
+    // Générer un nouveau token
+    const user = await tables.user.read(userId);
+    const token = jwt.sign(
+      {
+        userId: user.id,
+        rolesId: user.roles_id,
+        abonnementId: abonnementsId,
+      },
+      process.env.APP_SECRET,
+      { expiresIn: "1h" }
+    );
+
+    res.status(200).json({ token });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   hashPassword,
   verifyToken,
   currentUser,
+  updateAbonnement,
 };

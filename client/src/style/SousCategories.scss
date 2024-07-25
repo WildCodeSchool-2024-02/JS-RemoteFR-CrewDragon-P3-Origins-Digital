@@ -8,8 +8,12 @@
 // Titre style
 
 .title-h1 {
+  margin-top: 20px;
+  font-size: 40px;
   text-decoration: underline;
   text-decoration-color: $text-color-black;
+  text-align: center;
+  text-decoration-color: $title-color;
 }
 .title-sous-categorie {
   text-align: center;
@@ -81,6 +85,32 @@
   font-weight: bolder;
   -webkit-text-stroke-width: 2px;
   -webkit-text-stroke-color: black;
+}
+
+.video-unavailable {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.container-sous-categorie-unavailable {
+  display: flex;
+  justify-content: center;
+  iframe {
+    width: 70vw;
+    max-height: auto;
+  }
+}
+
+// Responsive adjustments
+@media only screen and (min-width: 1080px) {
+  .container-sous-categorie-unavailable {
+    display: flex;
+    justify-content: center;
+    iframe {
+      width: 40vw;
+      max-height: auto;
+    }
+  }
 }
 
 @media only screen and (min-width: 1080px) {

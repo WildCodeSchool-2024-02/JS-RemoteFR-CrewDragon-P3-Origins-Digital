@@ -43,9 +43,20 @@ class SousCatRepository extends AbstractRepository {
   // TODO: Implement the update operation to modify an existing souscat
 
   async update(souscat) {
+    // Récupérer les clés et les valeurs de l'objet souscat
+    const keys = Object.keys(souscat);
+    const values = Object.values(souscat);
+
+    // Construire dynamiquement la requête SQL
+    const setClause = keys.map((key) => `${key} = ?`).join(", ");
+
+    // Ajouter la clé primaire (id) à la fin des valeurs
+    values.push(souscat.id);
+
+    // Exécuter la requête SQL
     const [edit] = await this.database.query(
-      `update ${this.table} set name =? where id =?`,
-      [souscat.name, souscat.id]
+      `UPDATE ${this.table} SET ${setClause} WHERE id = ?`,
+      values
     );
     return edit;
   }

@@ -2,6 +2,7 @@ import HeroSlider, { Overlay, Slide, MenuNav } from "hero-slider";
 import { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexte/AuthContext";
+import { useTheme } from "../contexte/ThemeContext";
 
 import LOGO from "../assets/images/origindigital.svg";
 import MENU from "../assets/images/images-header/menu.svg";
@@ -16,7 +17,6 @@ import videohomepage5 from "../assets/images/images-header/videohomepage5.mp4";
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [theme, setTheme] = useState("light");
   const navigate = useNavigate();
   const { isAuthenticated, isAdmin, logout } = useContext(AuthContext);
 
@@ -24,13 +24,7 @@ function Header() {
     setMenuOpen(!menuOpen);
   };
 
-  const toggleTheme = () => {
-    setTheme(theme === "light" ? "dark" : "light");
-  };
-
-  useEffect(() => {
-    document.body.className = theme;
-  }, [theme]);
+  const { darkMode, toggleDarkMode } = useTheme();
 
   const goToProfile = () => {
     if (isAuthenticated) {
@@ -176,8 +170,8 @@ function Header() {
       <img className="logo" src={LOGO} alt="logo" />
 
       <div className="theme">
-        <button type="button" onClick={toggleTheme}>
-          Changer de thème
+        <button type="button" onClick={toggleDarkMode}>
+          {darkMode ? "clair" : "sombre"}
         </button>
       </div>
 
@@ -202,7 +196,7 @@ function Header() {
           </li>
           <li>
             <Link className="glitch" data-glitch="Contenue" to="/contenue">
-              Contenue
+              Contenu
             </Link>
           </li>
           {isAdmin() && (
@@ -215,7 +209,7 @@ function Header() {
           <li>
             <Link
               className="glitch"
-              data-glitch="pourquoi pas s'abonner ?"
+              data-glitch="pourquoi s'abonner ?"
               to="/abo"
             >
               Pourquoi s'abonner ?

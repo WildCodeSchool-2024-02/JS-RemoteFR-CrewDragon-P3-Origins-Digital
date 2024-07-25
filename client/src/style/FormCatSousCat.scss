@@ -1,0 +1,170 @@
+@use "./Variables.scss" as *;
+
+.formcatsouscat-container {
+  height: 84vh;
+}
+
+.form-container {
+  position: absolute;
+  top: 102%;
+  left: 26%;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  max-height: 700px;
+  z-index: 1;
+
+  h1 {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 2.5rem;
+  }
+}
+
+.button-arrow-container {
+  margin-top: 30px;
+}
+
+.popup-categorie {
+  border: 2px solid $arrow-color;
+  border-radius: 20px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 5px 4px 8px rgba(182, 142, 142, 0.1);
+  margin: 10px;
+
+  h2 {
+    font-size: 1.8rem;
+    padding-bottom: 30px;
+    padding-top: 10px;
+  }
+  input {
+    margin: 20px 0;
+    padding: 5px;
+  }
+  p {
+    font-size: 1.2rem;
+    font-weight: 400;
+  }
+  select {
+    margin: 12px 0;
+    padding: 5px 0;
+    font-size: 0.9rem;
+  }
+  label {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+}
+.form-cat-souscat {
+  display: flex;
+  justify-content: center;
+  gap: 150px;
+}
+.crossbutton {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.close-button-categorie {
+  top: 10px;
+  right: 10px;
+  background-color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 5px;
+  cursor: pointer;
+  z-index: 10;
+  transition: background-color 0.3s;
+
+  img {
+    width: 20px;
+    height: 20px;
+  }
+
+  &:hover {
+    background-color: darkred;
+  }
+}
+
+/* Styles pour les sections du formulaire */
+
+.button-container {
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 20px;
+  button {
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    background-color: $arrow-color;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: darken($arrow-color, 10%);
+    }
+  }
+}
+
+.add-sous-categorie-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+@media (max-width: 1024px) {
+  .form-container {
+    position: static;
+    top: auto;
+    left: auto;
+    margin: 20px;
+    width: calc(100% - 40px);
+    padding: 15px;
+  }
+
+  .form-cat-souscat {
+    flex-direction: column;
+    gap: 50px;
+  }
+
+  .close-button {
+    top: 1000px;
+    right: 40px;
+    padding: 8px;
+
+    img {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  .form-content {
+    margin: 10px 0;
+  }
+
+  .input-container,
+  .list-container,
+  .button-container {
+    margin-bottom: 15px;
+  }
+
+  .input-container input,
+  .list-container select {
+    padding: 8px;
+  }
+
+  .button-container button {
+    padding: 8px 16px;
+  }
+
+  h1 {
+    font-size: 0.9rem;
+  }
+}
