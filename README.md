@@ -56,8 +56,7 @@ Give a ⭐️ if this project helped you!
 
 ## 📝 License
 
-Copyright © 2024 [Franck Herpoux Aurelien Chetot Sacha Darras Jeviraj JEYARATNAM](https://github.com/Sachdarras Moonlow31 AurelienChetot).<br />
-This project is [MIT](https://github.com/WildCodeSchool/Origin_Digital/blob/master/LICENSE) licensed.
+Copyright © 2024 
 
 ***
 _This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
