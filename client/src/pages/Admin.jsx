@@ -364,8 +364,11 @@ function Admin() {
             <Link className="admin-link" to="/admin/catsouscats">
               Gérer mes Catégories et Sous-catégories
             </Link>
-            <Link className="admin-link" to="/contenue">
-              Contenue
+            <Link className="admin-link" to="/admin/utilisateurs">
+              Gérer les utilisateurs
+            </Link>
+            <Link className="admin-link" to="/contenu">
+              Contenu
             </Link>
             <Link className="admin-link" to="/login">
               Déconnexion

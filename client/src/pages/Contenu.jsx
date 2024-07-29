@@ -3,9 +3,9 @@ import { useLoaderData, Link } from "react-router-dom";
 import YouTube from "react-youtube";
 import fleche from "../assets/images/fleche.png";
 import { AuthContext } from "../contexte/AuthContext";
-import "../style/Contenue.scss";
+import "../style/Contenu.scss";
 
-function Contenue() {
+function Contenu() {
   const videos = useLoaderData();
   const { abonnementId } = useContext(AuthContext);
 
@@ -84,4 +84,4 @@ function Contenue() {
   );
 }
 
-export default Contenue;
+export default Contenu;

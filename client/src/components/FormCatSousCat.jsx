@@ -254,9 +254,12 @@ export default function FormCatSousCat() {
             Gérer mes vidéos
           </Link>
           <Link className="admin-link" to="/admin/catsouscats">
-            Modifier Catégorie / Sous-catégorie
+          Gérer mes Catégories et Sous-catégories
           </Link>
-          <Link className="admin-link" to="/contenue">
+          <Link className="admin-link" to="/admin/utilisateurs">
+              Gérer les utilisateurs
+            </Link>
+          <Link className="admin-link" to="/contenu">
             Contenu
           </Link>
           <Link className="admin-link" to="/login">

@@ -213,7 +213,7 @@ function Header() {
           <li>
             <Link
               className="glitch"
-              data-glitch="pourquoi pas s'abonner ?"
+              data-glitch="Pourquoi s'abonner ?"
               to="/abo"
             >
               Pourquoi s'abonner ?
@@ -224,6 +224,7 @@ function Header() {
               <li>
                 <button
                   className="button-profil"
+                  data-glitch="Mon profil"
                   type="button"
                   onClick={goToProfile}
                 >
