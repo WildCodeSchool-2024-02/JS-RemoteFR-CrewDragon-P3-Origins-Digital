@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexte/AuthContext";
 import { useTheme } from "../contexte/ThemeContext";
 
+
 import LOGO from "../assets/images/origindigital.svg";
 import MENU from "../assets/images/images-header/menu.svg";
 import CROSS from "../assets/images/images-header/cross.svg";
@@ -171,6 +172,7 @@ function Header() {
 
       <div className="theme">
         <button type="button" onClick={toggleDarkMode}>
+          {darkMode ? "clair" : "sombre"}
           {darkMode ? "clair" : "sombre"}
         </button>
       </div>
