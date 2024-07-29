@@ -1,5 +1,9 @@
 @use "./Variables.scss" as *;
 
+.formcatsouscat-container {
+  height: 84vh;
+}
+
 .form-container {
   position: absolute;
   top: 102%;
@@ -19,6 +23,11 @@
     font-size: 2.5rem;
   }
 }
+
+.button-arrow-container {
+  margin-top: 30px;
+}
+
 .popup-categorie {
   border: 2px solid $arrow-color;
   border-radius: 20px;
@@ -110,7 +119,7 @@
   gap: 10px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
   .form-container {
     position: static;
     top: auto;

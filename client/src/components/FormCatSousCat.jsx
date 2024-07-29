@@ -3,6 +3,10 @@ import { useLoaderData, Link } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 
+// Import des svg
+import OPENMENU from "../assets/images/svg-admin/openmenu.svg";
+import CROSSADMIN from "../assets/images/svg-admin/crossadmin.svg";
+
 export default function FormCatSousCat() {
   const [isPopupAddOpen, setIsPopupAddOpen] = useState(false);
   const [isPopupUpdateOpen, setIsPopupUpdateOpen] = useState(false);
@@ -15,7 +19,12 @@ export default function FormCatSousCat() {
   const [selectedSousCatsId, setSelectedSousCatsId] = useState("");
   const [deleteCategorieId, setDeleteCategorieId] = useState("");
   const [deleteSousCatsId, setDeleteSousCatsId] = useState("");
+  const [menuOpen, setMenuOpen] = useState(false);
   const { categories, souscats } = useLoaderData();
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
 
   // Message de Toastify Ajouter une catégorie
   const notifyAddCategorie = () =>
@@ -238,7 +247,10 @@ export default function FormCatSousCat() {
 
   return (
     <div className="formcatsouscat-container">
-      <div className="sideadmin">
+      <div className={menuOpen ? "sideadmin active" : "sideadmin"}>
+        <button type="button" className="close" onClick={toggleMenu}>
+          <img className="cross-admin" src={CROSSADMIN} alt="fermer" />
+        </button>
         <ul>
           <h2>
             Bienvenue <br />
@@ -266,6 +278,11 @@ export default function FormCatSousCat() {
             Déconnexion
           </Link>
         </ul>
+      </div>
+      <div className="button-arrow-container">
+        <button type="button" id="openBtn" onClick={toggleMenu}>
+          <img className="logo-arrow" src={OPENMENU} alt="menu burger" />{" "}
+        </button>
       </div>
       <div className="form-container">
         <div className="container-admin-videos">
