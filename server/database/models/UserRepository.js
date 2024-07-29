@@ -53,10 +53,22 @@ class UserRepository extends AbstractRepository {
   }
 
   async update(user) {
-    await this.database.query(
-      `UPDATE ${this.table} SET firstname = ?, lastname = ?, birthday = ?, email = ? WHERE id = ?`,
-      [user.firstname, user.lastname, user.birthday, user.email, user.id]
+    // Récupérer les clés et les valeurs de l'objet user
+    const keys = Object.keys(user);
+    const values = Object.values(user);
+
+    // Construire dynamiquement la requête SQL
+    const setClause = keys.map((key) => `${key} = ?`).join(", ");
+
+    // Ajouter la clé primaire (id) à la fin des valeurs
+    values.push(user.id);
+
+    // Exécuter la requête SQL
+    const [edit] = await this.database.query(
+      `UPDATE ${this.table} SET ${setClause} WHERE id = ?`,
+      values
     );
+    return edit;
   }
 
   async delete(id) {
