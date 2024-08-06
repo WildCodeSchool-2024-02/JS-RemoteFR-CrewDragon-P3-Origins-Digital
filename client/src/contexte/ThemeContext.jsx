@@ -1,11 +1,5 @@
 // ThemeContext.js
-import  {
-  createContext,
-  useState,
-  useEffect,
-  useContext,
-  useMemo,
-} from "react";
+import { createContext, useState, useEffect, useContext, useMemo } from "react";
 import PropTypes from "prop-types";
 
 const ThemeContext = createContext();
