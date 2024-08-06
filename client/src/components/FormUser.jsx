@@ -22,7 +22,7 @@ function FormUser() {
   const handleDeleteUser = async (userId) => {
     try {
       await axios.delete(`${import.meta.env.VITE_API_URL}/api/users/${userId}`);
-      setDeleteUser(deleteUser.filter(user => user.id !== userId));
+      setDeleteUser(deleteUser.filter((user) => user.id !== userId));
     } catch (error) {
       console.error("Erreur lors de la suppression de l'utilisateur", error);
     }
@@ -41,7 +41,7 @@ function FormUser() {
   };
 
   return (
-    <div>
+    <div className="formUser">
       <div className="sideadmin">
         <ul>
           <h2>
@@ -71,60 +71,78 @@ function FormUser() {
           </Link>
         </ul>
       </div>
-      {deleteUser.map((user) => (
-        <form key={user.id} onSubmit={(e) => handleUpdateUser(e, user.id)}>
-          <p>{user.lastname}</p>
-          <p>{user.firstname}</p>
-          <label>
-            Choisissez un rôle : <br />
-            <select
-              value={selectedRoles[user.id]}
-              onChange={(e) =>
-                setSelectedRoles({
-                  ...selectedRoles,
-                  [user.id]: e.target.value,
-                })
-              }
+      <div className="formUser-global">
+        <h1 className="formUser-global-title">Gérer les utilisateurs</h1>
+        <div className="formUser-global-user">
+          {deleteUser.map((user) => (
+            <form
+              className="formUser-global-user-form"
+              key={user.id}
+              onSubmit={(e) => handleUpdateUser(e, user.id)}
             >
-              {roles.map((role) => (
-                <option key={role.id} value={role.id}>
-                  {role.name}
-                </option>
-              ))}
-            </select>
-          </label>
-          {selectedRoles[user.id] !== user.roles_id && (
-            <button type="submit">Modifier</button>
-          )}
-          <label>
-            Choisissez un abonnement : <br />
-            <select
-              value={selectedAbonnements[user.id]}
-              onChange={(e) =>
-                setSelectedAbonnements({
-                  ...selectedAbonnements,
-                  [user.id]: e.target.value,
-                })
-              }
-            >
-              {abonnements.map((abonnement) => (
-                <option key={abonnement.id} value={abonnement.id}>
-                  {abonnement.name}
-                </option>
-              ))}
-            </select>
-          </label>
-          {selectedAbonnements[user.id] !== user.abonnementsid && (
-            <button type="submit">Modifier</button>
-          )}
-          <button
-            type="button"
-            onClick={() => handleDeleteUser(user.id)}
-          >
-            Supprimer
-          </button>
-        </form>
-      ))}
+              <p>
+                <strong>Nom : </strong>
+                {user.lastname}
+              </p>
+              <p>
+                <strong>Prénom : </strong>
+                {user.firstname}
+              </p>
+              <div className="formUser-global-user-role">
+                <label>
+                  <strong>Son rôle : </strong>
+                  <br />
+                  <select
+                    value={selectedRoles[user.id]}
+                    onChange={(e) =>
+                      setSelectedRoles({
+                        ...selectedRoles,
+                        [user.id]: e.target.value,
+                      })
+                    }
+                  >
+                    {roles.map((role) => (
+                      <option key={role.id} value={role.id}>
+                        {role.name}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                {selectedRoles[user.id] !== user.roles_id && (
+                  <button type="submit">Modifier</button>
+                )}
+              </div>
+              <div className="formUser-global-user-abo">
+                <label>
+                  <strong>Son abonnement : </strong>
+                  <br />
+                  <select
+                    value={selectedAbonnements[user.id]}
+                    onChange={(e) =>
+                      setSelectedAbonnements({
+                        ...selectedAbonnements,
+                        [user.id]: e.target.value,
+                      })
+                    }
+                  >
+                    {abonnements.map((abonnement) => (
+                      <option key={abonnement.id} value={abonnement.id}>
+                        {abonnement.name}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                {selectedAbonnements[user.id] !== user.abonnementsid && (
+                  <button type="submit">Modifier</button>
+                )}
+              </div>
+              <button type="button" onClick={() => handleDeleteUser(user.id)}>
+                Supprimer l'utilisateur
+              </button>
+            </form>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

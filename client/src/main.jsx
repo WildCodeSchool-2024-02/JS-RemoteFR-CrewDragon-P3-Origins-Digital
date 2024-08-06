@@ -98,10 +98,10 @@ const router = createBrowserRouter([
               axios.get(`${import.meta.env.VITE_API_URL}/api/categories`),
               axios.get(`${import.meta.env.VITE_API_URL}/api/souscats`),
             ]);
-            
+
             const categories = categoriesResponse.data;
             const souscats = souscatsResponse.data;
-            
+
             return { categories, souscats };
           } catch (error) {
             console.error(
@@ -117,22 +117,20 @@ const router = createBrowserRouter([
         element: <FormUser />,
         loader: async () => {
           try {
-            const [usersResponse, rolesResponse, abonnementsResponse] = await Promise.all([
-              axios.get(`${import.meta.env.VITE_API_URL}/api/users`),
-              axios.get(`${import.meta.env.VITE_API_URL}/api/roles`),
-              axios.get(`${import.meta.env.VITE_API_URL}/api/abonnements`),
-            ]);
-            
+            const [usersResponse, rolesResponse, abonnementsResponse] =
+              await Promise.all([
+                axios.get(`${import.meta.env.VITE_API_URL}/api/users`),
+                axios.get(`${import.meta.env.VITE_API_URL}/api/roles`),
+                axios.get(`${import.meta.env.VITE_API_URL}/api/abonnements`),
+              ]);
+
             const users = usersResponse.data;
             const roles = rolesResponse.data;
             const abonnements = abonnementsResponse.data;
-            
+
             return { users, roles, abonnements };
           } catch (error) {
-            console.error(
-              "Erreur lors du chargement des infos user",
-              error
-            );
+            console.error("Erreur lors du chargement des infos user", error);
             return { users: [], roles: [], abonnements: [] }; // Valeurs par défaut en cas d'erreur
           }
         },
