@@ -1,12 +1,20 @@
 import { useParams, useLocation } from "react-router-dom";
 import YouTube from "react-youtube";
+import { useContext } from "react";
+import { AuthContext } from "../contexte/AuthContext";
 
 function UniqueVideo() {
   const { videoId } = useParams();
-  // Fait passé les données dans une autre page
   const location = useLocation();
-  // Déstructuration pour récup les data du Link de la page SousCategories.jsx
-  const { title, description, date, duration, categories } = location.state;
+  const { title, description, date, duration, categories, abonnementsid } =
+    location.state;
+  const { abonnementId } = useContext(AuthContext);
+
+  // Déterminez si l'utilisateur a accès à la vidéo
+  const hasAccess =
+    abonnementId === 2 ||
+    (abonnementId === 1 && abonnementsid === 1) ||
+    (!abonnementId && abonnementsid === 1);
 
   const opts = {
     playerVars: {
@@ -16,12 +24,20 @@ function UniqueVideo() {
 
   return (
     <div>
-      <div className="video-unique-container">
-        <YouTube videoId={videoId} opts={opts} />
-      </div>
+      {hasAccess ? (
+        <div className="video-unique-container">
+          <YouTube videoId={videoId} opts={opts} />
+        </div>
+      ) : (
+        <div className="restricted-message">
+          <p>
+            Vous n'avez pas accès à cette vidéo. Veuillez vous abonner pour y
+            accéder.
+          </p>
+        </div>
+      )}
       <div className="data-container">
         <p className="title-video-unique">
-          {" "}
           <strong className="strong-color">Titre:</strong> <br /> {title}
         </p>
         <p className="desc-video-unique">
@@ -36,7 +52,7 @@ function UniqueVideo() {
           <strong className="strong-color">Durée:</strong> <br /> {duration}
         </p>
         <p className="time-video-unique">
-          <strong className="strong-color">Categorie:</strong> <br />{" "}
+          <strong className="strong-color">Catégorie:</strong> <br />{" "}
           {categories}
         </p>
       </div>

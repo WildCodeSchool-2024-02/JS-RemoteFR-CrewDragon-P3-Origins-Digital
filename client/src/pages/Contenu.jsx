@@ -65,6 +65,7 @@ function Contenu() {
                       date: video.date,
                       duration: video.duration,
                       categories: video.name,
+                      abonnementsid: video.abonnementsid,
                     }}
                   >
                     <button type="button">Détails</button>
