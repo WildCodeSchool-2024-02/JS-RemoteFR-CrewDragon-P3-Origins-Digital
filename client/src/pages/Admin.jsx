@@ -40,24 +40,19 @@ function Admin() {
       },
     });
 
-  // useState Popup pour ajouter une vidéo
   const [isPopupAddOpen, setIsPopupAddOpen] = useState(false);
   const [isPopupUpdateOpen, setIsPopupUpdateOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const { videos, categories, souscats } = useLoaderData();
-
   const [videoAdmin, setVideoAdmin] = useState(videos);
   const [menuOpen, setMenuOpen] = useState(false);
-
   const [selectAll, setSelectAll] = useState(false);
   const [selectedVideos, setSelectedVideos] = useState([]);
-
   // Nouvelle state pour les abonnements
   const [abonnements, setAbonnements] = useState([]);
 
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
+  const toggleMenu = () => setMenuOpen(!menuOpen);
 
   // Handle pour selectionner toutes les checkbox
   const handleSelectAll = () => {
@@ -68,7 +63,6 @@ function Admin() {
       setSelectedVideos([]);
     }
   };
-
   // Handle pour checkbox individuel
   const handleCheckboxChange = (id) => {
     if (selectedVideos.includes(id)) {
@@ -77,7 +71,6 @@ function Admin() {
       setSelectedVideos([...selectedVideos, id]);
     }
   };
-
   // Fonction pour supprimer les vidéos sélectionnées
   const handleDeleteVideos = async () => {
     try {
@@ -91,20 +84,16 @@ function Admin() {
           );
         })
       );
-
       console.info("Vidéos supprimées avec succès !");
     } catch (error) {
       console.error("Erreur lors de la suppression des vidéos :", error);
     }
   };
-
   // Fonction pour ajouter une vidéo
   const handleAddVideos = async (e) => {
     e.preventDefault();
     const form = e.target;
-
     const formData = new FormData(form);
-
     const formJson = Object.fromEntries(formData.entries());
 
     await axios.post(`${import.meta.env.VITE_API_URL}/api/videos/`, formJson);
@@ -115,14 +104,12 @@ function Admin() {
     notifyAdd();
     setIsPopupAddOpen(false);
   };
-
   // Fonction pour modifier une ou plusieurs vidéos
   const handleUpdateVideo = async (e) => {
     e.preventDefault();
 
     const formData = new FormData(e.target);
     const updates = {};
-
     formData.forEach((value, key) => {
       if (value) {
         updates[key] = value;
@@ -376,6 +363,14 @@ function Admin() {
           </ul>
         </div>
         <div className="container-video-information-responsive">
+          <div className="search-admin-container">
+            <input
+              type="text"
+              placeholder="Rechercher une vidéo..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
           <div className="grid-date-category">
             <div className="flex-checkbox">
               <p>Tout sélectionner</p>
@@ -392,8 +387,17 @@ function Admin() {
             <p>Date</p>
           </div>
           <div className="container-admin-videos">
-            {videoAdmin &&
-              videoAdmin.map((video) => (
+            {videoAdmin
+              .filter(
+                (video) =>
+                  video.title
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase()) ||
+                  video.description
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase())
+              )
+              .map((video) => (
                 <div key={video.id}>
                   <div className="player-wrapper-admin">
                     <div className="video-checkbox-container">

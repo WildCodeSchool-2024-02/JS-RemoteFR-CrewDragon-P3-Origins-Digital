@@ -9,7 +9,21 @@ function Contenu() {
   const videos = useLoaderData();
   const { abonnementId } = useContext(AuthContext);
 
+  const [searchTerm, setSearchTerm] = useState("");
   const [limiteVideo, setLimiteVideo] = useState(6);
+
+  // Filtrage des vidéos en fonction du terme de recherche
+  const filteredVideos = videos.filter((video) => {
+    const lowerSearchTerm = searchTerm.toLowerCase();
+    return (
+      video.title.toLowerCase().includes(lowerSearchTerm) ||
+      video.description.toLowerCase().includes(lowerSearchTerm) ||
+      video.categories.name.toLowerCase().includes(lowerSearchTerm) ||
+      video.souscats.name.toLowerCase().includes(lowerSearchTerm)
+    );
+  });
+
+  const firstPage = filteredVideos.slice(0, limiteVideo);
 
   const handleVoirPlus = () => {
     setLimiteVideo((precLimiteVideos) => precLimiteVideos + 6);
@@ -21,8 +35,6 @@ function Contenu() {
     }, 50);
   };
 
-  const firstPage = videos.slice(0, limiteVideo);
-
   useEffect(() => {
     window.scrollBy({
       top: window.innerHeight,
@@ -32,6 +44,14 @@ function Contenu() {
 
   return (
     <>
+      <div className="search-contenu-container">
+        <input
+          type="text"
+          placeholder="Rechercher une vidéo..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
       <div className="AllVideos">
         {firstPage.map((video) => {
           const hasAccess =

@@ -448,6 +448,11 @@
     font-size: 0.7rem;
   }
 }
+.search-admin-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
 // Responsive
 
 @media only screen and (min-width: 1024px) {
@@ -460,7 +465,7 @@
     position: relative;
     left: 0;
     width: 25%;
-    height: 84vh;
+    height: 88vh;
     overflow: visible;
     border-right: solid 3px $text-color-black;
   }
