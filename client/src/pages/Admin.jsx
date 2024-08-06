@@ -239,6 +239,30 @@ function Admin() {
               <label htmlFor="update-date">Durée</label>
               <input type="text" id="update-date" name="date" />
             </div>
+            <div>
+              <label>Catégorie
+                <br />
+                <select name="categories_id" id="categories">
+                {categories.map((categorie) => (
+                <option key={categorie.id} value={categorie.id}>
+                  {categorie.name}
+                </option>
+              ))}
+                </select>
+              </label>
+            </div>
+            <div>
+              <label>Sous-catégorie
+                <br />
+                <select name="souscats_id" id="souscats">
+                {souscats.map((souscat) => (
+                <option key={souscat.id} value={souscat.id}>
+                  {souscat.name}
+                </option>
+              ))}
+                </select>
+              </label>
+            </div>
             <button className="submit-add" onClick={notifyUpdate} type="submit">
               Mettre à jour
             </button>
