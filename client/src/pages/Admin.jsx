@@ -51,6 +51,8 @@ function Admin() {
   const [selectedVideos, setSelectedVideos] = useState([]);
   // Nouvelle state pour les abonnements
   const [abonnements, setAbonnements] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [filteredSouscats, setFilteredSouscats] = useState([]);
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
@@ -156,6 +158,20 @@ function Admin() {
     fetchAbonnements();
   }, []);
 
+  useEffect(() => {
+    if (selectedCategory) {
+      setFilteredSouscats(
+        souscats.filter((souscat) => souscat.categories_id === selectedCategory)
+      );
+    } else {
+      setFilteredSouscats([]);
+    }
+  }, [selectedCategory, souscats]);
+
+  const handleCategoryChange = (e) => {
+    setSelectedCategory(parseInt(e.target.value, 10));
+  };
+
   return (
     <div>
       <div className="container-admin-action">
@@ -229,7 +245,7 @@ function Admin() {
             <div>
               <label>Catégorie
                 <br />
-                <select name="categories_id" id="categories">
+                <select name="categories_id" id="categories" onChange={handleCategoryChange}>
                 {categories.map((categorie) => (
                 <option key={categorie.id} value={categorie.id}>
                   {categorie.name}
@@ -242,7 +258,7 @@ function Admin() {
               <label>Sous-catégorie
                 <br />
                 <select name="souscats_id" id="souscats">
-                {souscats.map((souscat) => (
+                {filteredSouscats.map((souscat) => (
                 <option key={souscat.id} value={souscat.id}>
                   {souscat.name}
                 </option>
@@ -326,7 +342,7 @@ function Admin() {
             </div>
             <label htmlFor="categories_id">Choisissez une catégorie :</label>{" "}
             <br />
-            <select name="categories_id" id="categories">
+            <select name="categories_id" id="categories" onChange={handleCategoryChange}>
               {categories.map((categorie) => (
                 <option key={categorie.id} value={categorie.id}>
                   {categorie.name}
@@ -339,7 +355,7 @@ function Admin() {
             </label>{" "}
             <br />
             <select name="souscats_id" id="souscats">
-              {souscats.map((souscat) => (
+            {filteredSouscats.map((souscat) => (
                 <option key={souscat.id} value={souscat.id}>
                   {souscat.name}
                 </option>
