@@ -40,24 +40,21 @@ function Admin() {
       },
     });
 
-  // useState Popup pour ajouter une vidéo
   const [isPopupAddOpen, setIsPopupAddOpen] = useState(false);
   const [isPopupUpdateOpen, setIsPopupUpdateOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const { videos, categories, souscats } = useLoaderData();
-
   const [videoAdmin, setVideoAdmin] = useState(videos);
   const [menuOpen, setMenuOpen] = useState(false);
-
   const [selectAll, setSelectAll] = useState(false);
   const [selectedVideos, setSelectedVideos] = useState([]);
-
   // Nouvelle state pour les abonnements
   const [abonnements, setAbonnements] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [filteredSouscats, setFilteredSouscats] = useState([]);
 
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
+  const toggleMenu = () => setMenuOpen(!menuOpen);
 
   // Handle pour selectionner toutes les checkbox
   const handleSelectAll = () => {
@@ -68,7 +65,6 @@ function Admin() {
       setSelectedVideos([]);
     }
   };
-
   // Handle pour checkbox individuel
   const handleCheckboxChange = (id) => {
     if (selectedVideos.includes(id)) {
@@ -77,7 +73,6 @@ function Admin() {
       setSelectedVideos([...selectedVideos, id]);
     }
   };
-
   // Fonction pour supprimer les vidéos sélectionnées
   const handleDeleteVideos = async () => {
     try {
@@ -91,20 +86,16 @@ function Admin() {
           );
         })
       );
-
       console.info("Vidéos supprimées avec succès !");
     } catch (error) {
       console.error("Erreur lors de la suppression des vidéos :", error);
     }
   };
-
   // Fonction pour ajouter une vidéo
   const handleAddVideos = async (e) => {
     e.preventDefault();
     const form = e.target;
-
     const formData = new FormData(form);
-
     const formJson = Object.fromEntries(formData.entries());
 
     await axios.post(`${import.meta.env.VITE_API_URL}/api/videos/`, formJson);
@@ -115,14 +106,12 @@ function Admin() {
     notifyAdd();
     setIsPopupAddOpen(false);
   };
-
   // Fonction pour modifier une ou plusieurs vidéos
   const handleUpdateVideo = async (e) => {
     e.preventDefault();
 
     const formData = new FormData(e.target);
     const updates = {};
-
     formData.forEach((value, key) => {
       if (value) {
         updates[key] = value;
@@ -168,6 +157,20 @@ function Admin() {
 
     fetchAbonnements();
   }, []);
+
+  useEffect(() => {
+    if (selectedCategory) {
+      setFilteredSouscats(
+        souscats.filter((souscat) => souscat.categories_id === selectedCategory)
+      );
+    } else {
+      setFilteredSouscats([]);
+    }
+  }, [selectedCategory, souscats]);
+
+  const handleCategoryChange = (e) => {
+    setSelectedCategory(parseInt(e.target.value, 10));
+  };
 
   return (
     <div>
@@ -238,6 +241,30 @@ function Admin() {
             <div className="popup-position">
               <label htmlFor="update-date">Durée</label>
               <input type="text" id="update-date" name="date" />
+            </div>
+            <div>
+              <label>Catégorie
+                <br />
+                <select name="categories_id" id="categories" onChange={handleCategoryChange}>
+                {categories.map((categorie) => (
+                <option key={categorie.id} value={categorie.id}>
+                  {categorie.name}
+                </option>
+              ))}
+                </select>
+              </label>
+            </div>
+            <div>
+              <label>Sous-catégorie
+                <br />
+                <select name="souscats_id" id="souscats">
+                {filteredSouscats.map((souscat) => (
+                <option key={souscat.id} value={souscat.id}>
+                  {souscat.name}
+                </option>
+              ))}
+                </select>
+              </label>
             </div>
             <button className="submit-add" onClick={notifyUpdate} type="submit">
               Mettre à jour
@@ -315,7 +342,7 @@ function Admin() {
             </div>
             <label htmlFor="categories_id">Choisissez une catégorie :</label>{" "}
             <br />
-            <select name="categories_id" id="categories">
+            <select name="categories_id" id="categories" onChange={handleCategoryChange}>
               {categories.map((categorie) => (
                 <option key={categorie.id} value={categorie.id}>
                   {categorie.name}
@@ -328,7 +355,7 @@ function Admin() {
             </label>{" "}
             <br />
             <select name="souscats_id" id="souscats">
-              {souscats.map((souscat) => (
+            {filteredSouscats.map((souscat) => (
                 <option key={souscat.id} value={souscat.id}>
                   {souscat.name}
                 </option>
@@ -364,8 +391,11 @@ function Admin() {
             <Link className="admin-link" to="/admin/catsouscats">
               Gérer mes Catégories et Sous-catégories
             </Link>
-            <Link className="admin-link" to="/contenue">
-              Contenue
+            <Link className="admin-link" to="/admin/utilisateurs">
+              Gérer les utilisateurs
+            </Link>
+            <Link className="admin-link" to="/contenu">
+              Contenu
             </Link>
             <Link className="admin-link" to="/login">
               Déconnexion
@@ -373,6 +403,14 @@ function Admin() {
           </ul>
         </div>
         <div className="container-video-information-responsive">
+          <div className="search-admin-container">
+            <input
+              type="text"
+              placeholder="Rechercher une vidéo..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
           <div className="grid-date-category">
             <div className="flex-checkbox">
               <p>Tout sélectionner</p>
@@ -389,8 +427,17 @@ function Admin() {
             <p>Date</p>
           </div>
           <div className="container-admin-videos">
-            {videoAdmin &&
-              videoAdmin.map((video) => (
+            {videoAdmin
+              .filter(
+                (video) =>
+                  video.title
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase()) ||
+                  video.description
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase())
+              )
+              .map((video) => (
                 <div key={video.id}>
                   <div className="player-wrapper-admin">
                     <div className="video-checkbox-container">

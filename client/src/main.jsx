@@ -12,7 +12,7 @@ import App from "./App";
 import Home from "./pages/Home";
 import Categories from "./pages/Categories";
 import SousCategories from "./pages/SousCategories";
-import Contenue from "./pages/Contenue";
+import Contenu from "./pages/Contenu";
 import VideoUnique from "./pages/UniqueVideo";
 import Admin from "./pages/Admin";
 import Error404 from "./pages/Error404";
@@ -20,6 +20,7 @@ import Login from "./pages/Login";
 import Account from "./pages/Account";
 import Contact from "./pages/Contact";
 import FormCatSousCat from "./components/FormCatSousCat";
+import FormUser from "./components/FormUser";
 
 import Abonnement from "./pages/Abonnement"; //
 
@@ -45,8 +46,8 @@ const router = createBrowserRouter([
         element: <SousCategories />,
       },
       {
-        path: "/contenue",
-        element: <Contenue />,
+        path: "/contenu",
+        element: <Contenu />,
         loader: async () => {
           const response = await axios.get(
             `${import.meta.env.VITE_API_URL}/api/videos`
@@ -89,18 +90,6 @@ const router = createBrowserRouter([
         },
       },
       {
-        path: "/login",
-        element: <Login />,
-      },
-      {
-        path: "/account",
-        element: <Account />,
-      },
-      {
-        path: "/*",
-        element: <Error404 />,
-      },
-      {
         path: "/admin/catsouscats",
         element: <FormCatSousCat />,
         loader: async () => {
@@ -122,6 +111,41 @@ const router = createBrowserRouter([
             return { categories: [], souscats: [] }; // Valeurs par défaut en cas d'erreur
           }
         },
+      },
+      {
+        path: "/admin/utilisateurs",
+        element: <FormUser />,
+        loader: async () => {
+          try {
+            const [usersResponse, rolesResponse, abonnementsResponse] =
+              await Promise.all([
+                axios.get(`${import.meta.env.VITE_API_URL}/api/users`),
+                axios.get(`${import.meta.env.VITE_API_URL}/api/roles`),
+                axios.get(`${import.meta.env.VITE_API_URL}/api/abonnements`),
+              ]);
+
+            const users = usersResponse.data;
+            const roles = rolesResponse.data;
+            const abonnements = abonnementsResponse.data;
+
+            return { users, roles, abonnements };
+          } catch (error) {
+            console.error("Erreur lors du chargement des infos user", error);
+            return { users: [], roles: [], abonnements: [] }; // Valeurs par défaut en cas d'erreur
+          }
+        },
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/account",
+        element: <Account />,
+      },
+      {
+        path: "/*",
+        element: <Error404 />,
       },
       {
         path: "/contact",

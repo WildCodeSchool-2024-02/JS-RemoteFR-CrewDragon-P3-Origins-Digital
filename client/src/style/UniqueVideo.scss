@@ -28,6 +28,10 @@
   border: solid 1px;
   border-radius: 25px;
 }
+.restricted-message {
+  text-align: center;
+  font-size: 24px;
+}
 
 // responsive tablette
 @media only screen and (min-width: 500px) {

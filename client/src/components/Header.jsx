@@ -172,6 +172,7 @@ function Header() {
       <div className="theme">
         <button type="button" onClick={toggleDarkMode}>
           {darkMode ? "clair" : "sombre"}
+          {darkMode ? "clair" : "sombre"}
         </button>
       </div>
 
@@ -195,7 +196,7 @@ function Header() {
             </Link>
           </li>
           <li>
-            <Link className="glitch" data-glitch="Contenue" to="/contenue">
+            <Link className="glitch" data-glitch="Contenu" to="/contenu">
               Contenu
             </Link>
           </li>
@@ -209,7 +210,7 @@ function Header() {
           <li>
             <Link
               className="glitch"
-              data-glitch="pourquoi s'abonner ?"
+              data-glitch="Pourquoi s'abonner ?"
               to="/abo"
             >
               Pourquoi s'abonner ?
@@ -220,6 +221,7 @@ function Header() {
               <li>
                 <button
                   className="button-profil"
+                  data-glitch="Mon profil"
                   type="button"
                   onClick={goToProfile}
                 >
