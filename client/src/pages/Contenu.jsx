@@ -11,9 +11,25 @@ function Contenu() {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [limiteVideo, setLimiteVideo] = useState(6);
+  const [randomVideos, setRandomVideos] = useState([]);
+
+  // Fonction pour mélanger un tableau
+  const shuffleArray = (inputArray) => {
+    const array = [...inputArray]; // Create a copy of the array
+    for (let i = array.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  };
+
+  useEffect(() => {
+    // Mélanger les vidéos une fois lors du chargement du composant
+    setRandomVideos(shuffleArray([...videos]));
+  }, [videos]);
 
   // Filtrage des vidéos en fonction du terme de recherche
-  const filteredVideos = videos.filter((video) => {
+  const filteredVideos = randomVideos.filter((video) => {
     const lowerSearchTerm = searchTerm.toLowerCase();
     return (
       video.title.toLowerCase().includes(lowerSearchTerm) ||
@@ -57,7 +73,7 @@ function Contenu() {
           const hasAccess =
             abonnementId === 2 ||
             (abonnementId === 1 && video.abonnementsid === 1) ||
-            (!abonnementId && video.abonnementsid === 1); // Allow non-authenticated users to see only videos with abonnementsid 1
+            (!abonnementId && video.abonnementsid === 1);
 
           return (
             <div key={video.id} className="videoItem">
