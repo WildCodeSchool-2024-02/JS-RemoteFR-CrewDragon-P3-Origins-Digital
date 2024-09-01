@@ -2,6 +2,7 @@ import HeroSlider, { Overlay, Slide, MenuNav } from "hero-slider";
 import { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+
 import { AuthContext } from "../contexte/AuthContext";
 import { useTheme } from "../contexte/ThemeContext";
 // Importer js-cookie
