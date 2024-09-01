@@ -1,8 +1,10 @@
 import HeroSlider, { Overlay, Slide, MenuNav } from "hero-slider";
 import { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 import { AuthContext } from "../contexte/AuthContext";
 import { useTheme } from "../contexte/ThemeContext";
+// Importer js-cookie
 
 import LOGO from "../assets/images/origindigital.svg";
 import MENU from "../assets/images/images-header/menu.svg";
@@ -28,7 +30,7 @@ function Header() {
 
   const goToProfile = () => {
     if (isAuthenticated) {
-      const token = localStorage.getItem("token");
+      const token = Cookies.get("token"); // Utiliser les cookies pour obtenir le token
       try {
         const decodedToken = JSON.parse(atob(token.split(".")[1]));
         const { userId } = decodedToken;

@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import { createContext, useState, useEffect, useMemo } from "react";
 import PropTypes from "prop-types";
 
@@ -19,7 +20,7 @@ export function AuthProvider({ children }) {
   const [abonnementId, setAbonnementId] = useState(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = Cookies.get("token"); // Lire le token depuis le cookie
     if (token) {
       const decodedToken = decodeToken(token);
       if (decodedToken) {
@@ -33,7 +34,7 @@ export function AuthProvider({ children }) {
   const login = (token) => {
     const decodedToken = decodeToken(token);
     if (decodedToken) {
-      localStorage.setItem("token", token);
+      Cookies.set("token", token, { expires: 1, secure: true }); // Stocker le token dans le cookie
       setIsAuthenticated(true);
       setRolesId(decodedToken.rolesId);
       setAbonnementId(decodedToken.abonnementId);
@@ -41,7 +42,7 @@ export function AuthProvider({ children }) {
   };
 
   const logout = () => {
-    localStorage.removeItem("token");
+    Cookies.remove("token"); // Supprimer le token du cookie
     setIsAuthenticated(false);
     setRolesId(null);
     setAbonnementId(null);
