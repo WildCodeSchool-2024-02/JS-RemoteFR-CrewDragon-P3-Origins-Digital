@@ -74,9 +74,9 @@ const router = createBrowserRouter([
           try {
             const token = Cookies.get("token");
             if (token) {
-              const decoded = decodeToken(token); // Utilisation de decodeToken
+              const decoded = decodeToken(token);
 
-              if (decoded && decoded.userId === 1) {
+              if (decoded && decoded.rolesId === 1) {
                 const [videosResponse, categoriesResponse, souscatsResponse] =
                   await Promise.all([
                     axios.get(`${import.meta.env.VITE_API_URL}/api/videos/`),
