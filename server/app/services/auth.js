@@ -84,11 +84,10 @@ const updateAbonnement = async (req, res, next) => {
       { expiresIn: "1h" }
     );
 
-    // Stocker le nouveau token dans un cookie
     res.cookie("token", token, {
-      httpOnly: true, // Empêche l'accès au cookie via JavaScript côté client
-      secure: process.env.NODE_ENV === "production", // Envoie le cookie uniquement via HTTPS en production
-      maxAge: 3600000, // Expiration du cookie en 1 heure
+      httpOnly: true,
+
+      maxAge: 3600000,
     });
 
     // Répondre avec le nouveau token si nécessaire
