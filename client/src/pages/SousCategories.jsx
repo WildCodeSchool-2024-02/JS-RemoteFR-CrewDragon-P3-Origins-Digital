@@ -128,6 +128,7 @@ function SousCategories() {
                         date: filteredVideo.date,
                         duration: filteredVideo.duration,
                         categories: sousCategorie.name,
+                        abonnementsid: filteredVideo.abonnementsid,
                       }}
                     >
                       <button className="button-style" type="button">
