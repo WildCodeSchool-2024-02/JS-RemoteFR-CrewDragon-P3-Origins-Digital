@@ -2,8 +2,9 @@ const express = require("express");
 
 const router = express.Router();
 
-const { login } = require("../../../controllers/authActions");
+const { login, logout } = require("../../../controllers/authActions");
 
 router.post("/", login);
+router.post("/logout", logout); // Route pour la déconnexion
 
 module.exports = router;

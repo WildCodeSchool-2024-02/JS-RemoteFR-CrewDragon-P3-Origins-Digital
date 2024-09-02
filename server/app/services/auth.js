@@ -6,7 +6,7 @@ const tables = require("../../database/tables"); // Assurez-vous du chemin corre
 // Recommandations **minimales** de l'OWASP : https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
 const hashingOptions = {
   type: argon2.argon2id,
-  memoryCost: 19 * 2 ** 10 /* 19 Mio en kio (19 * 1024 kio) */,
+  memoryCost: 19 * 2 ** 10, // 19 Mio en kio (19 * 1024 kio)
   timeCost: 2,
   parallelism: 1,
 };
@@ -33,22 +33,23 @@ const hashPassword = async (req, res, next) => {
 
 const verifyToken = (req, res, next) => {
   try {
-    // Vérifier la présence de l'en-tête "Authorization" dans la requête
-    const authorizationHeader = req.get(`Authorization`);
+    let token = req.get("Authorization");
 
-    if (authorizationHeader == null) {
-      throw new Error("Authorization header is missing");
+    if (token) {
+      const [type, authToken] = token.split(" ");
+      if (type !== "Bearer") {
+        throw new Error(
+          "Le type de l'en-tête Authorization n'est pas 'Bearer'"
+        );
+      }
+      token = authToken;
+    } else {
+      token = req.cookies.token;
+      if (!token) {
+        throw new Error("Le token d'autorisation est manquant");
+      }
     }
 
-    // Vérifier que l'en-tête a la forme "Bearer <token>"
-    const [type, token] = authorizationHeader.split(" ");
-
-    if (type !== "Bearer") {
-      throw new Error("Authorization header has not the 'Bearer' type");
-    }
-
-    // Vérifier la validité du token (son authenticité et sa date d'expiration)
-    // En cas de succès, le payload est extrait et décodé
     req.auth = jwt.verify(token, process.env.APP_SECRET);
     next();
   } catch (err) {
@@ -83,6 +84,14 @@ const updateAbonnement = async (req, res, next) => {
       { expiresIn: "1h" }
     );
 
+    // Stocker le nouveau token dans un cookie
+    res.cookie("token", token, {
+      httpOnly: true, // Empêche l'accès au cookie via JavaScript côté client
+      secure: process.env.NODE_ENV === "production", // Envoie le cookie uniquement via HTTPS en production
+      maxAge: 3600000, // Expiration du cookie en 1 heure
+    });
+
+    // Répondre avec le nouveau token si nécessaire
     res.status(200).json({ token });
   } catch (error) {
     next(error);
