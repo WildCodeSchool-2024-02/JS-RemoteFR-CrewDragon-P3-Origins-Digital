@@ -1,6 +1,7 @@
-import { Link, useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
+import Cookies from "js-cookie"; // Importation de la bibliothèque js-cookie
 import { AuthContext } from "../contexte/AuthContext";
 
 function LoginForm() {
@@ -38,7 +39,9 @@ function LoginForm() {
       const userData = await response.json();
       login(userData.token); // Utilisation de la fonction login du contexte
 
-      localStorage.setItem("user", JSON.stringify(userData.user)); // Stockage des données utilisateur si nécessaire
+      // Stocker le token dans un cookie au lieu du localStorage
+      Cookies.set("token", userData.token, { expires: 1, secure: true });
+
       notifyUser();
 
       setTimeout(() => {

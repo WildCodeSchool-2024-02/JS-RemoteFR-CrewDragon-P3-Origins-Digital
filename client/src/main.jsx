@@ -1,14 +1,12 @@
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import axios from "axios";
-import { jwtDecode } from "jwt-decode";
+import Cookies from "js-cookie";
 
 // Import du Composant App
-
 import App from "./App";
 
 // Import des pages
-
 import Home from "./pages/Home";
 import Categories from "./pages/Categories";
 import SousCategories from "./pages/SousCategories";
@@ -21,14 +19,23 @@ import Account from "./pages/Account";
 import Contact from "./pages/Contact";
 import FormCatSousCat from "./components/FormCatSousCat";
 import FormUser from "./components/FormUser";
-
-import Abonnement from "./pages/Abonnement"; //
-
+import Abonnement from "./pages/Abonnement";
 import Profil from "./pages/Profil";
 import ErrorBoundary from "./pages/ErrorBoundary";
 
-// router creation
+// Fonction pour décoder le token JWT
+const decodeToken = (token) => {
+  try {
+    const payload = token.split(".")[1];
+    const decoded = JSON.parse(atob(payload));
+    return decoded;
+  } catch (error) {
+    console.error("Erreur lors du décodage du token :", error);
+    return null;
+  }
+};
 
+// Création du routeur
 const router = createBrowserRouter([
   {
     element: <App />,
@@ -62,27 +69,31 @@ const router = createBrowserRouter([
       {
         path: "/admin",
         element: <Admin />,
-
         errorElement: <ErrorBoundary />,
         loader: async () => {
           try {
-            const token = localStorage.getItem("token");
-            const decoded = jwtDecode(token);
+            const token = Cookies.get("token");
+            if (token) {
+              const decoded = decodeToken(token); // Utilisation de decodeToken
 
-            if (decoded.userId === 1) {
-              const [videosResponse, categoriesResponse, souscatsResponse] =
-                await Promise.all([
-                  axios.get(`${import.meta.env.VITE_API_URL}/api/videos/`),
-                  axios.get(`${import.meta.env.VITE_API_URL}/api/categories/`),
-                  axios.get(`${import.meta.env.VITE_API_URL}/api/souscats/`),
-                ]);
-              const videos = videosResponse.data;
-              const categories = categoriesResponse.data;
-              const souscats = souscatsResponse.data;
-              return { videos, categories, souscats };
+              if (decoded && decoded.userId === 1) {
+                const [videosResponse, categoriesResponse, souscatsResponse] =
+                  await Promise.all([
+                    axios.get(`${import.meta.env.VITE_API_URL}/api/videos/`),
+                    axios.get(
+                      `${import.meta.env.VITE_API_URL}/api/categories/`
+                    ),
+                    axios.get(`${import.meta.env.VITE_API_URL}/api/souscats/`),
+                  ]);
+                const videos = videosResponse.data;
+                const categories = categoriesResponse.data;
+                const souscats = souscatsResponse.data;
+                return { videos, categories, souscats };
+              }
+              throw new Error("Oups, tu n'as pas les droits le 💯");
+            } else {
+              throw new Error("Token manquant");
             }
-            // eslint-disable-next-line no-throw-literal
-            throw { message: "Oups, tu n'as pas les droits le 💯" };
           } catch (error) {
             console.error(error);
             throw error;
@@ -160,7 +171,7 @@ const router = createBrowserRouter([
         element: <Profil />,
         errorElement: <ErrorBoundary />,
         loader: async ({ params }) => {
-          const token = localStorage.getItem("token");
+          const token = Cookies.get("token");
           try {
             const response = await axios.get(
               `${import.meta.env.VITE_API_URL}/api/users/${params.id}`,
@@ -181,8 +192,7 @@ const router = createBrowserRouter([
   },
 ]);
 
-// rendering
-
+// Rendu de l'application
 ReactDOM.createRoot(document.getElementById("root")).render(
   <RouterProvider router={router} />
 );

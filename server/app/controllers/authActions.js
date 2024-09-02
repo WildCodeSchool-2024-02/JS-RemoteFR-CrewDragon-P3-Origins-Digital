@@ -9,10 +9,12 @@ const login = async (req, res, next) => {
       res.sendStatus(422);
       return;
     }
+
     const verified = await argon2.verify(
       user.hashed_password,
       req.body.password
     );
+
     if (verified) {
       delete user.hashed_password;
       const token = jwt.sign(
@@ -24,6 +26,14 @@ const login = async (req, res, next) => {
         process.env.APP_SECRET,
         { expiresIn: "1h" }
       );
+
+      // Stocker le token dans un cookie
+      res.cookie("token", token, {
+        httpOnly: true, // Empêche l'accès au cookie via JavaScript côté client
+        secure: process.env.NODE_ENV === "production", // Envoie le cookie uniquement via HTTPS en production
+        maxAge: 3600000, // Expiration du cookie en 1 heure
+      });
+
       res.json({ token, user });
     } else {
       res.sendStatus(420);
@@ -43,7 +53,13 @@ const add = async (req, res, next) => {
   }
 };
 
+const logout = (req, res) => {
+  res.clearCookie("token");
+  res.sendStatus(200);
+};
+
 module.exports = {
   login,
   add,
+  logout,
 };

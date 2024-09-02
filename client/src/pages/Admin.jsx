@@ -243,26 +243,32 @@ function Admin() {
               <input type="text" id="update-date" name="date" />
             </div>
             <div>
-              <label>Catégorie
+              <label>
+                Catégorie
                 <br />
-                <select name="categories_id" id="categories" onChange={handleCategoryChange}>
-                {categories.map((categorie) => (
-                <option key={categorie.id} value={categorie.id}>
-                  {categorie.name}
-                </option>
-              ))}
+                <select
+                  name="categories_id"
+                  id="categories"
+                  onChange={handleCategoryChange}
+                >
+                  {categories.map((categorie) => (
+                    <option key={categorie.id} value={categorie.id}>
+                      {categorie.name}
+                    </option>
+                  ))}
                 </select>
               </label>
             </div>
             <div>
-              <label>Sous-catégorie
+              <label>
+                Sous-catégorie
                 <br />
                 <select name="souscats_id" id="souscats">
-                {filteredSouscats.map((souscat) => (
-                <option key={souscat.id} value={souscat.id}>
-                  {souscat.name}
-                </option>
-              ))}
+                  {filteredSouscats.map((souscat) => (
+                    <option key={souscat.id} value={souscat.id}>
+                      {souscat.name}
+                    </option>
+                  ))}
                 </select>
               </label>
             </div>
@@ -342,7 +348,11 @@ function Admin() {
             </div>
             <label htmlFor="categories_id">Choisissez une catégorie :</label>{" "}
             <br />
-            <select name="categories_id" id="categories" onChange={handleCategoryChange}>
+            <select
+              name="categories_id"
+              id="categories"
+              onChange={handleCategoryChange}
+            >
               {categories.map((categorie) => (
                 <option key={categorie.id} value={categorie.id}>
                   {categorie.name}
@@ -355,7 +365,7 @@ function Admin() {
             </label>{" "}
             <br />
             <select name="souscats_id" id="souscats">
-            {filteredSouscats.map((souscat) => (
+              {filteredSouscats.map((souscat) => (
                 <option key={souscat.id} value={souscat.id}>
                   {souscat.name}
                 </option>

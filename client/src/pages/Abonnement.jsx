@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 import { AuthContext } from "../contexte/AuthContext";
 
 function Abonnement() {
@@ -10,7 +11,8 @@ function Abonnement() {
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
 
-  const token = localStorage.getItem("token");
+  // Récupération du token depuis les cookies
+  const token = Cookies.get("token");
   const userId = token ? JSON.parse(atob(token.split(".")[1])).userId : null;
 
   useEffect(() => {
@@ -45,7 +47,7 @@ function Abonnement() {
 
       const newToken = response.data.token;
       if (newToken) {
-        localStorage.setItem("token", newToken);
+        Cookies.set("token", newToken, { expires: 7 }); // Sauvegarde du nouveau token dans les cookies
         login(newToken);
       } else {
         console.error(
