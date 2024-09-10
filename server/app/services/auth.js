@@ -86,10 +86,10 @@ const updateAbonnement = async (req, res, next) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: process.env.APP_SECRET === "production",
       maxAge: 3600000,
+      sameSite: "Strict",
     });
-
     // Répondre avec le nouveau token si nécessaire
     res.status(200).json({ token });
   } catch (error) {
